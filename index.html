@@ -81,10 +81,10 @@
         ['מזהה מסמך', '<span class="ltr">' + esc(rec.doc_id) + '</span>'],
         ['אימות ציטוטים', 'כל הפניה אומתה מול מקור רשמי ✓']
       ];
-      if (rec.project_label) {
-        rows.splice(1, 0, ['פרויקט', esc(rec.project_label)]);
-      }
-      if (rec.n_standards != null) {
+      if (rec.show_project) {
+        if (rec.project_label) {
+          rows.splice(1, 0, ['פרויקט', esc(rec.project_label)]);
+        }
         rows.push(['היקף', esc(rec.n_standards) + ' תקנים · ' + esc(rec.n_findings) + ' ממצאים']);
         rows.push(['פירוט', esc(rec.n_fail) + ' אי-התאמות · ' + esc(rec.n_warn) + ' אזהרות · ' + esc(rec.n_unknown) + ' לאימות']);
       }

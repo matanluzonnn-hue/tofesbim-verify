@@ -2,6 +2,7 @@
   "rHdqcCZgwnAniKDYzbimcQ": {
     "doc_id": "TB-20260709-6178",
     "date": "09/07/2026",
+    "show_project": false,
     "project_label": "",
     "n_standards": 1,
     "n_findings": 1,
