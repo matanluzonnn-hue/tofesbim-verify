@@ -32,6 +32,9 @@
   .foot{margin-top:18px;color:var(--muted);font-size:11px;line-height:1.6}
   .badge{display:inline-block;background:var(--accent-ok);color:#fff;font-size:12px;
     font-weight:700;padding:3px 10px;border-radius:12px}
+  .btn{display:block;text-align:center;margin-top:18px;background:var(--brand);color:#fff;
+    text-decoration:none;font-weight:700;font-size:14px;padding:12px 16px;border-radius:6px}
+  .btn:hover{background:#142a40}
 </style></head><body><div class="card" id="card">
   <div class="brand">
     <svg width="26" height="26" viewBox="0 0 30 30" aria-hidden="true">
@@ -91,9 +94,13 @@
       var rowsHtml = rows.map(function (r) {
         return '<tr><th>' + esc(r[0]) + '</th><td>' + r[1] + '</td></tr>';
       }).join('');
+      var reportBtn = '';
+      if (rec.report_file) {
+        reportBtn = '<a class="btn" href="' + encodeURI(rec.report_file) + '" target="_blank" rel="noopener">📄 צפו בדוח המלא לדוגמה ←</a>';
+      }
       bodyEl.innerHTML = '<h1 class="ok">מסמך מאומת</h1>' +
         '<div class="sub">דו״ח תאימות זה הופק על-ידי TofesBIM והוא מקורי.</div>' +
-        '<table>' + rowsHtml + '</table>';
+        '<table>' + rowsHtml + '</table>' + reportBtn;
     })
     .catch(function () {
       showBad('שגיאה', 'לא ניתן היה לטעון את נתוני האימות כרגע.');

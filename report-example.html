@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>דו״ח תאימות תקנים — DigitalHub - Doogmat Doch</title>
+<style>
+:root{
+  --font-display:"Frank Ruhl Libre","David Libre","Narkisim","Segoe UI",serif;
+  --font-body:"Heebo","Assistant","Segoe UI","Arial","DejaVu Sans",sans-serif;
+  --ink:#0F1E2E; --brand:#1C3D5A; --brand-900:#0E2136;
+  --gold:#A17A2B; --gold-line:#C9A24B;
+  --paper:#FFFFFF; --paper-2:#F7F9FB; --paper-3:#EEF2F6;
+  --rule:#D8DFE6; --muted:#5B6B7A;
+  --fail:#B3261E; --fail-tint:#FBECEA;
+  --warn:#B26B00; --warn-tint:#FBF3E4;
+  --unknown:#5B6B7A; --unknown-tint:#EEF1F4;
+  --pass:#1E6B41; --pass-tint:#E9F3EC;
+}
+@page{ size:A4; margin:20mm 15mm 18mm;
+  @bottom-right{ content:"עמוד " counter(page) " מתוך " counter(pages);
+    font-family:"Heebo","Segoe UI",sans-serif; font-size:8pt; color:#5B6B7A; }
+  @bottom-left{ content:string(docid); font-family:"Heebo","Segoe UI",sans-serif;
+    font-size:8pt; color:#5B6B7A; }
+}
+@page cover{ margin:0; @bottom-right{ content:none; } @bottom-left{ content:none; } }
+* { box-sizing:border-box; }
+html,body{ direction:rtl; font-family:var(--font-body); color:var(--ink); }
+body{ margin:0; padding:0; font-size:10.5pt; line-height:1.55;
+  font-feature-settings:"tnum" 0; }
+.docid-anchor{ string-set:docid content(); position:absolute; width:0; height:0;
+  overflow:hidden; }
+h1,h2,h3{ font-family:var(--font-display); font-weight:700; }
+h2{ font-size:16pt; color:var(--ink); margin:20pt 0 8pt;
+  border-bottom:2px solid var(--brand); padding-bottom:4pt; }
+h2 .h2-sub{ font-family:var(--font-body); font-size:9pt; font-weight:400;
+  color:var(--muted); margin-inline-start:8pt; }
+.num{ font-feature-settings:"tnum" 1; }
+.ltr{ direction:ltr; unicode-bidi:isolate; display:inline-block; }
+
+/* ── cover ── */
+.cover{ page:cover; height:297mm; display:flex; flex-direction:column;
+  page-break-after:always; }
+.cover-band{ display:flex; align-items:center; gap:10pt; height:32mm;
+  padding:0 18mm; background:var(--brand-900); color:#fff; }
+.cover-band .mark{ flex:0 0 auto; }
+.wordmark{ font-family:var(--font-display); font-weight:700; font-size:22pt;
+  letter-spacing:-.3pt; }
+.band-tag{ margin-inline-start:auto; font-size:9.5pt; color:#C9D3DE;
+  max-width:70mm; text-align:end; }
+.cover-body{ flex:1; margin:0 16mm; padding:20mm 14mm 14mm; position:relative;
+  border:1px solid var(--rule); border-top:none;
+  box-shadow:inset 0 0 0 2pt #fff, inset 0 0 0 3pt var(--gold-line); }
+.doc-kicker{ font-size:11pt; letter-spacing:2pt; color:var(--gold);
+  font-weight:700; margin-bottom:10pt; }
+.cover-title{ font-size:32pt; color:var(--ink); margin:0 0 4pt; line-height:1.1; }
+.cover-sub{ font-size:13pt; color:var(--muted); margin-bottom:24pt; }
+.cover-meta{ width:74%; border-collapse:collapse; font-size:10.5pt; }
+.cover-meta th{ text-align:right; color:var(--muted); font-weight:500;
+  padding:6pt 0; width:40%; border-bottom:1px solid var(--rule); }
+.cover-meta td{ padding:6pt 0; color:var(--ink); font-weight:700;
+  border-bottom:1px solid var(--rule); }
+.cover-seal{ position:absolute; bottom:16mm; left:16mm; }
+.cover-foot{ padding:8pt 18mm 12mm; font-size:8.5pt; color:var(--muted);
+  border-top:1px solid var(--rule); line-height:1.5; }
+
+/* ── verification seal ── */
+.seal-wrap{ display:inline-block; transform:rotate(-5deg); }
+.seal{ opacity:.97; }
+
+/* ── executive verdict ── */
+.exec{ margin:10pt 0 6pt; }
+.verdict{ padding:12pt 14pt; border-radius:4pt; border:1px solid var(--brand);
+  background:var(--paper-2); border-right:6px solid var(--brand); }
+.verdict .v-status{ font-family:var(--font-display); font-weight:700;
+  font-size:18pt; }
+.verdict .v-line{ font-size:10.5pt; color:var(--ink); margin-top:2pt; }
+.verdict.fail{ border-color:var(--fail); background:var(--fail-tint);
+  border-right-color:var(--fail); }
+.verdict.fail .v-status{ color:var(--fail); }
+.verdict.warn{ border-color:var(--warn); background:var(--warn-tint);
+  border-right-color:var(--warn); }
+.verdict.warn .v-status{ color:var(--warn); }
+.verdict.unknown{ border-right-color:var(--unknown); }
+.verdict.unknown .v-status{ color:var(--unknown); }
+.verdict.pass{ border-color:var(--pass); background:var(--pass-tint);
+  border-right-color:var(--pass); }
+.verdict.pass .v-status{ color:var(--pass); }
+.sevbar{ display:flex; height:11pt; border-radius:6pt; overflow:hidden;
+  margin:10pt 0; border:1px solid var(--rule); }
+.sevbar .seg.fail{ background:var(--fail); }
+.sevbar .seg.warn{ background:var(--warn); }
+.sevbar .seg.unknown{ background:var(--unknown); }
+.sevbar .seg.pass{ background:var(--pass); }
+.counts{ display:flex; gap:8pt; }
+.stat{ flex:1; padding:9pt 12pt; background:var(--paper-2);
+  border:1px solid var(--rule); border-right:4px solid var(--brand);
+  border-radius:3pt; }
+.stat .snum{ font-size:21pt; font-weight:700; font-feature-settings:"tnum" 1;
+  color:var(--ink); line-height:1.1; }
+.stat .lbl{ font-size:9pt; color:var(--muted); }
+.stat.fail{ border-right-color:var(--fail); }
+.stat.warn{ border-right-color:var(--warn); }
+.stat.unknown{ border-right-color:var(--unknown); }
+.stat.pass{ border-right-color:var(--pass); }
+.stat.total{ border-right-color:var(--brand); }
+
+/* ── methodology ── */
+.method{ padding:10pt 14pt; background:var(--paper-2);
+  border:1px solid var(--rule); border-radius:4pt; font-size:9.5pt;
+  color:var(--ink); line-height:1.6; }
+.method b{ color:var(--brand); }
+
+/* ── model info ── */
+table.model-info{ width:100%; border-collapse:collapse; margin:6pt 0;
+  font-size:10pt; }
+table.model-info th{ text-align:right; background:var(--paper-3);
+  color:var(--muted); font-weight:500; padding:5pt 8pt;
+  border:1px solid var(--rule); width:30%; }
+table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
+  font-weight:700; font-feature-settings:"tnum" 1; }
+
+/* ── finding cards ── */
+.section{ margin:8pt 0; }
+.card{ border:1px solid var(--rule); border-right:5px solid var(--brand);
+  background:var(--paper); border-radius:4pt; padding:11pt 14pt;
+  margin-bottom:9pt; page-break-inside:avoid; }
+.card.fail{ border-right-color:var(--fail); background:var(--fail-tint); }
+.card.warn{ border-right-color:var(--warn); background:var(--warn-tint); }
+.card.unknown{ border-right-color:var(--unknown); background:var(--unknown-tint); }
+.card.pass{ border-right-color:var(--pass); background:var(--pass-tint); }
+.card.skip{ border-right-color:var(--muted); }
+.card-head{ display:flex; align-items:center; gap:6pt; flex-wrap:wrap; }
+.card .idx{ font-family:var(--font-display); font-weight:700; font-size:11pt;
+  color:var(--muted); }
+.card .card-title{ font-size:12.5pt; margin:0; flex-basis:100%; order:5;
+  font-family:var(--font-display); font-weight:700; }
+.chip{ font-size:7.5pt; font-weight:700; padding:1.5pt 7pt; border-radius:10pt;
+  letter-spacing:.2pt; white-space:nowrap; }
+.chip.st-fail{ background:var(--fail); color:#fff; }
+.chip.st-warn{ background:var(--warn); color:#fff; }
+.chip.st-unknown{ background:var(--unknown); color:#fff; }
+.chip.st-pass{ background:var(--pass); color:#fff; }
+.chip.st-skip{ background:#B7C0C9; color:#fff; }
+.chip.cf-high{ background:var(--pass-tint); color:var(--pass);
+  border:1px solid var(--pass); }
+.chip.cf-medium{ background:#E7EFF7; color:var(--brand);
+  border:1px solid var(--brand); }
+.chip.cf-advisory{ background:var(--warn-tint); color:var(--warn);
+  border:1px solid var(--warn-line,#C98A1E); }
+.source{ font-size:8.5pt; color:var(--gold); font-weight:700; margin:5pt 0; }
+.spec{ width:100%; border-collapse:collapse; font-size:10pt; margin:2pt 0 6pt; }
+.spec th{ text-align:right; color:var(--muted); font-weight:500; width:14%;
+  padding:4pt 8pt; background:var(--paper-2); border:1px solid var(--rule); }
+.spec td{ padding:4pt 8pt; border:1px solid var(--rule); font-weight:700;
+  font-feature-settings:"tnum" 1; }
+.spec td.bad{ color:var(--fail); }
+.card .desc{ margin-top:2pt; font-size:10pt; color:var(--ink); }
+.card .snap{ display:block; max-width:100%; max-height:230pt; margin:8pt 0 2pt;
+  border:1px solid var(--rule); border-radius:3pt; }
+.card .snap-placeholder{ margin:8pt 0 2pt; padding:14pt; text-align:center;
+  border:1px dashed var(--rule); border-radius:3pt; background:var(--paper-2);
+  color:var(--muted); }
+.card .snap-placeholder .ph-icon{ font-size:18pt; color:var(--rule);
+  line-height:1; margin-bottom:4pt; }
+.card .snap-placeholder .ph-msg{ font-size:9pt; }
+.card .snap-placeholder .ph-where{ font-size:8.5pt; color:var(--ink);
+  font-weight:700; margin-top:3pt; }
+.card .open-viewer{ display:inline-block; margin-top:4pt; font-size:8.5pt;
+  color:var(--brand); font-weight:700; text-decoration:none;
+  border:1px solid var(--brand); border-radius:3pt; padding:2pt 8pt; }
+@media print{ .card .open-viewer{ display:none; } }
+
+/* ── alternatives ── */
+.card .alternatives{ margin-top:8pt; padding:6pt 10pt; background:var(--paper-2);
+  border-right:3px solid var(--brand); border-radius:3pt; font-size:9pt; }
+.card .alternatives h4{ margin:0 0 4pt; font-size:9.5pt; color:var(--brand); }
+.card .alt-item{ padding:4pt 0; border-bottom:1px dashed var(--rule); }
+.card .alt-item:last-child{ border-bottom:none; }
+.card .alt-item .alt-title{ font-weight:700; color:var(--ink); }
+.card .alt-item .alt-meta{ font-size:8pt; color:var(--muted); margin-top:2pt; }
+.card .alt-item .alt-meta .tag{ display:inline-block; padding:0 5pt;
+  margin-inline-start:3pt; border-radius:2pt; background:var(--paper-3);
+  color:var(--brand); }
+.card .alt-item .alt-meta .tag.review{ background:var(--warn-tint);
+  color:var(--warn); }
+.card .alt-item .alt-desc{ margin-top:3pt; color:var(--ink); }
+
+/* ── attestation ── */
+.attest{ page-break-inside:avoid; margin-top:20pt; padding-top:10pt;
+  border-top:2px solid var(--brand); }
+.attest .att-note{ font-size:9.5pt; color:var(--ink); }
+.att-grid{ width:100%; border-collapse:separate; border-spacing:16pt 12pt;
+  margin-top:6pt; }
+.att-grid label{ display:block; font-size:8.5pt; color:var(--muted); }
+.att-grid .sigline{ height:1px; margin-top:22pt; border-bottom:1px solid var(--ink); }
+.att-grid .sigline.tall{ margin-top:40pt; }
+.attest-seal{ margin-top:10pt; }
+
+/* ── transparency + footer ── */
+.transparency{ margin-top:14pt; padding:10pt 12pt; background:var(--paper-2);
+  border:1px solid var(--rule); border-right:4px solid var(--gold-line);
+  border-radius:3pt; font-size:9pt; color:var(--ink); line-height:1.55; }
+.transparency b{ color:var(--gold); }
+.all-clear{ padding:14pt; background:var(--pass-tint);
+  border:1px solid var(--pass); border-radius:4pt; text-align:center;
+  color:var(--pass); font-weight:700; font-size:12pt; }
+.footer{ margin-top:22pt; padding-top:8pt; border-top:1px solid var(--rule);
+  font-size:8.5pt; color:var(--muted); text-align:center; line-height:1.6; }
+.footer b{ color:var(--brand); }
+</style>
+</head>
+<body>
+<div class="docid-anchor">TB-20260709-E533</div>
+
+    <div class="cover">
+      <header class="cover-band">
+        <svg class="mark" width="30" height="30" viewBox="0 0 30 30" aria-hidden="true">
+          <rect x="3" y="3" width="24" height="24" rx="3" fill="none"
+                stroke="#C9A24B" stroke-width="2"/>
+          <path d="M9 16l4 4 8-9" fill="none" stroke="#fff" stroke-width="2.4"
+                stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="wordmark">TofesBIM</span>
+        <span class="band-tag">מנוע בדיקת תאימות תקני בנייה על מודלי BIM</span>
+      </header>
+      <div class="cover-body">
+        <div class="doc-kicker">דו״ח בדיקת תאימות · תקינה ישראלית</div>
+        <h1 class="cover-title">DigitalHub - Doogmat Doch</h1>
+        
+        <table class="cover-meta">
+          <tr><th>תאריך הפקה</th><td>09/07/2026</td></tr>
+          <tr><th>מזהה מסמך</th><td class="ltr">TB-20260709-E533</td></tr>
+          <tr><th>סמכות שיפוט</th><td>תקינה ישראלית (ת״י + תקנות התכנון והבנייה)</td></tr>
+          <tr><th>היקף הבדיקה</th><td>⁦9⁩ תקנים · ⁦73⁩ ממצאים</td></tr>
+          <tr><th>אימות ציטוטים</th><td>כל הפניה מאומתת מול מקור רשמי ✓</td></tr>
+          <tr><th>אימות מקוון</th><td class="ltr" style="font-size:8pt;font-weight:500">https://matanluzonnn-hue.github.io/tofesbim-verify/?t=8HdFdDD5Mk0-v1eYJeeI3Q</td></tr>
+        </table>
+        <div class="cover-seal">
+    <span class="seal-wrap"><svg class="seal" width="168" height="168"
+        viewBox="0 0 168 168" role="img" aria-label="חותמת אימות TofesBIM">
+      <circle cx="84" cy="84" r="80" fill="none" stroke="#1C3D5A" stroke-width="2.5"/>
+      <circle cx="84" cy="84" r="73" fill="none" stroke="#A17A2B" stroke-width="4.5"
+              stroke-dasharray="1.4 4.2" stroke-linecap="round"/>
+      <circle cx="84" cy="84" r="58" fill="none" stroke="#1C3D5A" stroke-width="1"/>
+      <text x="84" y="33" text-anchor="middle" font-family="'Frank Ruhl Libre',serif"
+            font-size="9.5" letter-spacing="2" font-weight="700" fill="#1C3D5A">TOFESBIM</text>
+      <text x="84" y="92" text-anchor="middle" direction="rtl"
+            font-family="'Frank Ruhl Libre','David Libre',serif" font-size="29"
+            font-weight="700" fill="#1C3D5A">אומת</text>
+      <text x="84" y="109" text-anchor="middle" direction="rtl"
+            font-family="'Heebo','Segoe UI',sans-serif" font-size="8"
+            font-weight="700" fill="#0F1E2E">ציטוטים מול מקור רשמי</text>
+      <text x="84" y="122" text-anchor="middle" font-family="'Heebo','Segoe UI',sans-serif"
+            font-size="7.5" fill="#5B6B7A">09/07/2026</text>
+      <text x="84" y="150" text-anchor="middle" font-family="'Heebo','Segoe UI',sans-serif"
+            font-size="7" letter-spacing="1" font-weight="700"
+            fill="#A17A2B">VERIFIED · מאומת מול מקור</text>
+    </svg></span>
+    </div>
+      </div>
+      <footer class="cover-foot">
+        <b>הצהרה:</b> דו״ח זה מופק אוטומטית ממודל IFC ומיועד לשמש כלי-עזר
+        למהנדס/אדריכל הרשוי. הוא אינו תחליף לבדיקה מקצועית ואינו היתר בנייה.
+        המערכת מציינת את מקור הדרישה (התקן והסעיף) ומתארת אותה במילותיה —
+        אין בדו״ח שכפול מילולי של נוסח התקן.
+      </footer>
+    </div>
+    
+
+    <h2>סיכום מנהלים</h2>
+    <div class="exec">
+      <div class="verdict fail">
+        <div class="v-status">נדרשת פעולה</div>
+        <div class="v-line">⁦28⁩ אי-התאמות · ⁦6⁩ אזהרות · ⁦28⁩ פריטים לאימות · ⁦10⁩ עברו · מתוך ⁦73⁩ ממצאים</div>
+      </div>
+      <div class="sevbar"><span class="seg fail" style="flex:28"></span><span class="seg warn" style="flex:6"></span><span class="seg unknown" style="flex:28"></span><span class="seg pass" style="flex:10"></span></div>
+      <div class="counts"><div class="stat fail"><div class="snum">⁦28⁩</div><div class="lbl">נכשל</div></div><div class="stat warn"><div class="snum">⁦6⁩</div><div class="lbl">אזהרה</div></div><div class="stat unknown"><div class="snum">⁦28⁩</div><div class="lbl">לאימות</div></div><div class="stat pass"><div class="snum">⁦10⁩</div><div class="lbl">עובר</div></div><div class="stat total"><div class="snum">⁦73⁩</div><div class="lbl">סה״כ</div></div></div>
+    </div>
+    
+
+    <h2>מתודולוגיה <span class="h2-sub">כיצד נבדק המודל</span></h2>
+    <div class="method">
+      <b>1. קריאת המודל.</b> מודל ה-IFC נקרא ישירות; נמדדים ממדים גאומטריים
+      אמיתיים (רוחב, גובה, מרחק, שיפוע) מתוך הרכיבים.
+      <b>2. השוואה למקור.</b> כל מדידה מושווית לדרישת התקן הישראלי הרלוונטי,
+      תוך ציון מספר התקן והסעיף.
+      <b>3. עיקרון אפס-התרעות-שווא.</b> קביעת «נכשל» ניתנת רק כשיש ודאות מלאה
+      (מקור + מדידה + שיוך רכיב). כאשר חסר נתון במודל — הממצא מסומן «לאימות»
+      ולעולם לא כ«נכשל» שגוי. זהו העיקרון שמבטיח שדו״ח זה לא ייצר התרעה שקרית.
+    </div>
+    
+
+    <h2>מידע על המודל</h2>
+    <table class="model-info"><tr><th>קובץ מקור</th><td>digitalhub_arc.ifc + digitalhub_hzg.ifc + digitalhub_lft.ifc + digitalhub_san.ifc</td></tr><tr><th>סכמה</th><td>IFC4</td></tr><tr><th>כלי עריכה</th><td>Revit 2019</td></tr><tr><th>קומות</th><td>⁦4⁩</td></tr><tr><th>דלתות</th><td>⁦70⁩</td></tr><tr><th>מרחבים</th><td>⁦64⁩</td></tr><tr><th>מהלכי מדרגות</th><td>⁦10⁩</td></tr><tr><th>מהלכי כבשים</th><td>⁦0⁩</td></tr><tr><th>מעליות</th><td>⁦2⁩</td></tr></table>
+    
+<h2>ממצאים לפי תקן</h2>
+<h3 style="margin-top:14pt;color:#1C3D5A">ת&quot;י 1918 חלק 3.1</h3>
+<div class="section">
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦01⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רום מדרגה גבוה מדרישת התקן</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ד · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2421041 Run 1</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">179 מ&quot;מ</td><th>נדרש</th><td>≤ 175 מ&quot;מ</td></tr></table>
+      <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2421041 Run 1&#x27; בקומה &#x27;B01_OKRD&#x27; עם רום בגובה 179 מ&quot;מ, מעל המקסימום 175 מ&quot;מ.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2421041 Run 1</div></div>
+      
+    <div class="alternatives">
+      <h4>חלופות מוצעות (⁦3⁩):</h4>
+      
+        <div class="alt-item">
+          <div class="alt-title">1. בקשת הקלה ממכון התקנים (רק לבניין קיים)</div>
+          <div class="alt-meta">
+            <span class="tag">מסלול תאימות חלופי</span>
+            <span class="tag">עלות: ₪6,000-12,000 עבור הגשה</span>
+            <span class="tag">זמן: 2-4 חודשים לאישור</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">סעיף 9 לתקנות התכנון והבנייה מתיר הקלה ברום מדרגות קיים כשרה-בנייה אינה סבירה הנדסית. דורש: (א) חוו&quot;ד מהנדס מבנים על חוסר-היתכנות הפיזית, (ב) הצעת אמצעי מיתון (אחיזה דו-צדדית חזקה, סימון נוסף, תאורת מדרגות), (ג) הגשה לוועדה המקומית. לא חל על פרויקט חדש.</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">2. להוסיף מדרגות (רום 179→175 מ&quot;מ)</div>
+          <div class="alt-meta">
+            <span class="tag">שינוי ערך</span>
+            <span class="tag">עלות: ₪15,000-30,000 למהלך</span>
+            <span class="tag">זמן: 1-2 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">פתרון המומלץ כאשר יש מרחב אופקי פנוי לפני או אחרי המהלך. מדרגות נוכחיות: ⁦9 × 179⁩ מ&quot;מ = עליה כוללת 1610 מ&quot;מ. כדי להגיע ל-175 מ&quot;מ לרום תצטרך 10 מדרגות (1 נוספות). המהלך הנוסף דורש כ-280 מ&quot;מ שלח לכל מדרגה חדשה = כ-0.8 מטר עומק נוסף לפי 3 מדרגות. דורש בדיקה שהפלטפורמה התחתונה/הפודסט עדיין עונה על דרישות המרחב המינימליות (סעיף 2.7.2.2).</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">3. לפצל את המהלך לשני מהלכים עם פודסט ביניים</div>
+          <div class="alt-meta">
+            <span class="tag">הזזה מרחבית</span>
+            <span class="tag">עלות: ₪35,000-60,000 למהלך</span>
+            <span class="tag">זמן: 3-5 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">במקום מהלך בודד של 9 מדרגות בגובה 179 מ&quot;מ, לפצל ל-2 מהלכים קצרים יותר עם פודסט ביניים (≥ 110 ס&quot;מ עומק לפי סעיף 2.7.4). מאפשר לחלק את סה&quot;כ העלייה מחדש: כל מהלך עם מספר מדרגות מופחת ולכן רום נמוך יותר. מיושם כשיש מרחב אנכי שניתן להקצות פודסט, לרוב בגרמי מדרגות פנימיים של 2.8-3 מ&#x27; קומה.</div>
+        </div>
+        
+    </div>
+    
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦02⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מדרגה — יחס שלח-רום גבוה מהארגונומיה התקנית</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ה (הערה — נוסחת שלח+2×רום) · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2421041 Run 1</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">635 מ&quot;מ (שלח+2רום)</td><th>נדרש</th><td>610–630 מ&quot;מ</td></tr></table>
+      <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2421041 Run 1&#x27; בקומה &#x27;B01_OKRD&#x27; עם שלח 277 מ&quot;מ ורום 179 מ&quot;מ. נוסחת הארגונומיה: שלח + 2×רום = 635 מ&quot;מ, מחוץ לטווח התקני 610–630 מ&quot;מ. מדרגה כזו קשה להליכה ומעלה סיכון נפילה — דרישה לפירוק ויציקה מחדש.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2421041 Run 1</div></div>
+      
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦03⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רום מדרגה גבוה מדרישת התקן</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ד · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2421041 Run 2</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">179 מ&quot;מ</td><th>נדרש</th><td>≤ 175 מ&quot;מ</td></tr></table>
+      <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2421041 Run 2&#x27; בקומה &#x27;B01_OKRD&#x27; עם רום בגובה 179 מ&quot;מ, מעל המקסימום 175 מ&quot;מ.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2421041 Run 2</div></div>
+      
+    <div class="alternatives">
+      <h4>חלופות מוצעות (⁦3⁩):</h4>
+      
+        <div class="alt-item">
+          <div class="alt-title">1. בקשת הקלה ממכון התקנים (רק לבניין קיים)</div>
+          <div class="alt-meta">
+            <span class="tag">מסלול תאימות חלופי</span>
+            <span class="tag">עלות: ₪6,000-12,000 עבור הגשה</span>
+            <span class="tag">זמן: 2-4 חודשים לאישור</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">סעיף 9 לתקנות התכנון והבנייה מתיר הקלה ברום מדרגות קיים כשרה-בנייה אינה סבירה הנדסית. דורש: (א) חוו&quot;ד מהנדס מבנים על חוסר-היתכנות הפיזית, (ב) הצעת אמצעי מיתון (אחיזה דו-צדדית חזקה, סימון נוסף, תאורת מדרגות), (ג) הגשה לוועדה המקומית. לא חל על פרויקט חדש.</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">2. להוסיף מדרגות (רום 179→175 מ&quot;מ)</div>
+          <div class="alt-meta">
+            <span class="tag">שינוי ערך</span>
+            <span class="tag">עלות: ₪15,000-30,000 למהלך</span>
+            <span class="tag">זמן: 1-2 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">פתרון המומלץ כאשר יש מרחב אופקי פנוי לפני או אחרי המהלך. מדרגות נוכחיות: ⁦9 × 179⁩ מ&quot;מ = עליה כוללת 1610 מ&quot;מ. כדי להגיע ל-175 מ&quot;מ לרום תצטרך 10 מדרגות (1 נוספות). המהלך הנוסף דורש כ-280 מ&quot;מ שלח לכל מדרגה חדשה = כ-0.8 מטר עומק נוסף לפי 3 מדרגות. דורש בדיקה שהפלטפורמה התחתונה/הפודסט עדיין עונה על דרישות המרחב המינימליות (סעיף 2.7.2.2).</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">3. לפצל את המהלך לשני מהלכים עם פודסט ביניים</div>
+          <div class="alt-meta">
+            <span class="tag">הזזה מרחבית</span>
+            <span class="tag">עלות: ₪35,000-60,000 למהלך</span>
+            <span class="tag">זמן: 3-5 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">במקום מהלך בודד של 9 מדרגות בגובה 179 מ&quot;מ, לפצל ל-2 מהלכים קצרים יותר עם פודסט ביניים (≥ 110 ס&quot;מ עומק לפי סעיף 2.7.4). מאפשר לחלק את סה&quot;כ העלייה מחדש: כל מהלך עם מספר מדרגות מופחת ולכן רום נמוך יותר. מיושם כשיש מרחב אנכי שניתן להקצות פודסט, לרוב בגרמי מדרגות פנימיים של 2.8-3 מ&#x27; קומה.</div>
+        </div>
+        
+    </div>
+    
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦04⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מדרגה — יחס שלח-רום גבוה מהארגונומיה התקנית</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ה (הערה — נוסחת שלח+2×רום) · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2421041 Run 2</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">635 מ&quot;מ (שלח+2רום)</td><th>נדרש</th><td>610–630 מ&quot;מ</td></tr></table>
+      <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2421041 Run 2&#x27; בקומה &#x27;B01_OKRD&#x27; עם שלח 277 מ&quot;מ ורום 179 מ&quot;מ. נוסחת הארגונומיה: שלח + 2×רום = 635 מ&quot;מ, מחוץ לטווח התקני 610–630 מ&quot;מ. מדרגה כזו קשה להליכה ומעלה סיכון נפילה — דרישה לפירוק ויציקה מחדש.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2421041 Run 2</div></div>
+      
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦05⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רום מדרגה גבוה מדרישת התקן</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ד · קומה E00_OKRD · רכיב Fertigbetontreppe:Treppe:2421059 Run 1</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">177 מ&quot;מ</td><th>נדרש</th><td>≤ 175 מ&quot;מ</td></tr></table>
+      <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2421059 Run 1&#x27; בקומה &#x27;E00_OKRD&#x27; עם רום בגובה 177 מ&quot;מ, מעל המקסימום 175 מ&quot;מ.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2421059 Run 1</div></div>
+      
+    <div class="alternatives">
+      <h4>חלופות מוצעות (⁦3⁩):</h4>
+      
+        <div class="alt-item">
+          <div class="alt-title">1. בקשת הקלה ממכון התקנים (רק לבניין קיים)</div>
+          <div class="alt-meta">
+            <span class="tag">מסלול תאימות חלופי</span>
+            <span class="tag">עלות: ₪6,000-12,000 עבור הגשה</span>
+            <span class="tag">זמן: 2-4 חודשים לאישור</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">סעיף 9 לתקנות התכנון והבנייה מתיר הקלה ברום מדרגות קיים כשרה-בנייה אינה סבירה הנדסית. דורש: (א) חוו&quot;ד מהנדס מבנים על חוסר-היתכנות הפיזית, (ב) הצעת אמצעי מיתון (אחיזה דו-צדדית חזקה, סימון נוסף, תאורת מדרגות), (ג) הגשה לוועדה המקומית. לא חל על פרויקט חדש.</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">2. להוסיף מדרגות (רום 177→175 מ&quot;מ)</div>
+          <div class="alt-meta">
+            <span class="tag">שינוי ערך</span>
+            <span class="tag">עלות: ₪15,000-30,000 למהלך</span>
+            <span class="tag">זמן: 1-2 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">פתרון המומלץ כאשר יש מרחב אופקי פנוי לפני או אחרי המהלך. מדרגות נוכחיות: ⁦11 × 177⁩ מ&quot;מ = עליה כוללת 1950 מ&quot;מ. כדי להגיע ל-175 מ&quot;מ לרום תצטרך 12 מדרגות (1 נוספות). המהלך הנוסף דורש כ-280 מ&quot;מ שלח לכל מדרגה חדשה = כ-0.8 מטר עומק נוסף לפי 3 מדרגות. דורש בדיקה שהפלטפורמה התחתונה/הפודסט עדיין עונה על דרישות המרחב המינימליות (סעיף 2.7.2.2).</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">3. לפצל את המהלך לשני מהלכים עם פודסט ביניים</div>
+          <div class="alt-meta">
+            <span class="tag">הזזה מרחבית</span>
+            <span class="tag">עלות: ₪35,000-60,000 למהלך</span>
+            <span class="tag">זמן: 3-5 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">במקום מהלך בודד של 11 מדרגות בגובה 177 מ&quot;מ, לפצל ל-2 מהלכים קצרים יותר עם פודסט ביניים (≥ 110 ס&quot;מ עומק לפי סעיף 2.7.4). מאפשר לחלק את סה&quot;כ העלייה מחדש: כל מהלך עם מספר מדרגות מופחת ולכן רום נמוך יותר. מיושם כשיש מרחב אנכי שניתן להקצות פודסט, לרוב בגרמי מדרגות פנימיים של 2.8-3 מ&#x27; קומה.</div>
+        </div>
+        
+    </div>
+    
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦06⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רום מדרגה גבוה מדרישת התקן</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ד · קומה E00_OKRD · רכיב Fertigbetontreppe:Treppe:2421059 Run 2</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">177 מ&quot;מ</td><th>נדרש</th><td>≤ 175 מ&quot;מ</td></tr></table>
+      <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2421059 Run 2&#x27; בקומה &#x27;E00_OKRD&#x27; עם רום בגובה 177 מ&quot;מ, מעל המקסימום 175 מ&quot;מ.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2421059 Run 2</div></div>
+      
+    <div class="alternatives">
+      <h4>חלופות מוצעות (⁦3⁩):</h4>
+      
+        <div class="alt-item">
+          <div class="alt-title">1. בקשת הקלה ממכון התקנים (רק לבניין קיים)</div>
+          <div class="alt-meta">
+            <span class="tag">מסלול תאימות חלופי</span>
+            <span class="tag">עלות: ₪6,000-12,000 עבור הגשה</span>
+            <span class="tag">זמן: 2-4 חודשים לאישור</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">סעיף 9 לתקנות התכנון והבנייה מתיר הקלה ברום מדרגות קיים כשרה-בנייה אינה סבירה הנדסית. דורש: (א) חוו&quot;ד מהנדס מבנים על חוסר-היתכנות הפיזית, (ב) הצעת אמצעי מיתון (אחיזה דו-צדדית חזקה, סימון נוסף, תאורת מדרגות), (ג) הגשה לוועדה המקומית. לא חל על פרויקט חדש.</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">2. להוסיף מדרגות (רום 177→175 מ&quot;מ)</div>
+          <div class="alt-meta">
+            <span class="tag">שינוי ערך</span>
+            <span class="tag">עלות: ₪15,000-30,000 למהלך</span>
+            <span class="tag">זמן: 1-2 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">פתרון המומלץ כאשר יש מרחב אופקי פנוי לפני או אחרי המהלך. מדרגות נוכחיות: ⁦11 × 177⁩ מ&quot;מ = עליה כוללת 1950 מ&quot;מ. כדי להגיע ל-175 מ&quot;מ לרום תצטרך 12 מדרגות (1 נוספות). המהלך הנוסף דורש כ-280 מ&quot;מ שלח לכל מדרגה חדשה = כ-0.8 מטר עומק נוסף לפי 3 מדרגות. דורש בדיקה שהפלטפורמה התחתונה/הפודסט עדיין עונה על דרישות המרחב המינימליות (סעיף 2.7.2.2).</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">3. לפצל את המהלך לשני מהלכים עם פודסט ביניים</div>
+          <div class="alt-meta">
+            <span class="tag">הזזה מרחבית</span>
+            <span class="tag">עלות: ₪35,000-60,000 למהלך</span>
+            <span class="tag">זמן: 3-5 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">במקום מהלך בודד של 11 מדרגות בגובה 177 מ&quot;מ, לפצל ל-2 מהלכים קצרים יותר עם פודסט ביניים (≥ 110 ס&quot;מ עומק לפי סעיף 2.7.4). מאפשר לחלק את סה&quot;כ העלייה מחדש: כל מהלך עם מספר מדרגות מופחת ולכן רום נמוך יותר. מיושם כשיש מרחב אנכי שניתן להקצות פודסט, לרוב בגרמי מדרגות פנימיים של 2.8-3 מ&#x27; קומה.</div>
+        </div>
+        
+    </div>
+    
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦07⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רום מדרגה גבוה מדרישת התקן</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ד · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2423887 Run 1</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">179 מ&quot;מ</td><th>נדרש</th><td>≤ 175 מ&quot;מ</td></tr></table>
+      <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2423887 Run 1&#x27; בקומה &#x27;B01_OKRD&#x27; עם רום בגובה 179 מ&quot;מ, מעל המקסימום 175 מ&quot;מ.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2423887 Run 1</div></div>
+      
+    <div class="alternatives">
+      <h4>חלופות מוצעות (⁦3⁩):</h4>
+      
+        <div class="alt-item">
+          <div class="alt-title">1. בקשת הקלה ממכון התקנים (רק לבניין קיים)</div>
+          <div class="alt-meta">
+            <span class="tag">מסלול תאימות חלופי</span>
+            <span class="tag">עלות: ₪6,000-12,000 עבור הגשה</span>
+            <span class="tag">זמן: 2-4 חודשים לאישור</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">סעיף 9 לתקנות התכנון והבנייה מתיר הקלה ברום מדרגות קיים כשרה-בנייה אינה סבירה הנדסית. דורש: (א) חוו&quot;ד מהנדס מבנים על חוסר-היתכנות הפיזית, (ב) הצעת אמצעי מיתון (אחיזה דו-צדדית חזקה, סימון נוסף, תאורת מדרגות), (ג) הגשה לוועדה המקומית. לא חל על פרויקט חדש.</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">2. להוסיף מדרגות (רום 179→175 מ&quot;מ)</div>
+          <div class="alt-meta">
+            <span class="tag">שינוי ערך</span>
+            <span class="tag">עלות: ₪15,000-30,000 למהלך</span>
+            <span class="tag">זמן: 1-2 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">פתרון המומלץ כאשר יש מרחב אופקי פנוי לפני או אחרי המהלך. מדרגות נוכחיות: ⁦9 × 179⁩ מ&quot;מ = עליה כוללת 1610 מ&quot;מ. כדי להגיע ל-175 מ&quot;מ לרום תצטרך 10 מדרגות (1 נוספות). המהלך הנוסף דורש כ-280 מ&quot;מ שלח לכל מדרגה חדשה = כ-0.8 מטר עומק נוסף לפי 3 מדרגות. דורש בדיקה שהפלטפורמה התחתונה/הפודסט עדיין עונה על דרישות המרחב המינימליות (סעיף 2.7.2.2).</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">3. לפצל את המהלך לשני מהלכים עם פודסט ביניים</div>
+          <div class="alt-meta">
+            <span class="tag">הזזה מרחבית</span>
+            <span class="tag">עלות: ₪35,000-60,000 למהלך</span>
+            <span class="tag">זמן: 3-5 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">במקום מהלך בודד של 9 מדרגות בגובה 179 מ&quot;מ, לפצל ל-2 מהלכים קצרים יותר עם פודסט ביניים (≥ 110 ס&quot;מ עומק לפי סעיף 2.7.4). מאפשר לחלק את סה&quot;כ העלייה מחדש: כל מהלך עם מספר מדרגות מופחת ולכן רום נמוך יותר. מיושם כשיש מרחב אנכי שניתן להקצות פודסט, לרוב בגרמי מדרגות פנימיים של 2.8-3 מ&#x27; קומה.</div>
+        </div>
+        
+    </div>
+    
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦08⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מדרגה — יחס שלח-רום גבוה מהארגונומיה התקנית</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ה (הערה — נוסחת שלח+2×רום) · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2423887 Run 1</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">635 מ&quot;מ (שלח+2רום)</td><th>נדרש</th><td>610–630 מ&quot;מ</td></tr></table>
+      <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2423887 Run 1&#x27; בקומה &#x27;B01_OKRD&#x27; עם שלח 277 מ&quot;מ ורום 179 מ&quot;מ. נוסחת הארגונומיה: שלח + 2×רום = 635 מ&quot;מ, מחוץ לטווח התקני 610–630 מ&quot;מ. מדרגה כזו קשה להליכה ומעלה סיכון נפילה — דרישה לפירוק ויציקה מחדש.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2423887 Run 1</div></div>
+      
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦09⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רום מדרגה גבוה מדרישת התקן</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ד · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2423887 Run 2</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">179 מ&quot;מ</td><th>נדרש</th><td>≤ 175 מ&quot;מ</td></tr></table>
+      <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2423887 Run 2&#x27; בקומה &#x27;B01_OKRD&#x27; עם רום בגובה 179 מ&quot;מ, מעל המקסימום 175 מ&quot;מ.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2423887 Run 2</div></div>
+      
+    <div class="alternatives">
+      <h4>חלופות מוצעות (⁦3⁩):</h4>
+      
+        <div class="alt-item">
+          <div class="alt-title">1. בקשת הקלה ממכון התקנים (רק לבניין קיים)</div>
+          <div class="alt-meta">
+            <span class="tag">מסלול תאימות חלופי</span>
+            <span class="tag">עלות: ₪6,000-12,000 עבור הגשה</span>
+            <span class="tag">זמן: 2-4 חודשים לאישור</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">סעיף 9 לתקנות התכנון והבנייה מתיר הקלה ברום מדרגות קיים כשרה-בנייה אינה סבירה הנדסית. דורש: (א) חוו&quot;ד מהנדס מבנים על חוסר-היתכנות הפיזית, (ב) הצעת אמצעי מיתון (אחיזה דו-צדדית חזקה, סימון נוסף, תאורת מדרגות), (ג) הגשה לוועדה המקומית. לא חל על פרויקט חדש.</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">2. להוסיף מדרגות (רום 179→175 מ&quot;מ)</div>
+          <div class="alt-meta">
+            <span class="tag">שינוי ערך</span>
+            <span class="tag">עלות: ₪15,000-30,000 למהלך</span>
+            <span class="tag">זמן: 1-2 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">פתרון המומלץ כאשר יש מרחב אופקי פנוי לפני או אחרי המהלך. מדרגות נוכחיות: ⁦9 × 179⁩ מ&quot;מ = עליה כוללת 1610 מ&quot;מ. כדי להגיע ל-175 מ&quot;מ לרום תצטרך 10 מדרגות (1 נוספות). המהלך הנוסף דורש כ-280 מ&quot;מ שלח לכל מדרגה חדשה = כ-0.8 מטר עומק נוסף לפי 3 מדרגות. דורש בדיקה שהפלטפורמה התחתונה/הפודסט עדיין עונה על דרישות המרחב המינימליות (סעיף 2.7.2.2).</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">3. לפצל את המהלך לשני מהלכים עם פודסט ביניים</div>
+          <div class="alt-meta">
+            <span class="tag">הזזה מרחבית</span>
+            <span class="tag">עלות: ₪35,000-60,000 למהלך</span>
+            <span class="tag">זמן: 3-5 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">במקום מהלך בודד של 9 מדרגות בגובה 179 מ&quot;מ, לפצל ל-2 מהלכים קצרים יותר עם פודסט ביניים (≥ 110 ס&quot;מ עומק לפי סעיף 2.7.4). מאפשר לחלק את סה&quot;כ העלייה מחדש: כל מהלך עם מספר מדרגות מופחת ולכן רום נמוך יותר. מיושם כשיש מרחב אנכי שניתן להקצות פודסט, לרוב בגרמי מדרגות פנימיים של 2.8-3 מ&#x27; קומה.</div>
+        </div>
+        
+    </div>
+    
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦10⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מדרגה — יחס שלח-רום גבוה מהארגונומיה התקנית</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ה (הערה — נוסחת שלח+2×רום) · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2423887 Run 2</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">635 מ&quot;מ (שלח+2רום)</td><th>נדרש</th><td>610–630 מ&quot;מ</td></tr></table>
+      <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2423887 Run 2&#x27; בקומה &#x27;B01_OKRD&#x27; עם שלח 277 מ&quot;מ ורום 179 מ&quot;מ. נוסחת הארגונומיה: שלח + 2×רום = 635 מ&quot;מ, מחוץ לטווח התקני 610–630 מ&quot;מ. מדרגה כזו קשה להליכה ומעלה סיכון נפילה — דרישה לפירוק ויציקה מחדש.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2423887 Run 2</div></div>
+      
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦11⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רום מדרגה גבוה מדרישת התקן</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ד · קומה E00_OKRD · רכיב Fertigbetontreppe:Treppe:2423903 Run 1</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">177 מ&quot;מ</td><th>נדרש</th><td>≤ 175 מ&quot;מ</td></tr></table>
+      <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2423903 Run 1&#x27; בקומה &#x27;E00_OKRD&#x27; עם רום בגובה 177 מ&quot;מ, מעל המקסימום 175 מ&quot;מ.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2423903 Run 1</div></div>
+      
+    <div class="alternatives">
+      <h4>חלופות מוצעות (⁦3⁩):</h4>
+      
+        <div class="alt-item">
+          <div class="alt-title">1. בקשת הקלה ממכון התקנים (רק לבניין קיים)</div>
+          <div class="alt-meta">
+            <span class="tag">מסלול תאימות חלופי</span>
+            <span class="tag">עלות: ₪6,000-12,000 עבור הגשה</span>
+            <span class="tag">זמן: 2-4 חודשים לאישור</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">סעיף 9 לתקנות התכנון והבנייה מתיר הקלה ברום מדרגות קיים כשרה-בנייה אינה סבירה הנדסית. דורש: (א) חוו&quot;ד מהנדס מבנים על חוסר-היתכנות הפיזית, (ב) הצעת אמצעי מיתון (אחיזה דו-צדדית חזקה, סימון נוסף, תאורת מדרגות), (ג) הגשה לוועדה המקומית. לא חל על פרויקט חדש.</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">2. להוסיף מדרגות (רום 177→175 מ&quot;מ)</div>
+          <div class="alt-meta">
+            <span class="tag">שינוי ערך</span>
+            <span class="tag">עלות: ₪15,000-30,000 למהלך</span>
+            <span class="tag">זמן: 1-2 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">פתרון המומלץ כאשר יש מרחב אופקי פנוי לפני או אחרי המהלך. מדרגות נוכחיות: ⁦11 × 177⁩ מ&quot;מ = עליה כוללת 1950 מ&quot;מ. כדי להגיע ל-175 מ&quot;מ לרום תצטרך 12 מדרגות (1 נוספות). המהלך הנוסף דורש כ-280 מ&quot;מ שלח לכל מדרגה חדשה = כ-0.8 מטר עומק נוסף לפי 3 מדרגות. דורש בדיקה שהפלטפורמה התחתונה/הפודסט עדיין עונה על דרישות המרחב המינימליות (סעיף 2.7.2.2).</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">3. לפצל את המהלך לשני מהלכים עם פודסט ביניים</div>
+          <div class="alt-meta">
+            <span class="tag">הזזה מרחבית</span>
+            <span class="tag">עלות: ₪35,000-60,000 למהלך</span>
+            <span class="tag">זמן: 3-5 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">במקום מהלך בודד של 11 מדרגות בגובה 177 מ&quot;מ, לפצל ל-2 מהלכים קצרים יותר עם פודסט ביניים (≥ 110 ס&quot;מ עומק לפי סעיף 2.7.4). מאפשר לחלק את סה&quot;כ העלייה מחדש: כל מהלך עם מספר מדרגות מופחת ולכן רום נמוך יותר. מיושם כשיש מרחב אנכי שניתן להקצות פודסט, לרוב בגרמי מדרגות פנימיים של 2.8-3 מ&#x27; קומה.</div>
+        </div>
+        
+    </div>
+    
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦12⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רום מדרגה גבוה מדרישת התקן</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ד · קומה E00_OKRD · רכיב Fertigbetontreppe:Treppe:2423903 Run 2</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">177 מ&quot;מ</td><th>נדרש</th><td>≤ 175 מ&quot;מ</td></tr></table>
+      <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2423903 Run 2&#x27; בקומה &#x27;E00_OKRD&#x27; עם רום בגובה 177 מ&quot;מ, מעל המקסימום 175 מ&quot;מ.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2423903 Run 2</div></div>
+      
+    <div class="alternatives">
+      <h4>חלופות מוצעות (⁦3⁩):</h4>
+      
+        <div class="alt-item">
+          <div class="alt-title">1. בקשת הקלה ממכון התקנים (רק לבניין קיים)</div>
+          <div class="alt-meta">
+            <span class="tag">מסלול תאימות חלופי</span>
+            <span class="tag">עלות: ₪6,000-12,000 עבור הגשה</span>
+            <span class="tag">זמן: 2-4 חודשים לאישור</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">סעיף 9 לתקנות התכנון והבנייה מתיר הקלה ברום מדרגות קיים כשרה-בנייה אינה סבירה הנדסית. דורש: (א) חוו&quot;ד מהנדס מבנים על חוסר-היתכנות הפיזית, (ב) הצעת אמצעי מיתון (אחיזה דו-צדדית חזקה, סימון נוסף, תאורת מדרגות), (ג) הגשה לוועדה המקומית. לא חל על פרויקט חדש.</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">2. להוסיף מדרגות (רום 177→175 מ&quot;מ)</div>
+          <div class="alt-meta">
+            <span class="tag">שינוי ערך</span>
+            <span class="tag">עלות: ₪15,000-30,000 למהלך</span>
+            <span class="tag">זמן: 1-2 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">פתרון המומלץ כאשר יש מרחב אופקי פנוי לפני או אחרי המהלך. מדרגות נוכחיות: ⁦11 × 177⁩ מ&quot;מ = עליה כוללת 1950 מ&quot;מ. כדי להגיע ל-175 מ&quot;מ לרום תצטרך 12 מדרגות (1 נוספות). המהלך הנוסף דורש כ-280 מ&quot;מ שלח לכל מדרגה חדשה = כ-0.8 מטר עומק נוסף לפי 3 מדרגות. דורש בדיקה שהפלטפורמה התחתונה/הפודסט עדיין עונה על דרישות המרחב המינימליות (סעיף 2.7.2.2).</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">3. לפצל את המהלך לשני מהלכים עם פודסט ביניים</div>
+          <div class="alt-meta">
+            <span class="tag">הזזה מרחבית</span>
+            <span class="tag">עלות: ₪35,000-60,000 למהלך</span>
+            <span class="tag">זמן: 3-5 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">במקום מהלך בודד של 11 מדרגות בגובה 177 מ&quot;מ, לפצל ל-2 מהלכים קצרים יותר עם פודסט ביניים (≥ 110 ס&quot;מ עומק לפי סעיף 2.7.4). מאפשר לחלק את סה&quot;כ העלייה מחדש: כל מהלך עם מספר מדרגות מופחת ולכן רום נמוך יותר. מיושם כשיש מרחב אנכי שניתן להקצות פודסט, לרוב בגרמי מדרגות פנימיים של 2.8-3 מ&#x27; קומה.</div>
+        </div>
+        
+    </div>
+    
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦13⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רום מדרגה גבוה מדרישת התקן</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ד · קומה E00_OKRD · רכיב Zusammengebaute Treppe:Treppe:2424673 Run 1</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">177 מ&quot;מ</td><th>נדרש</th><td>≤ 175 מ&quot;מ</td></tr></table>
+      <div class="desc">מהלך מדרגות &#x27;Zusammengebaute Treppe:Treppe:2424673 Run 1&#x27; בקומה &#x27;E00_OKRD&#x27; עם רום בגובה 177 מ&quot;מ, מעל המקסימום 175 מ&quot;מ.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Zusammengebaute Treppe:Treppe:2424673 Run 1</div></div>
+      
+    <div class="alternatives">
+      <h4>חלופות מוצעות (⁦3⁩):</h4>
+      
+        <div class="alt-item">
+          <div class="alt-title">1. בקשת הקלה ממכון התקנים (רק לבניין קיים)</div>
+          <div class="alt-meta">
+            <span class="tag">מסלול תאימות חלופי</span>
+            <span class="tag">עלות: ₪6,000-12,000 עבור הגשה</span>
+            <span class="tag">זמן: 2-4 חודשים לאישור</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">סעיף 9 לתקנות התכנון והבנייה מתיר הקלה ברום מדרגות קיים כשרה-בנייה אינה סבירה הנדסית. דורש: (א) חוו&quot;ד מהנדס מבנים על חוסר-היתכנות הפיזית, (ב) הצעת אמצעי מיתון (אחיזה דו-צדדית חזקה, סימון נוסף, תאורת מדרגות), (ג) הגשה לוועדה המקומית. לא חל על פרויקט חדש.</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">2. להוסיף מדרגות (רום 177→175 מ&quot;מ)</div>
+          <div class="alt-meta">
+            <span class="tag">שינוי ערך</span>
+            <span class="tag">עלות: ₪15,000-30,000 למהלך</span>
+            <span class="tag">זמן: 1-2 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">פתרון המומלץ כאשר יש מרחב אופקי פנוי לפני או אחרי המהלך. מדרגות נוכחיות: ⁦11 × 177⁩ מ&quot;מ = עליה כוללת 1950 מ&quot;מ. כדי להגיע ל-175 מ&quot;מ לרום תצטרך 12 מדרגות (1 נוספות). המהלך הנוסף דורש כ-280 מ&quot;מ שלח לכל מדרגה חדשה = כ-0.8 מטר עומק נוסף לפי 3 מדרגות. דורש בדיקה שהפלטפורמה התחתונה/הפודסט עדיין עונה על דרישות המרחב המינימליות (סעיף 2.7.2.2).</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">3. לפצל את המהלך לשני מהלכים עם פודסט ביניים</div>
+          <div class="alt-meta">
+            <span class="tag">הזזה מרחבית</span>
+            <span class="tag">עלות: ₪35,000-60,000 למהלך</span>
+            <span class="tag">זמן: 3-5 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">במקום מהלך בודד של 11 מדרגות בגובה 177 מ&quot;מ, לפצל ל-2 מהלכים קצרים יותר עם פודסט ביניים (≥ 110 ס&quot;מ עומק לפי סעיף 2.7.4). מאפשר לחלק את סה&quot;כ העלייה מחדש: כל מהלך עם מספר מדרגות מופחת ולכן רום נמוך יותר. מיושם כשיש מרחב אנכי שניתן להקצות פודסט, לרוב בגרמי מדרגות פנימיים של 2.8-3 מ&#x27; קומה.</div>
+        </div>
+        
+    </div>
+    
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦14⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מדרגה — יחס שלח-רום גבוה מהארגונומיה התקנית</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ה (הערה — נוסחת שלח+2×רום) · קומה E00_OKRD · רכיב Zusammengebaute Treppe:Treppe:2424673 Run 1</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">635 מ&quot;מ (שלח+2רום)</td><th>נדרש</th><td>610–630 מ&quot;מ</td></tr></table>
+      <div class="desc">מהלך מדרגות &#x27;Zusammengebaute Treppe:Treppe:2424673 Run 1&#x27; בקומה &#x27;E00_OKRD&#x27; עם שלח 280 מ&quot;מ ורום 177 מ&quot;מ. נוסחת הארגונומיה: שלח + 2×רום = 635 מ&quot;מ, מחוץ לטווח התקני 610–630 מ&quot;מ. מדרגה כזו קשה להליכה ומעלה סיכון נפילה — דרישה לפירוק ויציקה מחדש.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Zusammengebaute Treppe:Treppe:2424673 Run 1</div></div>
+      
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦15⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רום מדרגה גבוה מדרישת התקן</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ד · קומה E00_OKRD · רכיב Zusammengebaute Treppe:Treppe:2424673 Run 2</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">177 מ&quot;מ</td><th>נדרש</th><td>≤ 175 מ&quot;מ</td></tr></table>
+      <div class="desc">מהלך מדרגות &#x27;Zusammengebaute Treppe:Treppe:2424673 Run 2&#x27; בקומה &#x27;E00_OKRD&#x27; עם רום בגובה 177 מ&quot;מ, מעל המקסימום 175 מ&quot;מ.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Zusammengebaute Treppe:Treppe:2424673 Run 2</div></div>
+      
+    <div class="alternatives">
+      <h4>חלופות מוצעות (⁦3⁩):</h4>
+      
+        <div class="alt-item">
+          <div class="alt-title">1. בקשת הקלה ממכון התקנים (רק לבניין קיים)</div>
+          <div class="alt-meta">
+            <span class="tag">מסלול תאימות חלופי</span>
+            <span class="tag">עלות: ₪6,000-12,000 עבור הגשה</span>
+            <span class="tag">זמן: 2-4 חודשים לאישור</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">סעיף 9 לתקנות התכנון והבנייה מתיר הקלה ברום מדרגות קיים כשרה-בנייה אינה סבירה הנדסית. דורש: (א) חוו&quot;ד מהנדס מבנים על חוסר-היתכנות הפיזית, (ב) הצעת אמצעי מיתון (אחיזה דו-צדדית חזקה, סימון נוסף, תאורת מדרגות), (ג) הגשה לוועדה המקומית. לא חל על פרויקט חדש.</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">2. להוסיף מדרגות (רום 177→175 מ&quot;מ)</div>
+          <div class="alt-meta">
+            <span class="tag">שינוי ערך</span>
+            <span class="tag">עלות: ₪15,000-30,000 למהלך</span>
+            <span class="tag">זמן: 1-2 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">פתרון המומלץ כאשר יש מרחב אופקי פנוי לפני או אחרי המהלך. מדרגות נוכחיות: ⁦11 × 177⁩ מ&quot;מ = עליה כוללת 1950 מ&quot;מ. כדי להגיע ל-175 מ&quot;מ לרום תצטרך 12 מדרגות (1 נוספות). המהלך הנוסף דורש כ-280 מ&quot;מ שלח לכל מדרגה חדשה = כ-0.8 מטר עומק נוסף לפי 3 מדרגות. דורש בדיקה שהפלטפורמה התחתונה/הפודסט עדיין עונה על דרישות המרחב המינימליות (סעיף 2.7.2.2).</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">3. לפצל את המהלך לשני מהלכים עם פודסט ביניים</div>
+          <div class="alt-meta">
+            <span class="tag">הזזה מרחבית</span>
+            <span class="tag">עלות: ₪35,000-60,000 למהלך</span>
+            <span class="tag">זמן: 3-5 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">במקום מהלך בודד של 11 מדרגות בגובה 177 מ&quot;מ, לפצל ל-2 מהלכים קצרים יותר עם פודסט ביניים (≥ 110 ס&quot;מ עומק לפי סעיף 2.7.4). מאפשר לחלק את סה&quot;כ העלייה מחדש: כל מהלך עם מספר מדרגות מופחת ולכן רום נמוך יותר. מיושם כשיש מרחב אנכי שניתן להקצות פודסט, לרוב בגרמי מדרגות פנימיים של 2.8-3 מ&#x27; קומה.</div>
+        </div>
+        
+    </div>
+    
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦16⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מדרגה — יחס שלח-רום גבוה מהארגונומיה התקנית</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ה (הערה — נוסחת שלח+2×רום) · קומה E00_OKRD · רכיב Zusammengebaute Treppe:Treppe:2424673 Run 2</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">635 מ&quot;מ (שלח+2רום)</td><th>נדרש</th><td>610–630 מ&quot;מ</td></tr></table>
+      <div class="desc">מהלך מדרגות &#x27;Zusammengebaute Treppe:Treppe:2424673 Run 2&#x27; בקומה &#x27;E00_OKRD&#x27; עם שלח 280 מ&quot;מ ורום 177 מ&quot;מ. נוסחת הארגונומיה: שלח + 2×רום = 635 מ&quot;מ, מחוץ לטווח התקני 610–630 מ&quot;מ. מדרגה כזו קשה להליכה ומעלה סיכון נפילה — דרישה לפירוק ויציקה מחדש.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Zusammengebaute Treppe:Treppe:2424673 Run 2</div></div>
+      
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦17⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E00_OKRD · רכיב Fluchtflur Ost</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">1175 מ&quot;מ (bbox)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
+      <div class="desc">מסדרון &#x27;Fluchtflur Ost&#x27; בקומה &#x27;E00_OKRD&#x27; ברוחב כ-1175 מ&quot;מ, מתחת לדרישת תקן הנגישות של 1300 מ&quot;מ. מדידה נעשתה לפי bounding box מרחבי — בדיקה ידנית מומלצת.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fluchtflur Ost</div></div>
+      
+    <div class="alternatives">
+      <h4>חלופות מוצעות (⁦3⁩):</h4>
+      
+        <div class="alt-item">
+          <div class="alt-title">1. הפעלת חריג תקנות התכנון (פרוזדור ≥ 90 ס&quot;מ עם הרחבות)</div>
+          <div class="alt-meta">
+            <span class="tag">מסלול תאימות חלופי</span>
+            <span class="tag">עלות: ₪3,000-6,000 עבודת תכנון</span>
+            <span class="tag">זמן: 1-2 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">סעיף 2.5.2.2 בת&quot;י 1918 מאפשר פרוזדור ≥ 90 ס&quot;מ בכפוף ל: (א) הרחבות בתוך 15 מ&#x27;, (ב) משטח תפקוד מול כל דלת, (ג) סכום רוחבי מפגש ≥ 210 ס&quot;מ. דורש בדיקה הנדסית מפורטת.</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">2. להרחיב את המסדרון על חשבון חדרים סמוכים</div>
+          <div class="alt-meta">
+            <span class="tag">הזזה מרחבית</span>
+            <span class="tag">עלות: ₪800-1,500 למ&quot;ר קיר מוזז</span>
+            <span class="tag">זמן: 5-10 ימים</span>
+            
+          </div>
+          <div class="alt-desc">הרחבה ל-≥ 130 ס&quot;מ דורשת לרוב העברת קירות. עדיף להעביר את הקיר שאינו נושא (non-load-bearing) כדי לחסוך תגבור קונסטרוקטיבי.</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">3. לשנות מיקום מסדרון — לדחוס פונקציות לצד אחד</div>
+          <div class="alt-meta">
+            <span class="tag">הזזה מרחבית</span>
+            <span class="tag">עלות: ₪40,000-90,000</span>
+            <span class="tag">זמן: 3-6 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">שינוי תכנית הקומה כך שהחדרים בצד אחד יקטנו ב-~30 ס&quot;מ כדי להרחיב את המסדרון. פעולה זו משמרת את שטח החדרים הכולל אך משנה את פרופורציות הקומה. מומלץ בעיקר בבניינים בתכנון מוקדם לפני ביצוע.</div>
+        </div>
+        
+    </div>
+    
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦18⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E00_OKRD · רכיב Fluchtflur West</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">1175 מ&quot;מ (bbox)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
+      <div class="desc">מסדרון &#x27;Fluchtflur West&#x27; בקומה &#x27;E00_OKRD&#x27; ברוחב כ-1175 מ&quot;מ, מתחת לדרישת תקן הנגישות של 1300 מ&quot;מ. מדידה נעשתה לפי bounding box מרחבי — בדיקה ידנית מומלצת.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fluchtflur West</div></div>
+      
+    <div class="alternatives">
+      <h4>חלופות מוצעות (⁦3⁩):</h4>
+      
+        <div class="alt-item">
+          <div class="alt-title">1. הפעלת חריג תקנות התכנון (פרוזדור ≥ 90 ס&quot;מ עם הרחבות)</div>
+          <div class="alt-meta">
+            <span class="tag">מסלול תאימות חלופי</span>
+            <span class="tag">עלות: ₪3,000-6,000 עבודת תכנון</span>
+            <span class="tag">זמן: 1-2 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">סעיף 2.5.2.2 בת&quot;י 1918 מאפשר פרוזדור ≥ 90 ס&quot;מ בכפוף ל: (א) הרחבות בתוך 15 מ&#x27;, (ב) משטח תפקוד מול כל דלת, (ג) סכום רוחבי מפגש ≥ 210 ס&quot;מ. דורש בדיקה הנדסית מפורטת.</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">2. להרחיב את המסדרון על חשבון חדרים סמוכים</div>
+          <div class="alt-meta">
+            <span class="tag">הזזה מרחבית</span>
+            <span class="tag">עלות: ₪800-1,500 למ&quot;ר קיר מוזז</span>
+            <span class="tag">זמן: 5-10 ימים</span>
+            
+          </div>
+          <div class="alt-desc">הרחבה ל-≥ 130 ס&quot;מ דורשת לרוב העברת קירות. עדיף להעביר את הקיר שאינו נושא (non-load-bearing) כדי לחסוך תגבור קונסטרוקטיבי.</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">3. לשנות מיקום מסדרון — לדחוס פונקציות לצד אחד</div>
+          <div class="alt-meta">
+            <span class="tag">הזזה מרחבית</span>
+            <span class="tag">עלות: ₪40,000-90,000</span>
+            <span class="tag">זמן: 3-6 שבועות</span>
+            <span class="tag review">דורש אישור יועץ</span>
+          </div>
+          <div class="alt-desc">שינוי תכנית הקומה כך שהחדרים בצד אחד יקטנו ב-~30 ס&quot;מ כדי להרחיב את המסדרון. פעולה זו משמרת את שטח החדרים הכולל אך משנה את פרופורציות הקומה. מומלץ בעיקר בבניינים בתכנון מוקדם לפני ביצוע.</div>
+        </div>
+        
+    </div>
+    
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦19⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה — מקטע בתוך המסדרון</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E00_OKRD · רכיב Eingangsbereich / Flur</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">1099 מ&quot;מ (מקטע)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
+      <div class="desc">בתוך המסדרון «Eingangsbereich / Flur» בקומה &#x27;E00_OKRD&#x27; נמצא מעבר ברוחב 1099 מ&quot;מ לאורך 13.1 מ&#x27; — מתחת לדרישת 1300 מ&quot;מ של דרך נגישה (סעיף 2.5.2.1). (מקטע 1 מתוך 4) החלל כולו רחב יותר במלבן העוטף, אך המדידה הגאומטרית של המעבר עצמו (שחיקת-פוליגון) חושפת את המקטע הצר. פתחי דלתות ומעברים נקודתיים הוחרגו (מקטע מקיים ≥ 2 מ&#x27;).</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Eingangsbereich / Flur</div></div>
+      
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦20⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה — מקטע בתוך המסדרון</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E00_OKRD · רכיב Eingangsbereich / Flur</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">1100 מ&quot;מ (מקטע)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
+      <div class="desc">בתוך המסדרון «Eingangsbereich / Flur» בקומה &#x27;E00_OKRD&#x27; נמצא מעבר ברוחב 1100 מ&quot;מ לאורך 13.1 מ&#x27; — מתחת לדרישת 1300 מ&quot;מ של דרך נגישה (סעיף 2.5.2.1). (מקטע 2 מתוך 4) החלל כולו רחב יותר במלבן העוטף, אך המדידה הגאומטרית של המעבר עצמו (שחיקת-פוליגון) חושפת את המקטע הצר. פתחי דלתות ומעברים נקודתיים הוחרגו (מקטע מקיים ≥ 2 מ&#x27;).</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Eingangsbereich / Flur</div></div>
+      
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦21⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה — מקטע בתוך המסדרון</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E00_OKRD · רכיב Eingangsbereich / Flur</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">1174 מ&quot;מ (מקטע)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
+      <div class="desc">בתוך המסדרון «Eingangsbereich / Flur» בקומה &#x27;E00_OKRD&#x27; נמצא מעבר ברוחב 1174 מ&quot;מ לאורך 20.0 מ&#x27; — מתחת לדרישת 1300 מ&quot;מ של דרך נגישה (סעיף 2.5.2.1). (מקטע 3 מתוך 4) החלל כולו רחב יותר במלבן העוטף, אך המדידה הגאומטרית של המעבר עצמו (שחיקת-פוליגון) חושפת את המקטע הצר. פתחי דלתות ומעברים נקודתיים הוחרגו (מקטע מקיים ≥ 2 מ&#x27;).</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Eingangsbereich / Flur</div></div>
+      
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦22⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה — מקטע בתוך המסדרון</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E00_OKRD · רכיב Eingangsbereich / Flur</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">1174 מ&quot;מ (מקטע)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
+      <div class="desc">בתוך המסדרון «Eingangsbereich / Flur» בקומה &#x27;E00_OKRD&#x27; נמצא מעבר ברוחב 1174 מ&quot;מ לאורך 19.9 מ&#x27; — מתחת לדרישת 1300 מ&quot;מ של דרך נגישה (סעיף 2.5.2.1). (מקטע 4 מתוך 4) החלל כולו רחב יותר במלבן העוטף, אך המדידה הגאומטרית של המעבר עצמו (שחיקת-פוליגון) חושפת את המקטע הצר. פתחי דלתות ומעברים נקודתיים הוחרגו (מקטע מקיים ≥ 2 מ&#x27;).</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Eingangsbereich / Flur</div></div>
+      
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦23⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה — מקטע בתוך המסדרון</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E01_OKRD · רכיב Flur - OG</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">1100 מ&quot;מ (מקטע)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
+      <div class="desc">בתוך המסדרון «Flur - OG» בקומה &#x27;E01_OKRD&#x27; נמצא מעבר ברוחב 1100 מ&quot;מ לאורך 8.2 מ&#x27; — מתחת לדרישת 1300 מ&quot;מ של דרך נגישה (סעיף 2.5.2.1). (מקטע 1 מתוך 6) החלל כולו רחב יותר במלבן העוטף, אך המדידה הגאומטרית של המעבר עצמו (שחיקת-פוליגון) חושפת את המקטע הצר. פתחי דלתות ומעברים נקודתיים הוחרגו (מקטע מקיים ≥ 2 מ&#x27;).</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Flur - OG</div></div>
+      
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦24⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה — מקטע בתוך המסדרון</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E01_OKRD · רכיב Flur - OG</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">1100 מ&quot;מ (מקטע)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
+      <div class="desc">בתוך המסדרון «Flur - OG» בקומה &#x27;E01_OKRD&#x27; נמצא מעבר ברוחב 1100 מ&quot;מ לאורך 13.7 מ&#x27; — מתחת לדרישת 1300 מ&quot;מ של דרך נגישה (סעיף 2.5.2.1). (מקטע 2 מתוך 6) החלל כולו רחב יותר במלבן העוטף, אך המדידה הגאומטרית של המעבר עצמו (שחיקת-פוליגון) חושפת את המקטע הצר. פתחי דלתות ומעברים נקודתיים הוחרגו (מקטע מקיים ≥ 2 מ&#x27;).</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Flur - OG</div></div>
+      
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦25⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה — מקטע בתוך המסדרון</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E01_OKRD · רכיב Flur - OG</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">1202 מ&quot;מ (מקטע)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
+      <div class="desc">בתוך המסדרון «Flur - OG» בקומה &#x27;E01_OKRD&#x27; נמצא מעבר ברוחב 1202 מ&quot;מ לאורך 6.5 מ&#x27; — מתחת לדרישת 1300 מ&quot;מ של דרך נגישה (סעיף 2.5.2.1). (מקטע 3 מתוך 6) החלל כולו רחב יותר במלבן העוטף, אך המדידה הגאומטרית של המעבר עצמו (שחיקת-פוליגון) חושפת את המקטע הצר. פתחי דלתות ומעברים נקודתיים הוחרגו (מקטע מקיים ≥ 2 מ&#x27;).</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Flur - OG</div></div>
+      
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦26⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה — מקטע בתוך המסדרון</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E01_OKRD · רכיב Flur - OG</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">1202 מ&quot;מ (מקטע)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
+      <div class="desc">בתוך המסדרון «Flur - OG» בקומה &#x27;E01_OKRD&#x27; נמצא מעבר ברוחב 1202 מ&quot;מ לאורך 7.9 מ&#x27; — מתחת לדרישת 1300 מ&quot;מ של דרך נגישה (סעיף 2.5.2.1). (מקטע 4 מתוך 6) החלל כולו רחב יותר במלבן העוטף, אך המדידה הגאומטרית של המעבר עצמו (שחיקת-פוליגון) חושפת את המקטע הצר. פתחי דלתות ומעברים נקודתיים הוחרגו (מקטע מקיים ≥ 2 מ&#x27;).</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Flur - OG</div></div>
+      
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦27⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה — מקטע בתוך המסדרון</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E01_OKRD · רכיב Flur - OG</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">1202 מ&quot;מ (מקטע)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
+      <div class="desc">בתוך המסדרון «Flur - OG» בקומה &#x27;E01_OKRD&#x27; נמצא מעבר ברוחב 1202 מ&quot;מ לאורך 13.4 מ&#x27; — מתחת לדרישת 1300 מ&quot;מ של דרך נגישה (סעיף 2.5.2.1). (מקטע 5 מתוך 6) החלל כולו רחב יותר במלבן העוטף, אך המדידה הגאומטרית של המעבר עצמו (שחיקת-פוליגון) חושפת את המקטע הצר. פתחי דלתות ומעברים נקודתיים הוחרגו (מקטע מקיים ≥ 2 מ&#x27;).</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Flur - OG</div></div>
+      
+    </div>
+    
+
+    <div class="card fail">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦28⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה — מקטע בתוך המסדרון</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E01_OKRD · רכיב Flur - OG</div>
+      <table class="spec"><tr><th>נמדד</th><td class="bad">1202 מ&quot;מ (מקטע)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
+      <div class="desc">בתוך המסדרון «Flur - OG» בקומה &#x27;E01_OKRD&#x27; נמצא מעבר ברוחב 1202 מ&quot;מ לאורך 6.5 מ&#x27; — מתחת לדרישת 1300 מ&quot;מ של דרך נגישה (סעיף 2.5.2.1). (מקטע 6 מתוך 6) החלל כולו רחב יותר במלבן העוטף, אך המדידה הגאומטרית של המעבר עצמו (שחיקת-פוליגון) חושפת את המקטע הצר. פתחי דלתות ומעברים נקודתיים הוחרגו (מקטע מקיים ≥ 2 מ&#x27;).</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Flur - OG</div></div>
+      
+    </div>
+    
+
+    <div class="card warn">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦29⁩</span>
+        <span class="chip st-warn">אזהרה</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">לא זוהה בית שימוש נגיש במודל</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.13.1</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">0 בתי שימוש נגישים</td><th>נדרש</th><td>≥ 1 לפי הוראות כל דין</td></tr></table>
+      <div class="desc">המודל מכיל בתי שימוש אך אף אחד מהם לא מסווג כנגיש. אם זה בניין ציבורי, סעיף 2.13.1 מחייב בית שימוש נגיש אחד לפחות. ייתכן שהסיווג לא מופיע בשמות החללים — נדרשת בדיקה ידנית.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">לרכיב זה אין גאומטריה תלת-ממדית במודל — יש לאמת ידנית</div></div>
+      
+    <div class="alternatives">
+      <h4>חלופות מוצעות (⁦3⁩):</h4>
+      
+        <div class="alt-item">
+          <div class="alt-title">1. אסלה תלויה + כיור עם חלל רגליים (מרחיב סיבוב)</div>
+          <div class="alt-meta">
+            <span class="tag">תוספת רכיב</span>
+            <span class="tag">עלות: ₪4,000-8,000 לתא</span>
+            <span class="tag">זמן: 3-5 ימים</span>
+            
+          </div>
+          <div class="alt-desc">הערה א&#x27; לסעיף 2.13.4 מתירה שחלק מעיגול הסיבוב ∅150 ס&quot;מ יעבור מתחת לאסלה/כיור, בתנאי שנשמר חלל לכפות רגליים וברכיים. מתקני wall-hung חוסכים ~25 ס&quot;מ אורך בפועל.</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">2. למזג שני תאים רגילים לתא נגיש אחד</div>
+          <div class="alt-meta">
+            <span class="tag">הזזה מרחבית</span>
+            <span class="tag">עלות: ₪6,000-14,000</span>
+            <span class="tag">זמן: 3-7 ימים</span>
+            
+          </div>
+          <div class="alt-desc">בבלוקי שירותים סמוכים ניתן להסיר את המחיצה שבין שני תאים רגילים (80+80 ס&quot;מ) וליצור תא נגיש יחיד (~160 ס&quot;מ). המעבר משמר את הקירות החיצוניים של הבלוק ומצמצם שינויים במערכות התברואה.</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">3. לתכנן מחדש את התא לגודל 150×200 ס&quot;מ נטו</div>
+          <div class="alt-meta">
+            <span class="tag">הזזה מרחבית</span>
+            <span class="tag">עלות: ₪8,000-18,000 לתא</span>
+            <span class="tag">זמן: 1-2 שבועות</span>
+            
+          </div>
+          <div class="alt-desc">הקטנת חלל שכן או שילוב 2 תאים רגילים לתא נגיש יחיד. הוצאה של קירות פנימיים (לא נושאים) פתרון זול יחסית.</div>
+        </div>
+        
+    </div>
+    
+    </div>
+    
+
+    <div class="card warn">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦30⁩</span>
+        <span class="chip st-warn">אזהרה</span><span class="chip cf-advisory">ייעוץ</span>
+        <h3 class="card-title">שירות נגיש — לא אותר במודל</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1, (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.13 — שירותים נגישים</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">16 אסלות · 0 נגישות מסומנות</td><th>נדרש</th><td>לפחות שירות נגיש אחד (ת&quot;י 1918 §2.13)</td></tr></table>
+      <div class="desc">זוהו 16 אסלות במודל, אך אף אחת אינה מסומנת כנגישה ולא אותר תא-שירות נגיש. ת&quot;י 1918 §2.13 מחייב שירות נגיש בבניין ציבורי. סמן את האסלה הנגישה (שם/טיפוס), או ודא עם יועץ הנגישות שקיים תא נגיש — לא ניתן לקבוע מהמודל בלבד.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">לרכיב זה אין גאומטריה תלת-ממדית במודל — יש לאמת ידנית</div></div>
+      
+    <div class="alternatives">
+      <h4>חלופות מוצעות (⁦3⁩):</h4>
+      
+        <div class="alt-item">
+          <div class="alt-title">1. אסלה תלויה + כיור עם חלל רגליים (מרחיב סיבוב)</div>
+          <div class="alt-meta">
+            <span class="tag">תוספת רכיב</span>
+            <span class="tag">עלות: ₪4,000-8,000 לתא</span>
+            <span class="tag">זמן: 3-5 ימים</span>
+            
+          </div>
+          <div class="alt-desc">הערה א&#x27; לסעיף 2.13.4 מתירה שחלק מעיגול הסיבוב ∅150 ס&quot;מ יעבור מתחת לאסלה/כיור, בתנאי שנשמר חלל לכפות רגליים וברכיים. מתקני wall-hung חוסכים ~25 ס&quot;מ אורך בפועל.</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">2. למזג שני תאים רגילים לתא נגיש אחד</div>
+          <div class="alt-meta">
+            <span class="tag">הזזה מרחבית</span>
+            <span class="tag">עלות: ₪6,000-14,000</span>
+            <span class="tag">זמן: 3-7 ימים</span>
+            
+          </div>
+          <div class="alt-desc">בבלוקי שירותים סמוכים ניתן להסיר את המחיצה שבין שני תאים רגילים (80+80 ס&quot;מ) וליצור תא נגיש יחיד (~160 ס&quot;מ). המעבר משמר את הקירות החיצוניים של הבלוק ומצמצם שינויים במערכות התברואה.</div>
+        </div>
+        
+        <div class="alt-item">
+          <div class="alt-title">3. לתכנן מחדש את התא לגודל 150×200 ס&quot;מ נטו</div>
+          <div class="alt-meta">
+            <span class="tag">הזזה מרחבית</span>
+            <span class="tag">עלות: ₪8,000-18,000 לתא</span>
+            <span class="tag">זמן: 1-2 שבועות</span>
+            
+          </div>
+          <div class="alt-desc">הקטנת חלל שכן או שילוב 2 תאים רגילים לתא נגיש יחיד. הוצאה של קירות פנימיים (לא נושאים) פתרון זול יחסית.</div>
+        </div>
+        
+    </div>
+    
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦31⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מעלית ללא נתוני רוחב דלת</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.9.2 · קומה E00_OKRD · רכיב Aufzug West</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">לא ידוע</td><th>נדרש</th><td>≥ 800 מ&quot;מ</td></tr></table>
+      <div class="desc">מעלית &#x27;Aufzug West&#x27; בקומה &#x27;E00_OKRD&#x27; — לא נמצאה דלת תא תואמת במודל. לא ניתן לוודא ציות לסעיף 2.9.2 (רוחב ≥ 80-100 ס&quot;מ).</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Aufzug West</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦32⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מעלית ללא נתוני רוחב דלת</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.9.2 · קומה E00_OKRD · רכיב Aufzug Ost</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">לא ידוע</td><th>נדרש</th><td>≥ 800 מ&quot;מ</td></tr></table>
+      <div class="desc">מעלית &#x27;Aufzug Ost&#x27; בקומה &#x27;E00_OKRD&#x27; — לא נמצאה דלת תא תואמת במודל. לא ניתן לוודא ציות לסעיף 2.9.2 (רוחב ≥ 80-100 ס&quot;מ).</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Aufzug Ost</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦33⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מעלית — פנים התא אינו ממודל, לא ניתן לאמת מידות נגישות</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.9.2.ב · קומה E00_OKRD · רכיב Aufzug West</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">פיר ⁦2000×2575⁩ מ&quot;מ</td><th>נדרש</th><td>פנים תא ≥ ⁦1100×1400⁩ מ&quot;מ (טיפוס 2)</td></tr></table>
+      <div class="desc">מעלית &#x27;Aufzug West&#x27; בקומה &#x27;E00_OKRD&#x27; זוהתה כחלל-פיר במודל (מידות פיר ⁦2000×2575⁩ מ&quot;מ). פנים תא המעלית אינו ממודל בנפרד (אין IfcTransportElement), ומידות הפיר כוללות קירות ומרווחים — גדולות מפנים התא. לכן לא ניתן לאמת תא נגיש טיפוס 2 (≥ 110×140 ס&quot;מ פנים). יש למדל את פנים התא או לספק את מידותיו.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Aufzug West</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦34⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מעלית — פנים התא אינו ממודל, לא ניתן לאמת מידות נגישות</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.9.2.ב · קומה E00_OKRD · רכיב Aufzug Ost</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">פיר ⁦2000×2575⁩ מ&quot;מ</td><th>נדרש</th><td>פנים תא ≥ ⁦1100×1400⁩ מ&quot;מ (טיפוס 2)</td></tr></table>
+      <div class="desc">מעלית &#x27;Aufzug Ost&#x27; בקומה &#x27;E00_OKRD&#x27; זוהתה כחלל-פיר במודל (מידות פיר ⁦2000×2575⁩ מ&quot;מ). פנים תא המעלית אינו ממודל בנפרד (אין IfcTransportElement), ומידות הפיר כוללות קירות ומרווחים — גדולות מפנים התא. לכן לא ניתן לאמת תא נגיש טיפוס 2 (≥ 110×140 ס&quot;מ פנים). יש למדל את פנים התא או לספק את מידותיו.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Aufzug Ost</div></div>
+      
+    </div>
+    
+
+    <div class="card skip">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦35⁩</span>
+        <span class="chip st-skip">לא רלוונטי</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">בדיקת גובה ידית דלתות — לא רצה (נתון IFC חסר)</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.3.8</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">0 מתוך 70 דלתות</td><th>נדרש</th><td>Pset_DoorCommon.HandleHeight לפחות בדלת אחת</td></tr></table>
+      <div class="desc">בדיקת סעיף 2.3.8 (גובה ידיות ומנעולים 85-110 ס&quot;מ) לא בוצעה. כל 70 הדלתות במודל חסרות את Pset_DoorCommon.HandleHeight. יש למלא את הגובה במודל המקור (Revit/ArchiCAD) ולהריץ שוב. ראו גם דרישות נוספות של סעיף 2.3.8 שאינן בדיקות אוטומטיות: מרחק ידית מאגף ≥ 4 ס&quot;מ, אורך אחיזה ≥ 8 ס&quot;מ, איסור ידית כפתור בדלת סובבת, מנעול תפוס-פנוי בבתי שימוש נגישים.</div>
+      
+      
+    </div>
+    
+</div>
+<h3 style="margin-top:14pt;color:#1C3D5A">ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון</h3>
+<div class="section">
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦36⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">דירוג אש חסר בדלת לחדר מדרגות</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה E00_OKRD · רכיב TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2421088</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
+      <div class="desc">הדלת &#x27;TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2421088&#x27; בקומה &#x27;E00_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2421088</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦37⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">דירוג אש חסר בדלת לחדר מדרגות</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה E00_OKRD · רכיב TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2421089</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
+      <div class="desc">הדלת &#x27;TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2421089&#x27; בקומה &#x27;E00_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2421089</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦38⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">דירוג אש חסר בדלת לפיר מעלית</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה E00_OKRD · רכיב TU Durchgang:DL - 1200 x 2100:2421090</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
+      <div class="desc">הדלת &#x27;TU Durchgang:DL - 1200 x 2100:2421090&#x27; בקומה &#x27;E00_OKRD&#x27; מחוברת לפיר מעלית. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU Durchgang:DL - 1200 x 2100:2421090</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦39⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">דירוג אש חסר בדלת לחדר מדרגות</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה E00_OKRD · רכיב TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2423930</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
+      <div class="desc">הדלת &#x27;TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2423930&#x27; בקומה &#x27;E00_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2423930</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦40⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">דירוג אש חסר בדלת לחדר מדרגות</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה E00_OKRD · רכיב TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2423931</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
+      <div class="desc">הדלת &#x27;TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2423931&#x27; בקומה &#x27;E00_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2423931</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦41⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">דירוג אש חסר בדלת לפיר מעלית</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה E00_OKRD · רכיב TU Durchgang:DL - 1200 x 2100:2423932</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
+      <div class="desc">הדלת &#x27;TU Durchgang:DL - 1200 x 2100:2423932&#x27; בקומה &#x27;E00_OKRD&#x27; מחוברת לפיר מעלית. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU Durchgang:DL - 1200 x 2100:2423932</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦42⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">דירוג אש חסר בדלת לחדר מדרגות</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה E01_OKRD · רכיב TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2426178</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
+      <div class="desc">הדלת &#x27;TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2426178&#x27; בקומה &#x27;E01_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2426178</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦43⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">דירוג אש חסר בדלת לחדר מדרגות</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה E01_OKRD · רכיב TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2426180</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
+      <div class="desc">הדלת &#x27;TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2426180&#x27; בקומה &#x27;E01_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2426180</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦44⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">דירוג אש חסר בדלת לפיר מעלית</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה E01_OKRD · רכיב TU Durchgang:DL - 1200 x 2100:2426586</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
+      <div class="desc">הדלת &#x27;TU Durchgang:DL - 1200 x 2100:2426586&#x27; בקומה &#x27;E01_OKRD&#x27; מחוברת לפיר מעלית. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU Durchgang:DL - 1200 x 2100:2426586</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦45⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">דירוג אש חסר בדלת לפיר מעלית</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה E01_OKRD · רכיב TU Durchgang:DL - 1200 x 2100:2426588</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
+      <div class="desc">הדלת &#x27;TU Durchgang:DL - 1200 x 2100:2426588&#x27; בקומה &#x27;E01_OKRD&#x27; מחוברת לפיר מעלית. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU Durchgang:DL - 1200 x 2100:2426588</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦46⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">דירוג אש חסר בדלת לחדר מדרגות</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה B01_OKRD · רכיב TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432934</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
+      <div class="desc">הדלת &#x27;TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432934&#x27; בקומה &#x27;B01_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432934</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦47⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">דירוג אש חסר בדלת לחדר מדרגות</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה B01_OKRD · רכיב TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432938</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
+      <div class="desc">הדלת &#x27;TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432938&#x27; בקומה &#x27;B01_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432938</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦48⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">דירוג אש חסר בדלת לחדר מכונות/טכני</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה B01_OKRD · רכיב TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432971</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
+      <div class="desc">הדלת &#x27;TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432971&#x27; בקומה &#x27;B01_OKRD&#x27; מחוברת לחדר מכונות/טכני. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432971</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦49⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">דירוג אש חסר בדלת לחדר מכונות/טכני</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה B01_OKRD · רכיב TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2433295</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
+      <div class="desc">הדלת &#x27;TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2433295&#x27; בקומה &#x27;B01_OKRD&#x27; מחוברת לחדר מכונות/טכני. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2433295</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦50⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">דירוג אש חסר בדלת לחדר מכונות/טכני</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה B01_OKRD · רכיב TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434320</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
+      <div class="desc">הדלת &#x27;TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434320&#x27; בקומה &#x27;B01_OKRD&#x27; מחוברת לחדר מכונות/טכני. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434320</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦51⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">דירוג אש חסר בדלת לחדר שירות טכני</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה B01_OKRD · רכיב TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434549</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
+      <div class="desc">הדלת &#x27;TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434549&#x27; בקומה &#x27;B01_OKRD&#x27; מחוברת לחדר שירות טכני. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434549</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦52⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">דירוג אש חסר בדלת לחדר מכונות/טכני</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה B01_OKRD · רכיב TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434619</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
+      <div class="desc">הדלת &#x27;TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434619&#x27; בקומה &#x27;B01_OKRD&#x27; מחוברת לחדר מכונות/טכני. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434619</div></div>
+      
+    </div>
+    
+</div>
+<h3 style="margin-top:14pt;color:#1C3D5A">תקנות התכנון והבנייה תש&quot;ל-1970</h3>
+<div class="section">
+
+    <div class="card warn">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦53⁩</span>
+        <span class="chip st-warn">אזהרה</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מזקף ראש בחדר (סעיף 2.03(ב))</h3>
+      </div>
+      <div class="source">מקור: תקנות התכנון והבנייה תש&quot;ל-1970, סעיף 2.03(א)(3)+(ב) · קומה B01_OKRD · רכיב RLT-Raum</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">1.51 מ&#x27;</td><th>נדרש</th><td>≥ 2.05 מ&#x27;</td></tr></table>
+      <div class="desc">מזקף ראש 1.51 מ&#x27; מתחת ל«מערכת (קובץ דיסציפלינה)» בחדר שירות «RLT-Raum» — פחות מהגובה 2.05 מ&#x27; של סעיף 2.03. מותר גובה נמוך רק על השטח העודף על מינימום סעיף 2.04 (קורות/כוכים) — לאימות מול האדריכל.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">RLT-Raum</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦54⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מטבח — חלון בקיר-הגבול שויך לחלל סמוך (לאימות)</h3>
+      </div>
+      <div class="source">מקור: תקנות התכנון והבנייה תש&quot;ל-1970, סעיף 2.20 · קומה E00_OKRD · רכיב Küche</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">חלון בקיר-גבול (שיוך לחלל סמוך)</td><th>נדרש</th><td>חלון לאוויר החוץ (סעיף 2.20) — לאימות</td></tr></table>
+      <div class="desc">חלל &#x27;Küche&#x27; בקומה &#x27;E00_OKRD&#x27; (מטבח) — לא מקושר אליו חלון ישירות, אך קיים חלון המותקן באחד מקירות-הגבול שלו וששויך בחילוץ לחלל הסמוך (קיר משותף). לכן לא ניתן לקבוע בוודאות שאין כאן חלון לאוויר החוץ (סעיף 2.20) — ייתכן שהחלון משרת את החלל וייתכן שהוא פנימי. נדרש אימות ידני של שיוך החלון / התאורה הטבעית בפועל.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Küche</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦55⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">לא זוהתה מעלית נושאת אלונקה במודל</h3>
+      </div>
+      <div class="source">מקור: תקנות התכנון והבנייה תש&quot;ל-1970, סעיף 3.7.3.4(ב)(1)</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">2 מעליות — אף אחת אלונקה</td><th>נדרש</th><td>מעלית אחת לפחות בעומק ≥ 2100 מ&quot;מ</td></tr></table>
+      <div class="desc">המודל מכיל 2 מעלית/ות אך אף אחת מהן לא עומדת במידות תא מעלית אלונקה (עומק ≥ 2100 מ&quot;מ × רוחב ≥ 1100 מ&quot;מ) ואף אחת לא מזוהה לפי שמה כמעלית אלונקה. בבניין רב-קומות (כהגדרתו בחוק התכנון והבנייה סעיף 158א), סעיף 3.7.3.4(א) של התקנות מחייב מעלית אחת לפחות כזו. יש לוודא ידנית האם הבניין חייב במעלית אלונקה.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">לרכיב זה אין גאומטריה תלת-ממדית במודל — יש לאמת ידנית</div></div>
+      
+    </div>
+    
+</div>
+<h3 style="margin-top:14pt;color:#1C3D5A">ת&quot;י 1001 — מסלול מילוט (≥ 110 ס&quot;מ) × ת&quot;י 1918 חלק 3.1</h3>
+<div class="section">
+
+    <div class="card warn">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦56⁩</span>
+        <span class="chip st-warn">אזהרה</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רוחב מסדרון — מילוט מול נגישות</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1001 — מסלול מילוט (≥ 110 ס&quot;מ) × ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 (≥ 130 ס&quot;מ) · רכיב מסדרון &#x27;Fluchtflur Ost&#x27; ברוחב 1175 מ&quot;מ: עבור לת&quot;י 1001 (מילוט), נכשל לת&quot;י 1918 (</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">מסדרון &#x27;Fluchtflur Ost&#x27; ברוחב 1175 מ&quot;מ: עבור לת&quot;י 1001 (מילוט), נכשל לת&quot;י 1918 (נגישות)</td><th>נדרש</th><td>בחינה תכנונית משולבת</td></tr></table>
+      <div class="desc">ת&quot;י 1001 לרוב מסתפק ב-110 ס&quot;מ לרוחב מסלול מילוט, בעוד ת&quot;י 1918 סעיף 2.5.2.1 מחייב ≥ 130 ס&quot;מ במסדרון שהוא חלק מדרך נגישה. בבניין ציבורי שני התקנים חלים במקביל, ויש לאמץ את המחמיר.
+
+מופע שזוהה: מסדרון &#x27;Fluchtflur Ost&#x27; ברוחב 1175 מ&quot;מ: עבור לת&quot;י 1001 (מילוט), נכשל לת&quot;י 1918 (נגישות)
+
+המלצת פתרון: להרחיב מסדרון ל-≥ 130 ס&quot;מ. אם בלתי אפשרי: להפעיל את החריג בסעיף 2.5.2.2 (פרוזדור ≥ 90 ס&quot;מ עם הרחבות כל 15 מ&#x27; ומשטחי תמרון).</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">מסדרון &#x27;Fluchtflur Ost&#x27; ברוחב 1175 מ&quot;מ: עבור לת&quot;י 1001 (מילוט), נכשל לת&quot;י 1918 (</div></div>
+      
+    </div>
+    
+
+    <div class="card warn">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦57⁩</span>
+        <span class="chip st-warn">אזהרה</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">רוחב מסדרון — מילוט מול נגישות</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1001 — מסלול מילוט (≥ 110 ס&quot;מ) × ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 (≥ 130 ס&quot;מ) · רכיב מסדרון &#x27;Fluchtflur West&#x27; ברוחב 1175 מ&quot;מ: עבור לת&quot;י 1001 (מילוט), נכשל לת&quot;י 1918 </div>
+      <table class="spec"><tr><th>נמדד</th><td class="">מסדרון &#x27;Fluchtflur West&#x27; ברוחב 1175 מ&quot;מ: עבור לת&quot;י 1001 (מילוט), נכשל לת&quot;י 1918 (נגישות)</td><th>נדרש</th><td>בחינה תכנונית משולבת</td></tr></table>
+      <div class="desc">ת&quot;י 1001 לרוב מסתפק ב-110 ס&quot;מ לרוחב מסלול מילוט, בעוד ת&quot;י 1918 סעיף 2.5.2.1 מחייב ≥ 130 ס&quot;מ במסדרון שהוא חלק מדרך נגישה. בבניין ציבורי שני התקנים חלים במקביל, ויש לאמץ את המחמיר.
+
+מופע שזוהה: מסדרון &#x27;Fluchtflur West&#x27; ברוחב 1175 מ&quot;מ: עבור לת&quot;י 1001 (מילוט), נכשל לת&quot;י 1918 (נגישות)
+
+המלצת פתרון: להרחיב מסדרון ל-≥ 130 ס&quot;מ. אם בלתי אפשרי: להפעיל את החריג בסעיף 2.5.2.2 (פרוזדור ≥ 90 ס&quot;מ עם הרחבות כל 15 מ&#x27; ומשטחי תמרון).</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">מסדרון &#x27;Fluchtflur West&#x27; ברוחב 1175 מ&quot;מ: עבור לת&quot;י 1001 (מילוט), נכשל לת&quot;י 1918 </div></div>
+      
+    </div>
+    
+</div>
+<h3 style="margin-top:14pt;color:#1C3D5A">בקרת איכות מודל (BIM Validation) — TofesBIM</h3>
+<div class="section">
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦58⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-advisory">ייעוץ</span>
+        <h3 class="card-title">אלמנטים המצוירים כמשטח בלבד (ללא עובי) — לידיעה</h3>
+      </div>
+      <div class="source">מקור: בקרת איכות מודל (BIM Validation) — TofesBIM · רכיב Unterregion:2439145</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">4 אלמנטים דו-ממדיים</td><th>נדרש</th><td>לידיעה בלבד — אין דרישת תיקון</td></tr></table>
+      <div class="desc">במודל יש 4 אלמנטים שצוירו כמשטח דו-ממדי ולא כגוף מלא (למשל: Unterregion:2439145, Oberfläche:2440033, Unterregion:2454499). לרוב זה מכוון — פני קרקע, תקרות גנריות או סמלי ציוד — ולכן זו אינה שגיאה. כדאי לדעת: אלמנטים כאלה לא נכללים בחישובי כמויות ובבדיקות נפח.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Unterregion:2439145</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦59⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-advisory">ייעוץ</span>
+        <h3 class="card-title">חפיפה תוך-דיסציפלינרית — לאימות</h3>
+      </div>
+      <div class="source">מקור: בקרת איכות מודל (BIM Validation) — TofesBIM · רכיב Sohle:Sohle 1 mm:2437499</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">חיתוך 0.546 מ&quot;ק (88% מהקטן)</td><th>נדרש</th><td>ללא חפיפה בין אלמנטים באותה דיסציפלינה</td></tr></table>
+      <div class="desc">שני אלמנטים מטיפוס IfcSlab — חיתוך-הגופים האמיתי 0.546 מ&quot;ק = 88% מנפח האלמנט הקטן (מעל 50%). מידול כפול-חלקית; ההתנגשות הבין-מערכתית לא מכסה חפיפות בתוך אותה דיסציפלינה.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Sohle:Sohle 1 mm:2437499</div></div>
+      
+    </div>
+    
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦60⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-advisory">ייעוץ</span>
+        <h3 class="card-title">חפיפה תוך-דיסציפלינרית — לאימות</h3>
+      </div>
+      <div class="source">מקור: בקרת איכות מודל (BIM Validation) — TofesBIM · רכיב Geschossdecke:WD 200 hart:2721280</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">חיתוך 0.637 מ&quot;ק (100% מהקטן)</td><th>נדרש</th><td>ללא חפיפה בין אלמנטים באותה דיסציפלינה</td></tr></table>
+      <div class="desc">שני אלמנטים מטיפוס IfcSlab — חיתוך-הגופים האמיתי 0.637 מ&quot;ק = 100% מנפח האלמנט הקטן (מעל 50%). מידול כפול-חלקית; ההתנגשות הבין-מערכתית לא מכסה חפיפות בתוך אותה דיסציפלינה.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Geschossdecke:WD 200 hart:2721280</div></div>
+      
+    </div>
+    
+</div>
+<h3 style="margin-top:14pt;color:#1C3D5A">ת&quot;י 1918 חלק 1</h3>
+<div class="section">
+
+    <div class="card warn">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦61⁩</span>
+        <span class="chip st-warn">אזהרה</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מכשול תלוי מתחת למהלך מדרגות (ת&quot;י 1918 חלק 1 §2.9.1)</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1918 חלק 1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.9.1 (מכשולים בדרך — גובה חופשי) · קומה E00_OKRD · רכיב Eingangsbereich / Flur</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">0.66 מ&#x27;</td><th>נדרש</th><td>≥ 2.00 מ&#x27; או מחסום</td></tr></table>
+      <div class="desc">מהלך המדרגות «Zusammengebaute Treppe:Treppe:2424673 Run 1» יורד מעל «Eingangsbereich / Flur» ומשאיר גובה חופשי של 0.66 מ&#x27; — פחות מ-2.00 מ&#x27;. סעיף 2.9.1 דורש מחסום הניתן לאיתור במקל נחייה (תחתיתו ≤ 30 ס&quot;מ, פניו העליונים ≥ 55 ס&quot;מ מפני הדרך) סביב האזור שמתחת למהלך — יש לוודא שמחסום או סגירה מתוכננים שם.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Eingangsbereich / Flur</div></div>
+      
+    </div>
+    
+</div>
+<h3 style="margin-top:14pt;color:#1C3D5A">טבלה 3.2.15.5 (מרחקי הליכה) — תקנות התכנון והבנייה תש&quot;ל</h3>
+<div class="section">
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦62⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-advisory">ייעוץ</span>
+        <h3 class="card-title">מרחק הליכה — חללים ללא מסלול-מילוט מזוהה</h3>
+      </div>
+      <div class="source">מקור: טבלה 3.2.15.5 (מרחקי הליכה) — תקנות התכנון והבנייה תש&quot;ל</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">2 חללים</td><th>נדרש</th><td>מסלול-מילוט לכל חלל</td></tr></table>
+      <div class="desc">ל-2 מתוך 64 חללים לא נמצא מסלול דרך דלתות אל מוצא בטוח (דלת חיצונית או כניסה לחדר-מדרגות). (17 חללים מגיעים דרך כניסה לחדר-מדרגות שזוהה כמוצא בטוח — ודא שהוא מוגן כנדרש) לרוב זהו פער בגבולות-החלל (IfcRelSpaceBoundary) או בסימון היציאות; ייתכן גם מבוי-סתום אמיתי. לאימות: Offene Lounge 1 (2-6) · Offene Lounge 2 (2-15)</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">לרכיב זה אין גאומטריה תלת-ממדית במודל — יש לאמת ידנית</div></div>
+      
+    </div>
+    
+</div>
+<h3 style="margin-top:14pt;color:#1C3D5A">ת&quot;י 1205 חלק 2</h3>
+<div class="section">
+
+    <div class="card unknown">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦63⁩</span>
+        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">שיפוע צנרת נקז — לא ניתן לאמת מהמודל</h3>
+      </div>
+      <div class="source">מקור: ת&quot;י 1205 חלק 2 (מתקני תברואה), סעיף 2.3.1 (טבלה 2)</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">לא ניתן לאמת</td><th>נדרש</th><td>שיפוע לפי קוטר (ת&quot;י 1205 חלק 2, טבלה 2)</td></tr></table>
+      <div class="desc">זוהו 216 מקטעי צנרת נקז אופקית שלא ניתן לאמת את שיפועם: המודל אינו כולל את ציר ההנחה של הצינור (IfcAxis2Placement3D.Axis), וחישוב מתיבת-תיחום (AABB) אינו אמין לשיפוע — הוא כולל את קוטר הצינור ומנפח שיפוע מדומה. לכן לא ניתן לקבוע עמידה בת&quot;י 1205 חלק 2 (טבלה 2). נדרשת בדיקה ידנית, או מודל עם גאומטריית קו-מרכז מדויקת לצנרת.</div>
+      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">לרכיב זה אין גאומטריה תלת-ממדית במודל — יש לאמת ידנית</div></div>
+      
+    </div>
+    
+</div>
+<h3 style="margin-top:14pt;color:#1C3D5A">פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל</h3>
+<div class="section">
+
+    <div class="card pass">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦64⁩</span>
+        <span class="chip st-pass">עובר</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מזקף ראש מעל מדרגות (פרט 3.2.2.4)</h3>
+      </div>
+      <div class="source">מקור: פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2421041 Run 1</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">3.09 מ&#x27;</td><th>נדרש</th><td>≥ 2.10 מ&#x27;</td></tr></table>
+      <div class="desc">מזקף ראש 3.09 מ&#x27; מעל «Fertigbetontreppe:Treppe:2421041 Run 1» — תקין</div>
+      
+      
+    </div>
+    
+
+    <div class="card pass">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦65⁩</span>
+        <span class="chip st-pass">עובר</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מזקף ראש מעל מדרגות (פרט 3.2.2.4)</h3>
+      </div>
+      <div class="source">מקור: פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2421041 Run 2</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">3.12 מ&#x27;</td><th>נדרש</th><td>≥ 2.10 מ&#x27;</td></tr></table>
+      <div class="desc">מזקף ראש 3.12 מ&#x27; מעל «Fertigbetontreppe:Treppe:2421041 Run 2» — תקין</div>
+      
+      
+    </div>
+    
+
+    <div class="card pass">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦66⁩</span>
+        <span class="chip st-pass">עובר</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מזקף ראש מעל מדרגות (פרט 3.2.2.4)</h3>
+      </div>
+      <div class="source">מקור: פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל · קומה E00_OKRD · רכיב Fertigbetontreppe:Treppe:2421059 Run 1</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">5.45 מ&#x27;</td><th>נדרש</th><td>≥ 2.10 מ&#x27;</td></tr></table>
+      <div class="desc">מזקף ראש 5.45 מ&#x27; מעל «Fertigbetontreppe:Treppe:2421059 Run 1» — תקין</div>
+      
+      
+    </div>
+    
+
+    <div class="card pass">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦67⁩</span>
+        <span class="chip st-pass">עובר</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מזקף ראש מעל מדרגות (פרט 3.2.2.4)</h3>
+      </div>
+      <div class="source">מקור: פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל · קומה E00_OKRD · רכיב Fertigbetontreppe:Treppe:2421059 Run 2</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">3.50 מ&#x27;</td><th>נדרש</th><td>≥ 2.10 מ&#x27;</td></tr></table>
+      <div class="desc">מזקף ראש 3.50 מ&#x27; מעל «Fertigbetontreppe:Treppe:2421059 Run 2» — תקין</div>
+      
+      
+    </div>
+    
+
+    <div class="card pass">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦68⁩</span>
+        <span class="chip st-pass">עובר</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מזקף ראש מעל מדרגות (פרט 3.2.2.4)</h3>
+      </div>
+      <div class="source">מקור: פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2423887 Run 1</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">3.09 מ&#x27;</td><th>נדרש</th><td>≥ 2.10 מ&#x27;</td></tr></table>
+      <div class="desc">מזקף ראש 3.09 מ&#x27; מעל «Fertigbetontreppe:Treppe:2423887 Run 1» — תקין</div>
+      
+      
+    </div>
+    
+
+    <div class="card pass">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦69⁩</span>
+        <span class="chip st-pass">עובר</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מזקף ראש מעל מדרגות (פרט 3.2.2.4)</h3>
+      </div>
+      <div class="source">מקור: פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2423887 Run 2</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">3.12 מ&#x27;</td><th>נדרש</th><td>≥ 2.10 מ&#x27;</td></tr></table>
+      <div class="desc">מזקף ראש 3.12 מ&#x27; מעל «Fertigbetontreppe:Treppe:2423887 Run 2» — תקין</div>
+      
+      
+    </div>
+    
+
+    <div class="card pass">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦70⁩</span>
+        <span class="chip st-pass">עובר</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מזקף ראש מעל מדרגות (פרט 3.2.2.4)</h3>
+      </div>
+      <div class="source">מקור: פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל · קומה E00_OKRD · רכיב Fertigbetontreppe:Treppe:2423903 Run 1</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">5.45 מ&#x27;</td><th>נדרש</th><td>≥ 2.10 מ&#x27;</td></tr></table>
+      <div class="desc">מזקף ראש 5.45 מ&#x27; מעל «Fertigbetontreppe:Treppe:2423903 Run 1» — תקין</div>
+      
+      
+    </div>
+    
+
+    <div class="card pass">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦71⁩</span>
+        <span class="chip st-pass">עובר</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מזקף ראש מעל מדרגות (פרט 3.2.2.4)</h3>
+      </div>
+      <div class="source">מקור: פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל · קומה E00_OKRD · רכיב Fertigbetontreppe:Treppe:2423903 Run 2</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">3.50 מ&#x27;</td><th>נדרש</th><td>≥ 2.10 מ&#x27;</td></tr></table>
+      <div class="desc">מזקף ראש 3.50 מ&#x27; מעל «Fertigbetontreppe:Treppe:2423903 Run 2» — תקין</div>
+      
+      
+    </div>
+    
+
+    <div class="card pass">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦72⁩</span>
+        <span class="chip st-pass">עובר</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מזקף ראש מעל מדרגות (פרט 3.2.2.4)</h3>
+      </div>
+      <div class="source">מקור: פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל · קומה E00_OKRD · רכיב Zusammengebaute Treppe:Treppe:2424673 Run 1</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">4.95 מ&#x27;</td><th>נדרש</th><td>≥ 2.10 מ&#x27;</td></tr></table>
+      <div class="desc">מזקף ראש 4.95 מ&#x27; מעל «Zusammengebaute Treppe:Treppe:2424673 Run 1» — תקין</div>
+      
+      
+    </div>
+    
+
+    <div class="card pass">
+      <div class="card-head">
+        <span class="idx">ממצא ⁦73⁩</span>
+        <span class="chip st-pass">עובר</span><span class="chip cf-high">מדידה ישירה</span>
+        <h3 class="card-title">מזקף ראש מעל מדרגות (פרט 3.2.2.4)</h3>
+      </div>
+      <div class="source">מקור: פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל · קומה E00_OKRD · רכיב Zusammengebaute Treppe:Treppe:2424673 Run 2</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">3.00 מ&#x27;</td><th>נדרש</th><td>≥ 2.10 מ&#x27;</td></tr></table>
+      <div class="desc">מזקף ראש 3.00 מ&#x27; מעל «Zusammengebaute Treppe:Treppe:2424673 Run 2» — תקין</div>
+      
+      
+    </div>
+    
+</div>
+
+
+    <div class="transparency">
+      <b>הערת שקיפות.</b> המנוע מריץ בדיקות נוספות שטרם עברו אימות סופי מול
+      נוסח המקור, ולכן בדיקה אחת אינן מוצגות בדו״ח זה. התחומים הנוגעים בדבר: ת&quot;י 1918 חלק 3.1.
+      בדיקות אלו יתווספו אוטומטית לדו״ח לאחר השלמת האימות — עד אז אין להסתמך
+      על היעדרן כאישור לתאימות באותם תחומים.
+    </div>
+    
+
+    <section class="attest">
+      <h2>אישור והצהרת עורך הבדיקה</h2>
+      <p class="att-note">אני החתום/ה מטה, מורשה/ית להיתר, בחנתי את ממצאי דו״ח זה
+      ואת התאמתם למודל ולתקנים המצוטטים, והם באחריותי המקצועית.</p>
+      <table class="att-grid">
+        <tr>
+          <td><label>שם מורשה להיתר</label><div class="sigline"></div></td>
+          <td><label>מספר רישוי</label><div class="sigline"></div></td>
+        </tr>
+        <tr>
+          <td><label>תאריך</label><div class="sigline"></div></td>
+          <td><label>חתימה + חותמת</label><div class="sigline tall"></div></td>
+        </tr>
+      </table>
+      <div class="attest-seal">
+    <span class="seal-wrap"><svg class="seal" width="168" height="168"
+        viewBox="0 0 168 168" role="img" aria-label="חותמת אימות TofesBIM">
+      <circle cx="84" cy="84" r="80" fill="none" stroke="#1C3D5A" stroke-width="2.5"/>
+      <circle cx="84" cy="84" r="73" fill="none" stroke="#A17A2B" stroke-width="4.5"
+              stroke-dasharray="1.4 4.2" stroke-linecap="round"/>
+      <circle cx="84" cy="84" r="58" fill="none" stroke="#1C3D5A" stroke-width="1"/>
+      <text x="84" y="33" text-anchor="middle" font-family="'Frank Ruhl Libre',serif"
+            font-size="9.5" letter-spacing="2" font-weight="700" fill="#1C3D5A">TOFESBIM</text>
+      <text x="84" y="92" text-anchor="middle" direction="rtl"
+            font-family="'Frank Ruhl Libre','David Libre',serif" font-size="29"
+            font-weight="700" fill="#1C3D5A">אומת</text>
+      <text x="84" y="109" text-anchor="middle" direction="rtl"
+            font-family="'Heebo','Segoe UI',sans-serif" font-size="8"
+            font-weight="700" fill="#0F1E2E">ציטוטים מול מקור רשמי</text>
+      <text x="84" y="122" text-anchor="middle" font-family="'Heebo','Segoe UI',sans-serif"
+            font-size="7.5" fill="#5B6B7A">09/07/2026</text>
+      <text x="84" y="150" text-anchor="middle" font-family="'Heebo','Segoe UI',sans-serif"
+            font-size="7" letter-spacing="1" font-weight="700"
+            fill="#A17A2B">VERIFIED · מאומת מול מקור</text>
+    </svg></span>
+    </div>
+    </section>
+    
+
+    <div class="footer">
+      <b>TofesBIM</b> · מנוע בדיקת תאימות אוטומטי · 09/07/2026 ·
+      מזהה מסמך <span class="ltr">TB-20260709-E533</span><br>
+      אימות מקוון של מסמך זה: <span class="ltr">https://matanluzonnn-hue.github.io/tofesbim-verify/?t=8HdFdDD5Mk0-v1eYJeeI3Q</span><br>
+      הדו״ח אינו מהווה אישור רשמי. לכל ממצא מצוין מקור הדרישה (מספר התקן והסעיף);
+      נוסח התקן אינו משוכפל בדו״ח מטעמי זכויות יוצרים.<br>
+      מסמך חסוי — לשימוש מקצועי בלבד.
+    </div>
+    
+</body></html>
