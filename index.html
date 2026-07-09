@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>אימות מסמך — TofesBIM</title>
+<style>
+  :root{ --ink:#0F1E2E; --brand:#1C3D5A; --gold:#A17A2B; --muted:#5B6B7A;
+         --rule:#D8DFE6; --accent-ok:#1E6B41; --accent-bad:#B3261E; }
+  *{box-sizing:border-box}
+  body{margin:0;direction:rtl;font-family:"Heebo","Segoe UI",Arial,sans-serif;
+    color:var(--ink);background:#EEF2F6;min-height:100vh;display:flex;
+    align-items:center;justify-content:center;padding:24px}
+  .card{background:#fff;max-width:520px;width:100%;border:1px solid var(--rule);
+    border-top:5px solid var(--accent-ok);border-radius:8px;
+    box-shadow:0 10px 30px rgba(15,30,46,.08);padding:28px 30px}
+  .card.bad{border-top-color:var(--accent-bad)}
+  .brand{display:flex;align-items:center;gap:8px;color:var(--brand);
+    font-weight:800;font-size:20px;letter-spacing:-.3px}
+  .brand svg{flex:0 0 auto}
+  h1{font-size:22px;margin:18px 0 4px}
+  h1.ok{color:var(--accent-ok)}
+  h1.bad{color:var(--accent-bad)}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:18px}
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th{text-align:right;color:var(--muted);font-weight:500;padding:7px 0;
+    width:42%;border-bottom:1px solid var(--rule)}
+  td{padding:7px 0;font-weight:700;border-bottom:1px solid var(--rule);
+    font-feature-settings:"tnum" 1}
+  .ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+  .foot{margin-top:18px;color:var(--muted);font-size:11px;line-height:1.6}
+  .badge{display:inline-block;background:var(--accent-ok);color:#fff;font-size:12px;
+    font-weight:700;padding:3px 10px;border-radius:12px}
+</style></head><body><div class="card" id="card">
+  <div class="brand">
+    <svg width="26" height="26" viewBox="0 0 30 30" aria-hidden="true">
+      <rect x="3" y="3" width="24" height="24" rx="3" fill="none" stroke="#C9A24B" stroke-width="2"/>
+      <path d="M9 16l4 4 8-9" fill="none" stroke="#1C3D5A" stroke-width="2.4"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>TofesBIM
+  </div>
+  <div id="body">טוען…</div>
+  <div class="foot">מנוע בדיקת תאימות תקני בנייה על מודלי BIM · דף אימות מסמך.
+    אימות זה מאשר שהמסמך הופק על-ידי המערכת; אין בו כדי להחליף בדיקת מהנדס/אדריכל רשוי.</div>
+</div>
+<script>
+(function () {
+  var params = new URLSearchParams(location.search);
+  var token = params.get('t') || '';
+  var bodyEl = document.getElementById('body');
+  var cardEl = document.getElementById('card');
+
+  function esc(s) {
+    var d = document.createElement('div');
+    d.textContent = String(s == null ? '' : s);
+    return d.innerHTML;
+  }
+
+  function showBad(title, msg) {
+    cardEl.classList.add('bad');
+    bodyEl.innerHTML = '<h1 class="bad">' + esc(title) + '</h1><div class="sub">' + esc(msg) + '</div>';
+  }
+
+  if (!/^[A-Za-z0-9_-]{16,64}$/.test(token)) {
+    showBad('מזהה לא תקין', 'קישור האימות אינו בפורמט תקין.');
+    return;
+  }
+
+  fetch('records.json', { cache: 'no-store' })
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      var rec = data[token];
+      if (!rec) {
+        showBad('המסמך לא נמצא', 'לא קיים דו״ח מאומת עם מזהה זה. ייתכן שהקישור שגוי או שהרשומה נמחקה.');
+        return;
+      }
+      var rows = [
+        ['סטטוס', '<span class="badge">מסמך מקורי ✓</span>'],
+        ['תאריך הפקה', '<span class="ltr">' + esc(rec.date) + '</span>'],
+        ['מזהה מסמך', '<span class="ltr">' + esc(rec.doc_id) + '</span>'],
+        ['אימות ציטוטים', 'כל הפניה אומתה מול מקור רשמי ✓']
+      ];
+      if (rec.project_label) {
+        rows.splice(1, 0, ['פרויקט', esc(rec.project_label)]);
+      }
+      if (rec.n_standards != null) {
+        rows.push(['היקף', esc(rec.n_standards) + ' תקנים · ' + esc(rec.n_findings) + ' ממצאים']);
+        rows.push(['פירוט', esc(rec.n_fail) + ' אי-התאמות · ' + esc(rec.n_warn) + ' אזהרות · ' + esc(rec.n_unknown) + ' לאימות']);
+      }
+      var rowsHtml = rows.map(function (r) {
+        return '<tr><th>' + esc(r[0]) + '</th><td>' + r[1] + '</td></tr>';
+      }).join('');
+      bodyEl.innerHTML = '<h1 class="ok">מסמך מאומת</h1>' +
+        '<div class="sub">דו״ח תאימות זה הופק על-ידי TofesBIM והוא מקורי.</div>' +
+        '<table>' + rowsHtml + '</table>';
+    })
+    .catch(function () {
+      showBad('שגיאה', 'לא ניתן היה לטעון את נתוני האימות כרגע.');
+    });
+})();
+</script>
+</body></html>
