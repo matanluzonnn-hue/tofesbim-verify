@@ -207,10 +207,84 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
 .footer{ margin-top:22pt; padding-top:8pt; border-top:1px solid var(--rule);
   font-size:8.5pt; color:var(--muted); text-align:center; line-height:1.6; }
 .footer b{ color:var(--brand); }
+
+/* ── 2026-07-09 overhaul: cover chips, authority tags, TOC, tables, watermark ── */
+.cv-chips .cv-chip{ display:inline-block; font-size:8pt; font-weight:700;
+  padding:1.5pt 6pt; border-radius:9pt; margin-inline-end:4pt;
+  border:1px solid var(--rule); color:var(--ink); background:var(--paper-2); }
+.cv-chip.fail{ color:var(--fail); border-color:var(--fail); }
+.cv-chip.warn{ color:var(--warn); border-color:var(--warn); }
+.cv-chip.unknown{ color:var(--unknown); border-color:var(--unknown); }
+.cv-chip.pass{ color:var(--pass); border-color:var(--pass); }
+.chip.tag-law{ background:rgba(28,61,90,.10); color:var(--brand);
+  border:1px solid var(--brand); }
+.chip.tag-std{ background:rgba(161,122,43,.10); color:var(--gold);
+  border:1px solid var(--gold-line); }
+.toc{ width:100%; border-collapse:collapse; margin:6pt 0 4pt; }
+.toc td{ padding:4.5pt 2pt; border-bottom:1px dotted var(--rule);
+  font-size:9.5pt; vertical-align:middle; }
+.toc .toc-name{ font-weight:600; color:var(--ink); }
+.toc .toc-counts{ text-align:left; white-space:nowrap; }
+.toc-n{ display:inline-block; font-size:7.5pt; font-weight:700;
+  padding:1pt 5pt; border-radius:8pt; margin-inline-start:4pt;
+  border:1px solid var(--rule); }
+.toc-n.fail{ color:var(--fail); border-color:var(--fail); }
+.toc-n.warn{ color:var(--warn); border-color:var(--warn); }
+.toc-n.unknown{ color:var(--unknown); border-color:var(--unknown); }
+.toc-n.pass{ color:var(--pass); border-color:var(--pass); }
+.pass-table{ width:100%; border-collapse:collapse; margin-top:6pt; }
+.pass-table th{ text-align:right; font-size:8.5pt; color:var(--muted);
+  padding:4pt 6pt; border-bottom:1.5px solid var(--brand); }
+.pass-table td{ padding:4pt 6pt; font-size:9pt; border-bottom:1px solid var(--rule);
+  vertical-align:top; }
+.pass-table .pt-ok{ color:var(--pass); font-weight:900; width:14pt; }
+.pass-table .pt-src{ color:var(--muted); font-size:8.5pt; }
+.pass-table .pt-n{ font-weight:700; width:36pt; }
+.ua-table{ width:100%; border-collapse:collapse; margin-top:6pt; }
+.ua-table th{ text-align:right; font-size:8.5pt; color:var(--muted);
+  padding:4pt 6pt; border-bottom:1.5px solid var(--unknown); }
+.ua-table td{ padding:5pt 6pt; font-size:8.8pt; border-bottom:1px solid var(--rule);
+  vertical-align:top; line-height:1.5; }
+.ua-table tr{ page-break-inside:avoid; }
+.ua-table .ua-n{ color:var(--muted); width:16pt; }
+.ua-table .ua-t{ width:26%; }
+.ua-table .ua-src{ color:var(--muted); font-size:7.8pt; margin-top:1.5pt; }
+.ua-table .ua-loc{ width:18%; color:var(--ink); }
+.page-watermark{ position:fixed; bottom:9mm; left:10mm; opacity:.07;
+  z-index:0; pointer-events:none; }
+.page-watermark svg{ width:84px; height:84px; }
+.cover-qr{ display:inline-block; vertical-align:top; margin-inline-start:18pt;
+  text-align:center; }
+.cover-qr svg{ border:1px solid var(--rule); border-radius:3pt; padding:3pt;
+  background:#fff; }
+.cover-qr .qr-cap{ font-size:7.5pt; color:var(--muted); margin-top:2pt; }
 </style>
+<style>@page{ @bottom-left{ content:"TB-20260709-E533 · TofesBIM"; font-family:'Heebo','Segoe UI',sans-serif; font-size:7.5pt; color:#8A97A5; }} }}</style>
 </head>
 <body>
 <div class="docid-anchor">TB-20260709-E533</div>
+<div class="page-watermark" aria-hidden="true">
+    <span class="seal-wrap"><svg class="seal" width="168" height="168"
+        viewBox="0 0 168 168" role="img" aria-label="חותמת אימות TofesBIM">
+      <circle cx="84" cy="84" r="80" fill="none" stroke="#1C3D5A" stroke-width="2.5"/>
+      <circle cx="84" cy="84" r="73" fill="none" stroke="#A17A2B" stroke-width="4.5"
+              stroke-dasharray="1.4 4.2" stroke-linecap="round"/>
+      <circle cx="84" cy="84" r="58" fill="none" stroke="#1C3D5A" stroke-width="1"/>
+      <text x="84" y="33" text-anchor="middle" font-family="'Frank Ruhl Libre',serif"
+            font-size="9.5" letter-spacing="2" font-weight="700" fill="#1C3D5A">TOFESBIM</text>
+      <text x="84" y="92" text-anchor="middle" direction="rtl"
+            font-family="'Frank Ruhl Libre','David Libre',serif" font-size="29"
+            font-weight="700" fill="#1C3D5A">אומת</text>
+      <text x="84" y="109" text-anchor="middle" direction="rtl"
+            font-family="'Heebo','Segoe UI',sans-serif" font-size="8"
+            font-weight="700" fill="#0F1E2E">ציטוטים מול מקור רשמי</text>
+      <text x="84" y="122" text-anchor="middle" font-family="'Heebo','Segoe UI',sans-serif"
+            font-size="7.5" fill="#5B6B7A"></text>
+      <text x="84" y="150" text-anchor="middle" font-family="'Heebo','Segoe UI',sans-serif"
+            font-size="7" letter-spacing="1" font-weight="700"
+            fill="#A17A2B">VERIFIED · מאומת מול מקור</text>
+    </svg></span>
+    </div>
 
     <div class="cover">
       <header class="cover-band">
@@ -231,9 +305,10 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
           <tr><th>תאריך הפקה</th><td>09/07/2026</td></tr>
           <tr><th>מזהה מסמך</th><td class="ltr">TB-20260709-E533</td></tr>
           <tr><th>סמכות שיפוט</th><td>תקינה ישראלית (ת״י + תקנות התכנון והבנייה)</td></tr>
-          <tr><th>היקף הבדיקה</th><td>⁦9⁩ תקנים · ⁦73⁩ ממצאים</td></tr>
+          <tr><th>היקף הבדיקה</th><td>⁦9⁩ תקנים · ⁦72⁩ ממצאים</td></tr>
+          <tr><th>שורה תחתונה</th><td class="cv-chips"><span class="cv-chip fail">⁦28⁩ אי-התאמות</span><span class="cv-chip warn">⁦6⁩ אזהרות</span><span class="cv-chip unknown">⁦28⁩ לאימות</span><span class="cv-chip pass">⁦10⁩ עברו</span></td></tr>
           <tr><th>אימות ציטוטים</th><td>כל הפניה מאומתת מול מקור רשמי ✓</td></tr>
-          <tr><th>אימות מקוון</th><td class="ltr" style="font-size:8pt;font-weight:500">https://matanluzonnn-hue.github.io/tofesbim-verify/?t=8HdFdDD5Mk0-v1eYJeeI3Q</td></tr>
+          <tr><th>אימות מקוון</th><td class="ltr" style="font-size:8pt;font-weight:500">https://matanluzonnn-hue.github.io/tofesbim-verify/verify/IYyRjx-uFs_cR260RTuZXA</td></tr>
         </table>
         <div class="cover-seal">
     <span class="seal-wrap"><svg class="seal" width="168" height="168"
@@ -256,7 +331,7 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
             font-size="7" letter-spacing="1" font-weight="700"
             fill="#A17A2B">VERIFIED · מאומת מול מקור</text>
     </svg></span>
-    </div>
+    <div class="cover-qr"><svg width="62" height="62" version="1.1" viewBox="0 0 39 39" xmlns="http://www.w3.org/2000/svg"><path d="M1,1H2V2H1zM2,1H3V2H2zM3,1H4V2H3zM4,1H5V2H4zM5,1H6V2H5zM6,1H7V2H6zM7,1H8V2H7zM11,1H12V2H11zM13,1H14V2H13zM14,1H15V2H14zM15,1H16V2H15zM18,1H19V2H18zM20,1H21V2H20zM21,1H22V2H21zM23,1H24V2H23zM24,1H25V2H24zM26,1H27V2H26zM28,1H29V2H28zM29,1H30V2H29zM31,1H32V2H31zM32,1H33V2H32zM33,1H34V2H33zM34,1H35V2H34zM35,1H36V2H35zM36,1H37V2H36zM37,1H38V2H37zM1,2H2V3H1zM7,2H8V3H7zM10,2H11V3H10zM11,2H12V3H11zM12,2H13V3H12zM15,2H16V3H15zM16,2H17V3H16zM17,2H18V3H17zM18,2H19V3H18zM23,2H24V3H23zM25,2H26V3H25zM26,2H27V3H26zM28,2H29V3H28zM29,2H30V3H29zM31,2H32V3H31zM37,2H38V3H37zM1,3H2V4H1zM3,3H4V4H3zM4,3H5V4H4zM5,3H6V4H5zM7,3H8V4H7zM9,3H10V4H9zM10,3H11V4H10zM11,3H12V4H11zM13,3H14V4H13zM14,3H15V4H14zM15,3H16V4H15zM17,3H18V4H17zM21,3H22V4H21zM22,3H23V4H22zM24,3H25V4H24zM29,3H30V4H29zM31,3H32V4H31zM33,3H34V4H33zM34,3H35V4H34zM35,3H36V4H35zM37,3H38V4H37zM1,4H2V5H1zM3,4H4V5H3zM4,4H5V5H4zM5,4H6V5H5zM7,4H8V5H7zM9,4H10V5H9zM11,4H12V5H11zM12,4H13V5H12zM14,4H15V5H14zM15,4H16V5H15zM16,4H17V5H16zM17,4H18V5H17zM18,4H19V5H18zM19,4H20V5H19zM23,4H24V5H23zM25,4H26V5H25zM26,4H27V5H26zM27,4H28V5H27zM29,4H30V5H29zM31,4H32V5H31zM33,4H34V5H33zM34,4H35V5H34zM35,4H36V5H35zM37,4H38V5H37zM1,5H2V6H1zM3,5H4V6H3zM4,5H5V6H4zM5,5H6V6H5zM7,5H8V6H7zM9,5H10V6H9zM11,5H12V6H11zM12,5H13V6H12zM13,5H14V6H13zM15,5H16V6H15zM16,5H17V6H16zM17,5H18V6H17zM19,5H20V6H19zM20,5H21V6H20zM21,5H22V6H21zM22,5H23V6H22zM24,5H25V6H24zM25,5H26V6H25zM26,5H27V6H26zM29,5H30V6H29zM31,5H32V6H31zM33,5H34V6H33zM34,5H35V6H34zM35,5H36V6H35zM37,5H38V6H37zM1,6H2V7H1zM7,6H8V7H7zM9,6H10V7H9zM11,6H12V7H11zM13,6H14V7H13zM15,6H16V7H15zM21,6H22V7H21zM28,6H29V7H28zM29,6H30V7H29zM31,6H32V7H31zM37,6H38V7H37zM1,7H2V8H1zM2,7H3V8H2zM3,7H4V8H3zM4,7H5V8H4zM5,7H6V8H5zM6,7H7V8H6zM7,7H8V8H7zM9,7H10V8H9zM11,7H12V8H11zM13,7H14V8H13zM15,7H16V8H15zM17,7H18V8H17zM19,7H20V8H19zM21,7H22V8H21zM23,7H24V8H23zM25,7H26V8H25zM27,7H28V8H27zM29,7H30V8H29zM31,7H32V8H31zM32,7H33V8H32zM33,7H34V8H33zM34,7H35V8H34zM35,7H36V8H35zM36,7H37V8H36zM37,7H38V8H37zM9,8H10V9H9zM10,8H11V9H10zM11,8H12V9H11zM12,8H13V9H12zM13,8H14V9H13zM14,8H15V9H14zM22,8H23V9H22zM23,8H24V9H23zM27,8H28V9H27zM28,8H29V9H28zM29,8H30V9H29zM1,9H2V10H1zM3,9H4V10H3zM4,9H5V10H4zM5,9H6V10H5zM6,9H7V10H6zM7,9H8V10H7zM10,9H11V10H10zM11,9H12V10H11zM16,9H17V10H16zM17,9H18V10H17zM20,9H21V10H20zM21,9H22V10H21zM22,9H23V10H22zM23,9H24V10H23zM25,9H26V10H25zM27,9H28V10H27zM28,9H29V10H28zM31,9H32V10H31zM32,9H33V10H32zM33,9H34V10H33zM34,9H35V10H34zM35,9H36V10H35zM1,10H2V11H1zM2,10H3V11H2zM4,10H5V11H4zM6,10H7V11H6zM8,10H9V11H8zM11,10H12V11H11zM14,10H15V11H14zM16,10H17V11H16zM18,10H19V11H18zM21,10H22V11H21zM22,10H23V11H22zM23,10H24V11H23zM26,10H27V11H26zM27,10H28V11H27zM30,10H31V11H30zM32,10H33V11H32zM36,10H37V11H36zM1,11H2V12H1zM2,11H3V12H2zM3,11H4V12H3zM7,11H8V12H7zM11,11H12V12H11zM13,11H14V12H13zM14,11H15V12H14zM15,11H16V12H15zM16,11H17V12H16zM17,11H18V12H17zM18,11H19V12H18zM23,11H24V12H23zM26,11H27V12H26zM27,11H28V12H27zM28,11H29V12H28zM29,11H30V12H29zM30,11H31V12H30zM32,11H33V12H32zM33,11H34V12H33zM34,11H35V12H34zM35,11H36V12H35zM36,11H37V12H36zM37,11H38V12H37zM1,12H2V13H1zM3,12H4V13H3zM6,12H7V13H6zM11,12H12V13H11zM12,12H13V13H12zM15,12H16V13H15zM16,12H17V13H16zM20,12H21V13H20zM22,12H23V13H22zM23,12H24V13H23zM27,12H28V13H27zM28,12H29V13H28zM30,12H31V13H30zM31,12H32V13H31zM32,12H33V13H32zM33,12H34V13H33zM37,12H38V13H37zM4,13H5V14H4zM5,13H6V14H5zM7,13H8V14H7zM8,13H9V14H8zM9,13H10V14H9zM11,13H12V14H11zM16,13H17V14H16zM18,13H19V14H18zM23,13H24V14H23zM25,13H26V14H25zM26,13H27V14H26zM27,13H28V14H27zM29,13H30V14H29zM30,13H31V14H30zM31,13H32V14H31zM33,13H34V14H33zM34,13H35V14H34zM35,13H36V14H35zM36,13H37V14H36zM37,13H38V14H37zM1,14H2V15H1zM2,14H3V15H2zM4,14H5V15H4zM5,14H6V15H5zM9,14H10V15H9zM10,14H11V15H10zM12,14H13V15H12zM13,14H14V15H13zM17,14H18V15H17zM18,14H19V15H18zM20,14H21V15H20zM21,14H22V15H21zM24,14H25V15H24zM26,14H27V15H26zM29,14H30V15H29zM32,14H33V15H32zM36,14H37V15H36zM3,15H4V16H3zM4,15H5V16H4zM7,15H8V16H7zM8,15H9V16H8zM10,15H11V16H10zM14,15H15V16H14zM16,15H17V16H16zM18,15H19V16H18zM19,15H20V16H19zM23,15H24V16H23zM28,15H29V16H28zM30,15H31V16H30zM31,15H32V16H31zM32,15H33V16H32zM33,15H34V16H33zM34,15H35V16H34zM36,15H37V16H36zM37,15H38V16H37zM1,16H2V17H1zM4,16H5V17H4zM10,16H11V17H10zM11,16H12V17H11zM13,16H14V17H13zM14,16H15V17H14zM15,16H16V17H15zM19,16H20V17H19zM20,16H21V17H20zM21,16H22V17H21zM22,16H23V17H22zM23,16H24V17H23zM27,16H28V17H27zM28,16H29V17H28zM29,16H30V17H29zM32,16H33V17H32zM33,16H34V17H33zM36,16H37V17H36zM37,16H38V17H37zM1,17H2V18H1zM4,17H5V18H4zM7,17H8V18H7zM10,17H11V18H10zM11,17H12V18H11zM14,17H15V18H14zM15,17H16V18H15zM16,17H17V18H16zM20,17H21V18H20zM21,17H22V18H21zM23,17H24V18H23zM26,17H27V18H26zM27,17H28V18H27zM29,17H30V18H29zM30,17H31V18H30zM31,17H32V18H31zM33,17H34V18H33zM35,17H36V18H35zM36,17H37V18H36zM4,18H5V19H4zM6,18H7V19H6zM13,18H14V19H13zM15,18H16V19H15zM16,18H17V19H16zM17,18H18V19H17zM21,18H22V19H21zM24,18H25V19H24zM26,18H27V19H26zM27,18H28V19H27zM29,18H30V19H29zM36,18H37V19H36zM3,19H4V20H3zM4,19H5V20H4zM7,19H8V20H7zM10,19H11V20H10zM14,19H15V20H14zM22,19H23V20H22zM26,19H27V20H26zM27,19H28V20H27zM28,19H29V20H28zM31,19H32V20H31zM32,19H33V20H32zM36,19H37V20H36zM37,19H38V20H37zM1,20H2V21H1zM2,20H3V21H2zM3,20H4V21H3zM6,20H7V21H6zM10,20H11V21H10zM11,20H12V21H11zM13,20H14V21H13zM14,20H15V21H14zM17,20H18V21H17zM19,20H20V21H19zM22,20H23V21H22zM23,20H24V21H23zM29,20H30V21H29zM30,20H31V21H30zM31,20H32V21H31zM33,20H34V21H33zM37,20H38V21H37zM1,21H2V22H1zM6,21H7V22H6zM7,21H8V22H7zM8,21H9V22H8zM10,21H11V22H10zM13,21H14V22H13zM18,21H19V22H18zM23,21H24V22H23zM24,21H25V22H24zM26,21H27V22H26zM27,21H28V22H27zM28,21H29V22H28zM30,21H31V22H30zM31,21H32V22H31zM33,21H34V22H33zM35,21H36V22H35zM3,22H4V23H3zM4,22H5V23H4zM5,22H6V23H5zM8,22H9V23H8zM12,22H13V23H12zM14,22H15V23H14zM17,22H18V23H17zM18,22H19V23H18zM19,22H20V23H19zM20,22H21V23H20zM22,22H23V23H22zM23,22H24V23H23zM24,22H25V23H24zM26,22H27V23H26zM29,22H30V23H29zM30,22H31V23H30zM34,22H35V23H34zM4,23H5V24H4zM7,23H8V24H7zM8,23H9V24H8zM12,23H13V24H12zM13,23H14V24H13zM16,23H17V24H16zM17,23H18V24H17zM19,23H20V24H19zM25,23H26V24H25zM28,23H29V24H28zM30,23H31V24H30zM31,23H32V24H31zM32,23H33V24H32zM33,23H34V24H33zM34,23H35V24H34zM37,23H38V24H37zM1,24H2V25H1zM2,24H3V25H2zM4,24H5V25H4zM10,24H11V25H10zM12,24H13V25H12zM14,24H15V25H14zM15,24H16V25H15zM19,24H20V25H19zM20,24H21V25H20zM22,24H23V25H22zM23,24H24V25H23zM25,24H26V25H25zM27,24H28V25H27zM29,24H30V25H29zM30,24H31V25H30zM31,24H32V25H31zM32,24H33V25H32zM33,24H34V25H33zM36,24H37V25H36zM37,24H38V25H37zM1,25H2V26H1zM2,25H3V26H2zM5,25H6V26H5zM6,25H7V26H6zM7,25H8V26H7zM9,25H10V26H9zM10,25H11V26H10zM11,25H12V26H11zM14,25H15V26H14zM16,25H17V26H16zM17,25H18V26H17zM21,25H22V26H21zM22,25H23V26H22zM23,25H24V26H23zM24,25H25V26H24zM25,25H26V26H25zM27,25H28V26H27zM30,25H31V26H30zM31,25H32V26H31zM32,25H33V26H32zM33,25H34V26H33zM35,25H36V26H35zM36,25H37V26H36zM1,26H2V27H1zM4,26H5V27H4zM5,26H6V27H5zM6,26H7V27H6zM13,26H14V27H13zM14,26H15V27H14zM15,26H16V27H15zM16,26H17V27H16zM18,26H19V27H18zM19,26H20V27H19zM20,26H21V27H20zM22,26H23V27H22zM23,26H24V27H23zM24,26H25V27H24zM25,26H26V27H25zM26,26H27V27H26zM27,26H28V27H27zM29,26H30V27H29zM30,26H31V27H30zM32,26H33V27H32zM34,26H35V27H34zM1,27H2V28H1zM3,27H4V28H3zM6,27H7V28H6zM7,27H8V28H7zM8,27H9V28H8zM14,27H15V28H14zM16,27H17V28H16zM17,27H18V28H17zM18,27H19V28H18zM22,27H23V28H22zM23,27H24V28H23zM25,27H26V28H25zM26,27H27V28H26zM27,27H28V28H27zM28,27H29V28H28zM29,27H30V28H29zM30,27H31V28H30zM31,27H32V28H31zM33,27H34V28H33zM34,27H35V28H34zM35,27H36V28H35zM36,27H37V28H36zM37,27H38V28H37zM1,28H2V29H1zM3,28H4V29H3zM5,28H6V29H5zM11,28H12V29H11zM13,28H14V29H13zM14,28H15V29H14zM16,28H17V29H16zM20,28H21V29H20zM21,28H22V29H21zM22,28H23V29H22zM25,28H26V29H25zM28,28H29V29H28zM31,28H32V29H31zM32,28H33V29H32zM37,28H38V29H37zM1,29H2V30H1zM3,29H4V30H3zM6,29H7V30H6zM7,29H8V30H7zM9,29H10V30H9zM10,29H11V30H10zM11,29H12V30H11zM13,29H14V30H13zM14,29H15V30H14zM16,29H17V30H16zM17,29H18V30H17zM18,29H19V30H18zM23,29H24V30H23zM24,29H25V30H24zM25,29H26V30H25zM26,29H27V30H26zM27,29H28V30H27zM29,29H30V30H29zM30,29H31V30H30zM31,29H32V30H31zM32,29H33V30H32zM33,29H34V30H33zM34,29H35V30H34zM35,29H36V30H35zM37,29H38V30H37zM9,30H10V31H9zM10,30H11V31H10zM11,30H12V31H11zM12,30H13V31H12zM13,30H14V31H13zM14,30H15V31H14zM17,30H18V31H17zM19,30H20V31H19zM20,30H21V31H20zM21,30H22V31H21zM22,30H23V31H22zM24,30H25V31H24zM28,30H29V31H28zM29,30H30V31H29zM33,30H34V31H33zM34,30H35V31H34zM1,31H2V32H1zM2,31H3V32H2zM3,31H4V32H3zM4,31H5V32H4zM5,31H6V32H5zM6,31H7V32H6zM7,31H8V32H7zM10,31H11V32H10zM12,31H13V32H12zM15,31H16V32H15zM16,31H17V32H16zM17,31H18V32H17zM19,31H20V32H19zM21,31H22V32H21zM26,31H27V32H26zM29,31H30V32H29zM31,31H32V32H31zM33,31H34V32H33zM35,31H36V32H35zM36,31H37V32H36zM37,31H38V32H37zM1,32H2V33H1zM7,32H8V33H7zM9,32H10V33H9zM11,32H12V33H11zM14,32H15V33H14zM15,32H16V33H15zM16,32H17V33H16zM17,32H18V33H17zM21,32H22V33H21zM22,32H23V33H22zM29,32H30V33H29zM33,32H34V33H33zM34,32H35V33H34zM36,32H37V33H36zM37,32H38V33H37zM1,33H2V34H1zM3,33H4V34H3zM4,33H5V34H4zM5,33H6V34H5zM7,33H8V34H7zM9,33H10V34H9zM10,33H11V34H10zM12,33H13V34H12zM16,33H17V34H16zM19,33H20V34H19zM21,33H22V34H21zM24,33H25V34H24zM26,33H27V34H26zM27,33H28V34H27zM28,33H29V34H28zM29,33H30V34H29zM30,33H31V34H30zM31,33H32V34H31zM32,33H33V34H32zM33,33H34V34H33zM35,33H36V34H35zM1,34H2V35H1zM3,34H4V35H3zM4,34H5V35H4zM5,34H6V35H5zM7,34H8V35H7zM9,34H10V35H9zM10,34H11V35H10zM13,34H14V35H13zM15,34H16V35H15zM16,34H17V35H16zM17,34H18V35H17zM19,34H20V35H19zM20,34H21V35H20zM23,34H24V35H23zM24,34H25V35H24zM26,34H27V35H26zM30,34H31V35H30zM31,34H32V35H31zM33,34H34V35H33zM34,34H35V35H34zM35,34H36V35H35zM36,34H37V35H36zM37,34H38V35H37zM1,35H2V36H1zM3,35H4V36H3zM4,35H5V36H4zM5,35H6V36H5zM7,35H8V36H7zM9,35H10V36H9zM10,35H11V36H10zM13,35H14V36H13zM14,35H15V36H14zM18,35H19V36H18zM22,35H23V36H22zM25,35H26V36H25zM26,35H27V36H26zM27,35H28V36H27zM28,35H29V36H28zM36,35H37V36H36zM37,35H38V36H37zM1,36H2V37H1zM7,36H8V37H7zM12,36H13V37H12zM14,36H15V37H14zM15,36H16V37H15zM17,36H18V37H17zM19,36H20V37H19zM20,36H21V37H20zM22,36H23V37H22zM24,36H25V37H24zM25,36H26V37H25zM28,36H29V37H28zM29,36H30V37H29zM31,36H32V37H31zM33,36H34V37H33zM37,36H38V37H37zM1,37H2V38H1zM2,37H3V38H2zM3,37H4V38H3zM4,37H5V38H4zM5,37H6V38H5zM6,37H7V38H6zM7,37H8V38H7zM9,37H10V38H9zM12,37H13V38H12zM14,37H15V38H14zM15,37H16V38H15zM18,37H19V38H18zM21,37H22V38H21zM23,37H24V38H23zM24,37H25V38H24zM25,37H26V38H25zM26,37H27V38H26zM33,37H34V38H33zM34,37H35V38H34zM35,37H36V38H35zM36,37H37V38H36zM37,37H38V38H37z" id="qr-path" fill="#000000" fill-opacity="1" fill-rule="nonzero" stroke="none"/></svg><div class="qr-cap">סרקו לאימות מקוון</div></div></div>
       </div>
       <footer class="cover-foot">
         <b>הצהרה:</b> דו״ח זה מופק אוטומטית ממודל IFC ומיועד לשמש כלי-עזר
@@ -271,11 +346,15 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
     <div class="exec">
       <div class="verdict fail">
         <div class="v-status">נדרשת פעולה</div>
-        <div class="v-line">⁦28⁩ אי-התאמות · ⁦6⁩ אזהרות · ⁦28⁩ פריטים לאימות · ⁦10⁩ עברו · מתוך ⁦73⁩ ממצאים</div>
+        <div class="v-line">⁦28⁩ אי-התאמות · ⁦6⁩ אזהרות · ⁦28⁩ פריטים לאימות · ⁦10⁩ עברו · מתוך ⁦72⁩ ממצאים</div>
       </div>
       <div class="sevbar"><span class="seg fail" style="flex:28"></span><span class="seg warn" style="flex:6"></span><span class="seg unknown" style="flex:28"></span><span class="seg pass" style="flex:10"></span></div>
-      <div class="counts"><div class="stat fail"><div class="snum">⁦28⁩</div><div class="lbl">נכשל</div></div><div class="stat warn"><div class="snum">⁦6⁩</div><div class="lbl">אזהרה</div></div><div class="stat unknown"><div class="snum">⁦28⁩</div><div class="lbl">לאימות</div></div><div class="stat pass"><div class="snum">⁦10⁩</div><div class="lbl">עובר</div></div><div class="stat total"><div class="snum">⁦73⁩</div><div class="lbl">סה״כ</div></div></div>
+      <div class="counts"><div class="stat fail"><div class="snum">⁦28⁩</div><div class="lbl">נכשל</div></div><div class="stat warn"><div class="snum">⁦6⁩</div><div class="lbl">אזהרה</div></div><div class="stat unknown"><div class="snum">⁦28⁩</div><div class="lbl">לאימות</div></div><div class="stat pass"><div class="snum">⁦10⁩</div><div class="lbl">עובר</div></div><div class="stat total"><div class="snum">⁦72⁩</div><div class="lbl">סה״כ</div></div></div>
     </div>
+    
+
+    <h2>תוכן העניינים</h2>
+    <table class="toc"><tr><td class="toc-name">⁦1⁩. ת&quot;י 1918 חלק 3.1</td><td class="toc-counts"><span class="toc-n fail">⁦28⁩ נכשל</span><span class="toc-n warn">⁦2⁩ אזהרה</span><span class="toc-n unknown">⁦4⁩ לאימות</span></td></tr><tr><td class="toc-name">⁦2⁩. ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון</td><td class="toc-counts"><span class="toc-n unknown">⁦17⁩ לאימות</span></td></tr><tr><td class="toc-name">⁦3⁩. תקנות התכנון והבנייה תש&quot;ל-1970</td><td class="toc-counts"><span class="toc-n warn">⁦1⁩ אזהרה</span><span class="toc-n unknown">⁦2⁩ לאימות</span></td></tr><tr><td class="toc-name">⁦4⁩. ת&quot;י 1001 — מסלול מילוט (≥ 110 ס&quot;מ) × ת&quot;י 1918 חלק 3.1</td><td class="toc-counts"><span class="toc-n warn">⁦2⁩ אזהרה</span></td></tr><tr><td class="toc-name">⁦5⁩. ת&quot;י 1918 חלק 1</td><td class="toc-counts"><span class="toc-n warn">⁦1⁩ אזהרה</span></td></tr><tr><td class="toc-name">⁦6⁩. טבלה 3.2.15.5 (מרחקי הליכה) — תקנות התכנון והבנייה תש&quot;ל</td><td class="toc-counts"><span class="toc-n unknown">⁦1⁩ לאימות</span></td></tr><tr><td class="toc-name">⁦7⁩. ת&quot;י 1205 חלק 2</td><td class="toc-counts"><span class="toc-n unknown">⁦1⁩ לאימות</span></td></tr><tr><td class="toc-name">⁦8⁩. איכות מודל — חפיפות גאומטריות בין רכיבים</td><td class="toc-counts"><span class="toc-n unknown">⁦3⁩ לאימות</span></td></tr><tr><td class="toc-name">בדיקות שעברו</td><td class="toc-counts"><span class="toc-n pass">⁦10⁩</span></td></tr><tr><td class="toc-name">נספח — לאימות ידני</td><td class="toc-counts"><span class="toc-n unknown">⁦28⁩</span></td></tr><tr><td class="toc-name">הערת שקיפות</td><td></td></tr><tr><td class="toc-name">אישור והצהרת עורך הבדיקה</td><td></td></tr></table>
     
 
     <h2>מתודולוגיה <span class="h2-sub">כיצד נבדק המודל</span></h2>
@@ -286,7 +365,7 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
       תוך ציון מספר התקן והסעיף.
       <b>3. עיקרון אפס-התרעות-שווא.</b> קביעת «נכשל» ניתנת רק כשיש ודאות מלאה
       (מקור + מדידה + שיוך רכיב). כאשר חסר נתון במודל — הממצא מסומן «לאימות»
-      ולעולם לא כ«נכשל» שגוי. זהו העיקרון שמבטיח שדו״ח זה לא ייצר התרעה שקרית.
+      ולעולם לא כ«נכשל» שגוי. זהו העיקרון שמבטיח שדו״ח זה לא ייצר התרעה שקרית. <b>הערה:</b> דו״ח זה הופק ללא תצלומי-מודל תלת-ממדיים; ממצאים הדורשים בחינה חזותית מרוכזים בנספח «לאימות ידני» בסוף הדו״ח.
     </div>
     
 
@@ -294,19 +373,19 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
     <table class="model-info"><tr><th>קובץ מקור</th><td>digitalhub_arc.ifc + digitalhub_hzg.ifc + digitalhub_lft.ifc + digitalhub_san.ifc</td></tr><tr><th>סכמה</th><td>IFC4</td></tr><tr><th>כלי עריכה</th><td>Revit 2019</td></tr><tr><th>קומות</th><td>⁦4⁩</td></tr><tr><th>דלתות</th><td>⁦70⁩</td></tr><tr><th>מרחבים</th><td>⁦64⁩</td></tr><tr><th>מהלכי מדרגות</th><td>⁦10⁩</td></tr><tr><th>מהלכי כבשים</th><td>⁦0⁩</td></tr><tr><th>מעליות</th><td>⁦2⁩</td></tr></table>
     
 <h2>ממצאים לפי תקן</h2>
-<h3 style="margin-top:14pt;color:#1C3D5A">ת&quot;י 1918 חלק 3.1</h3>
+<h3 style="margin-top:14pt;color:#1C3D5A">⁦1⁩. ת&quot;י 1918 חלק 3.1</h3>
 <div class="section">
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦01⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.01⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רום מדרגה גבוה מדרישת התקן</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ד · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2421041 Run 1</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">179 מ&quot;מ</td><th>נדרש</th><td>≤ 175 מ&quot;מ</td></tr></table>
       <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2421041 Run 1&#x27; בקומה &#x27;B01_OKRD&#x27; עם רום בגובה 179 מ&quot;מ, מעל המקסימום 175 מ&quot;מ.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2421041 Run 1</div></div>
+      
       
     <div class="alternatives">
       <h4>חלופות מוצעות (⁦3⁩):</h4>
@@ -351,28 +430,28 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦02⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.02⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">מדרגה — יחס שלח-רום גבוה מהארגונומיה התקנית</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ה (הערה — נוסחת שלח+2×רום) · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2421041 Run 1</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">635 מ&quot;מ (שלח+2רום)</td><th>נדרש</th><td>610–630 מ&quot;מ</td></tr></table>
       <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2421041 Run 1&#x27; בקומה &#x27;B01_OKRD&#x27; עם שלח 277 מ&quot;מ ורום 179 מ&quot;מ. נוסחת הארגונומיה: שלח + 2×רום = 635 מ&quot;מ, מחוץ לטווח התקני 610–630 מ&quot;מ. מדרגה כזו קשה להליכה ומעלה סיכון נפילה — דרישה לפירוק ויציקה מחדש.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2421041 Run 1</div></div>
+      
       
     </div>
     
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦03⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.03⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רום מדרגה גבוה מדרישת התקן</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ד · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2421041 Run 2</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">179 מ&quot;מ</td><th>נדרש</th><td>≤ 175 מ&quot;מ</td></tr></table>
       <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2421041 Run 2&#x27; בקומה &#x27;B01_OKRD&#x27; עם רום בגובה 179 מ&quot;מ, מעל המקסימום 175 מ&quot;מ.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2421041 Run 2</div></div>
+      
       
     <div class="alternatives">
       <h4>חלופות מוצעות (⁦3⁩):</h4>
@@ -417,28 +496,28 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦04⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.04⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">מדרגה — יחס שלח-רום גבוה מהארגונומיה התקנית</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ה (הערה — נוסחת שלח+2×רום) · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2421041 Run 2</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">635 מ&quot;מ (שלח+2רום)</td><th>נדרש</th><td>610–630 מ&quot;מ</td></tr></table>
       <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2421041 Run 2&#x27; בקומה &#x27;B01_OKRD&#x27; עם שלח 277 מ&quot;מ ורום 179 מ&quot;מ. נוסחת הארגונומיה: שלח + 2×רום = 635 מ&quot;מ, מחוץ לטווח התקני 610–630 מ&quot;מ. מדרגה כזו קשה להליכה ומעלה סיכון נפילה — דרישה לפירוק ויציקה מחדש.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2421041 Run 2</div></div>
+      
       
     </div>
     
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦05⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.05⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רום מדרגה גבוה מדרישת התקן</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ד · קומה E00_OKRD · רכיב Fertigbetontreppe:Treppe:2421059 Run 1</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">177 מ&quot;מ</td><th>נדרש</th><td>≤ 175 מ&quot;מ</td></tr></table>
       <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2421059 Run 1&#x27; בקומה &#x27;E00_OKRD&#x27; עם רום בגובה 177 מ&quot;מ, מעל המקסימום 175 מ&quot;מ.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2421059 Run 1</div></div>
+      
       
     <div class="alternatives">
       <h4>חלופות מוצעות (⁦3⁩):</h4>
@@ -483,14 +562,14 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦06⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.06⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רום מדרגה גבוה מדרישת התקן</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ד · קומה E00_OKRD · רכיב Fertigbetontreppe:Treppe:2421059 Run 2</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">177 מ&quot;מ</td><th>נדרש</th><td>≤ 175 מ&quot;מ</td></tr></table>
       <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2421059 Run 2&#x27; בקומה &#x27;E00_OKRD&#x27; עם רום בגובה 177 מ&quot;מ, מעל המקסימום 175 מ&quot;מ.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2421059 Run 2</div></div>
+      
       
     <div class="alternatives">
       <h4>חלופות מוצעות (⁦3⁩):</h4>
@@ -535,14 +614,14 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦07⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.07⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רום מדרגה גבוה מדרישת התקן</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ד · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2423887 Run 1</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">179 מ&quot;מ</td><th>נדרש</th><td>≤ 175 מ&quot;מ</td></tr></table>
       <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2423887 Run 1&#x27; בקומה &#x27;B01_OKRD&#x27; עם רום בגובה 179 מ&quot;מ, מעל המקסימום 175 מ&quot;מ.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2423887 Run 1</div></div>
+      
       
     <div class="alternatives">
       <h4>חלופות מוצעות (⁦3⁩):</h4>
@@ -587,28 +666,28 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦08⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.08⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">מדרגה — יחס שלח-רום גבוה מהארגונומיה התקנית</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ה (הערה — נוסחת שלח+2×רום) · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2423887 Run 1</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">635 מ&quot;מ (שלח+2רום)</td><th>נדרש</th><td>610–630 מ&quot;מ</td></tr></table>
       <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2423887 Run 1&#x27; בקומה &#x27;B01_OKRD&#x27; עם שלח 277 מ&quot;מ ורום 179 מ&quot;מ. נוסחת הארגונומיה: שלח + 2×רום = 635 מ&quot;מ, מחוץ לטווח התקני 610–630 מ&quot;מ. מדרגה כזו קשה להליכה ומעלה סיכון נפילה — דרישה לפירוק ויציקה מחדש.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2423887 Run 1</div></div>
+      
       
     </div>
     
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦09⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.09⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רום מדרגה גבוה מדרישת התקן</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ד · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2423887 Run 2</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">179 מ&quot;מ</td><th>נדרש</th><td>≤ 175 מ&quot;מ</td></tr></table>
       <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2423887 Run 2&#x27; בקומה &#x27;B01_OKRD&#x27; עם רום בגובה 179 מ&quot;מ, מעל המקסימום 175 מ&quot;מ.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2423887 Run 2</div></div>
+      
       
     <div class="alternatives">
       <h4>חלופות מוצעות (⁦3⁩):</h4>
@@ -653,28 +732,28 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦10⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.10⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">מדרגה — יחס שלח-רום גבוה מהארגונומיה התקנית</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ה (הערה — נוסחת שלח+2×רום) · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2423887 Run 2</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">635 מ&quot;מ (שלח+2רום)</td><th>נדרש</th><td>610–630 מ&quot;מ</td></tr></table>
       <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2423887 Run 2&#x27; בקומה &#x27;B01_OKRD&#x27; עם שלח 277 מ&quot;מ ורום 179 מ&quot;מ. נוסחת הארגונומיה: שלח + 2×רום = 635 מ&quot;מ, מחוץ לטווח התקני 610–630 מ&quot;מ. מדרגה כזו קשה להליכה ומעלה סיכון נפילה — דרישה לפירוק ויציקה מחדש.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2423887 Run 2</div></div>
+      
       
     </div>
     
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦11⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.11⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רום מדרגה גבוה מדרישת התקן</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ד · קומה E00_OKRD · רכיב Fertigbetontreppe:Treppe:2423903 Run 1</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">177 מ&quot;מ</td><th>נדרש</th><td>≤ 175 מ&quot;מ</td></tr></table>
       <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2423903 Run 1&#x27; בקומה &#x27;E00_OKRD&#x27; עם רום בגובה 177 מ&quot;מ, מעל המקסימום 175 מ&quot;מ.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2423903 Run 1</div></div>
+      
       
     <div class="alternatives">
       <h4>חלופות מוצעות (⁦3⁩):</h4>
@@ -719,14 +798,14 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦12⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.12⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רום מדרגה גבוה מדרישת התקן</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ד · קומה E00_OKRD · רכיב Fertigbetontreppe:Treppe:2423903 Run 2</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">177 מ&quot;מ</td><th>נדרש</th><td>≤ 175 מ&quot;מ</td></tr></table>
       <div class="desc">מהלך מדרגות &#x27;Fertigbetontreppe:Treppe:2423903 Run 2&#x27; בקומה &#x27;E00_OKRD&#x27; עם רום בגובה 177 מ&quot;מ, מעל המקסימום 175 מ&quot;מ.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fertigbetontreppe:Treppe:2423903 Run 2</div></div>
+      
       
     <div class="alternatives">
       <h4>חלופות מוצעות (⁦3⁩):</h4>
@@ -771,14 +850,14 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦13⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.13⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רום מדרגה גבוה מדרישת התקן</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ד · קומה E00_OKRD · רכיב Zusammengebaute Treppe:Treppe:2424673 Run 1</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">177 מ&quot;מ</td><th>נדרש</th><td>≤ 175 מ&quot;מ</td></tr></table>
       <div class="desc">מהלך מדרגות &#x27;Zusammengebaute Treppe:Treppe:2424673 Run 1&#x27; בקומה &#x27;E00_OKRD&#x27; עם רום בגובה 177 מ&quot;מ, מעל המקסימום 175 מ&quot;מ.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Zusammengebaute Treppe:Treppe:2424673 Run 1</div></div>
+      
       
     <div class="alternatives">
       <h4>חלופות מוצעות (⁦3⁩):</h4>
@@ -823,28 +902,28 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦14⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.14⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">מדרגה — יחס שלח-רום גבוה מהארגונומיה התקנית</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ה (הערה — נוסחת שלח+2×רום) · קומה E00_OKRD · רכיב Zusammengebaute Treppe:Treppe:2424673 Run 1</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">635 מ&quot;מ (שלח+2רום)</td><th>נדרש</th><td>610–630 מ&quot;מ</td></tr></table>
       <div class="desc">מהלך מדרגות &#x27;Zusammengebaute Treppe:Treppe:2424673 Run 1&#x27; בקומה &#x27;E00_OKRD&#x27; עם שלח 280 מ&quot;מ ורום 177 מ&quot;מ. נוסחת הארגונומיה: שלח + 2×רום = 635 מ&quot;מ, מחוץ לטווח התקני 610–630 מ&quot;מ. מדרגה כזו קשה להליכה ומעלה סיכון נפילה — דרישה לפירוק ויציקה מחדש.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Zusammengebaute Treppe:Treppe:2424673 Run 1</div></div>
+      
       
     </div>
     
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦15⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.15⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רום מדרגה גבוה מדרישת התקן</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ד · קומה E00_OKRD · רכיב Zusammengebaute Treppe:Treppe:2424673 Run 2</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">177 מ&quot;מ</td><th>נדרש</th><td>≤ 175 מ&quot;מ</td></tr></table>
       <div class="desc">מהלך מדרגות &#x27;Zusammengebaute Treppe:Treppe:2424673 Run 2&#x27; בקומה &#x27;E00_OKRD&#x27; עם רום בגובה 177 מ&quot;מ, מעל המקסימום 175 מ&quot;מ.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Zusammengebaute Treppe:Treppe:2424673 Run 2</div></div>
+      
       
     <div class="alternatives">
       <h4>חלופות מוצעות (⁦3⁩):</h4>
@@ -889,28 +968,28 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦16⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.16⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">מדרגה — יחס שלח-רום גבוה מהארגונומיה התקנית</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.7.2.ה (הערה — נוסחת שלח+2×רום) · קומה E00_OKRD · רכיב Zusammengebaute Treppe:Treppe:2424673 Run 2</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">635 מ&quot;מ (שלח+2רום)</td><th>נדרש</th><td>610–630 מ&quot;מ</td></tr></table>
       <div class="desc">מהלך מדרגות &#x27;Zusammengebaute Treppe:Treppe:2424673 Run 2&#x27; בקומה &#x27;E00_OKRD&#x27; עם שלח 280 מ&quot;מ ורום 177 מ&quot;מ. נוסחת הארגונומיה: שלח + 2×רום = 635 מ&quot;מ, מחוץ לטווח התקני 610–630 מ&quot;מ. מדרגה כזו קשה להליכה ומעלה סיכון נפילה — דרישה לפירוק ויציקה מחדש.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Zusammengebaute Treppe:Treppe:2424673 Run 2</div></div>
+      
       
     </div>
     
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦17⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.17⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E00_OKRD · רכיב Fluchtflur Ost</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">1175 מ&quot;מ (bbox)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
       <div class="desc">מסדרון &#x27;Fluchtflur Ost&#x27; בקומה &#x27;E00_OKRD&#x27; ברוחב כ-1175 מ&quot;מ, מתחת לדרישת תקן הנגישות של 1300 מ&quot;מ. מדידה נעשתה לפי bounding box מרחבי — בדיקה ידנית מומלצת.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fluchtflur Ost</div></div>
+      
       
     <div class="alternatives">
       <h4>חלופות מוצעות (⁦3⁩):</h4>
@@ -955,14 +1034,14 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦18⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.18⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E00_OKRD · רכיב Fluchtflur West</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">1175 מ&quot;מ (bbox)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
       <div class="desc">מסדרון &#x27;Fluchtflur West&#x27; בקומה &#x27;E00_OKRD&#x27; ברוחב כ-1175 מ&quot;מ, מתחת לדרישת תקן הנגישות של 1300 מ&quot;מ. מדידה נעשתה לפי bounding box מרחבי — בדיקה ידנית מומלצת.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Fluchtflur West</div></div>
+      
       
     <div class="alternatives">
       <h4>חלופות מוצעות (⁦3⁩):</h4>
@@ -1007,154 +1086,154 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦19⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.19⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה — מקטע בתוך המסדרון</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E00_OKRD · רכיב Eingangsbereich / Flur</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">1099 מ&quot;מ (מקטע)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
       <div class="desc">בתוך המסדרון «Eingangsbereich / Flur» בקומה &#x27;E00_OKRD&#x27; נמצא מעבר ברוחב 1099 מ&quot;מ לאורך 13.1 מ&#x27; — מתחת לדרישת 1300 מ&quot;מ של דרך נגישה (סעיף 2.5.2.1). (מקטע 1 מתוך 4) החלל כולו רחב יותר במלבן העוטף, אך המדידה הגאומטרית של המעבר עצמו (שחיקת-פוליגון) חושפת את המקטע הצר. פתחי דלתות ומעברים נקודתיים הוחרגו (מקטע מקיים ≥ 2 מ&#x27;).</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Eingangsbereich / Flur</div></div>
+      
       
     </div>
     
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦20⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.20⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה — מקטע בתוך המסדרון</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E00_OKRD · רכיב Eingangsbereich / Flur</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">1100 מ&quot;מ (מקטע)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
       <div class="desc">בתוך המסדרון «Eingangsbereich / Flur» בקומה &#x27;E00_OKRD&#x27; נמצא מעבר ברוחב 1100 מ&quot;מ לאורך 13.1 מ&#x27; — מתחת לדרישת 1300 מ&quot;מ של דרך נגישה (סעיף 2.5.2.1). (מקטע 2 מתוך 4) החלל כולו רחב יותר במלבן העוטף, אך המדידה הגאומטרית של המעבר עצמו (שחיקת-פוליגון) חושפת את המקטע הצר. פתחי דלתות ומעברים נקודתיים הוחרגו (מקטע מקיים ≥ 2 מ&#x27;).</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Eingangsbereich / Flur</div></div>
+      
       
     </div>
     
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦21⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.21⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה — מקטע בתוך המסדרון</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E00_OKRD · רכיב Eingangsbereich / Flur</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">1174 מ&quot;מ (מקטע)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
       <div class="desc">בתוך המסדרון «Eingangsbereich / Flur» בקומה &#x27;E00_OKRD&#x27; נמצא מעבר ברוחב 1174 מ&quot;מ לאורך 20.0 מ&#x27; — מתחת לדרישת 1300 מ&quot;מ של דרך נגישה (סעיף 2.5.2.1). (מקטע 3 מתוך 4) החלל כולו רחב יותר במלבן העוטף, אך המדידה הגאומטרית של המעבר עצמו (שחיקת-פוליגון) חושפת את המקטע הצר. פתחי דלתות ומעברים נקודתיים הוחרגו (מקטע מקיים ≥ 2 מ&#x27;).</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Eingangsbereich / Flur</div></div>
+      
       
     </div>
     
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦22⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.22⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה — מקטע בתוך המסדרון</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E00_OKRD · רכיב Eingangsbereich / Flur</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">1174 מ&quot;מ (מקטע)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
       <div class="desc">בתוך המסדרון «Eingangsbereich / Flur» בקומה &#x27;E00_OKRD&#x27; נמצא מעבר ברוחב 1174 מ&quot;מ לאורך 19.9 מ&#x27; — מתחת לדרישת 1300 מ&quot;מ של דרך נגישה (סעיף 2.5.2.1). (מקטע 4 מתוך 4) החלל כולו רחב יותר במלבן העוטף, אך המדידה הגאומטרית של המעבר עצמו (שחיקת-פוליגון) חושפת את המקטע הצר. פתחי דלתות ומעברים נקודתיים הוחרגו (מקטע מקיים ≥ 2 מ&#x27;).</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Eingangsbereich / Flur</div></div>
+      
       
     </div>
     
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦23⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.23⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה — מקטע בתוך המסדרון</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E01_OKRD · רכיב Flur - OG</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">1100 מ&quot;מ (מקטע)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
       <div class="desc">בתוך המסדרון «Flur - OG» בקומה &#x27;E01_OKRD&#x27; נמצא מעבר ברוחב 1100 מ&quot;מ לאורך 8.2 מ&#x27; — מתחת לדרישת 1300 מ&quot;מ של דרך נגישה (סעיף 2.5.2.1). (מקטע 1 מתוך 6) החלל כולו רחב יותר במלבן העוטף, אך המדידה הגאומטרית של המעבר עצמו (שחיקת-פוליגון) חושפת את המקטע הצר. פתחי דלתות ומעברים נקודתיים הוחרגו (מקטע מקיים ≥ 2 מ&#x27;).</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Flur - OG</div></div>
+      
       
     </div>
     
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦24⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.24⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה — מקטע בתוך המסדרון</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E01_OKRD · רכיב Flur - OG</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">1100 מ&quot;מ (מקטע)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
       <div class="desc">בתוך המסדרון «Flur - OG» בקומה &#x27;E01_OKRD&#x27; נמצא מעבר ברוחב 1100 מ&quot;מ לאורך 13.7 מ&#x27; — מתחת לדרישת 1300 מ&quot;מ של דרך נגישה (סעיף 2.5.2.1). (מקטע 2 מתוך 6) החלל כולו רחב יותר במלבן העוטף, אך המדידה הגאומטרית של המעבר עצמו (שחיקת-פוליגון) חושפת את המקטע הצר. פתחי דלתות ומעברים נקודתיים הוחרגו (מקטע מקיים ≥ 2 מ&#x27;).</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Flur - OG</div></div>
+      
       
     </div>
     
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦25⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.25⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה — מקטע בתוך המסדרון</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E01_OKRD · רכיב Flur - OG</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">1202 מ&quot;מ (מקטע)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
       <div class="desc">בתוך המסדרון «Flur - OG» בקומה &#x27;E01_OKRD&#x27; נמצא מעבר ברוחב 1202 מ&quot;מ לאורך 6.5 מ&#x27; — מתחת לדרישת 1300 מ&quot;מ של דרך נגישה (סעיף 2.5.2.1). (מקטע 3 מתוך 6) החלל כולו רחב יותר במלבן העוטף, אך המדידה הגאומטרית של המעבר עצמו (שחיקת-פוליגון) חושפת את המקטע הצר. פתחי דלתות ומעברים נקודתיים הוחרגו (מקטע מקיים ≥ 2 מ&#x27;).</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Flur - OG</div></div>
+      
       
     </div>
     
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦26⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.26⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה — מקטע בתוך המסדרון</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E01_OKRD · רכיב Flur - OG</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">1202 מ&quot;מ (מקטע)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
       <div class="desc">בתוך המסדרון «Flur - OG» בקומה &#x27;E01_OKRD&#x27; נמצא מעבר ברוחב 1202 מ&quot;מ לאורך 7.9 מ&#x27; — מתחת לדרישת 1300 מ&quot;מ של דרך נגישה (סעיף 2.5.2.1). (מקטע 4 מתוך 6) החלל כולו רחב יותר במלבן העוטף, אך המדידה הגאומטרית של המעבר עצמו (שחיקת-פוליגון) חושפת את המקטע הצר. פתחי דלתות ומעברים נקודתיים הוחרגו (מקטע מקיים ≥ 2 מ&#x27;).</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Flur - OG</div></div>
+      
       
     </div>
     
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦27⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.27⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה — מקטע בתוך המסדרון</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E01_OKRD · רכיב Flur - OG</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">1202 מ&quot;מ (מקטע)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
       <div class="desc">בתוך המסדרון «Flur - OG» בקומה &#x27;E01_OKRD&#x27; נמצא מעבר ברוחב 1202 מ&quot;מ לאורך 13.4 מ&#x27; — מתחת לדרישת 1300 מ&quot;מ של דרך נגישה (סעיף 2.5.2.1). (מקטע 5 מתוך 6) החלל כולו רחב יותר במלבן העוטף, אך המדידה הגאומטרית של המעבר עצמו (שחיקת-פוליגון) חושפת את המקטע הצר. פתחי דלתות ומעברים נקודתיים הוחרגו (מקטע מקיים ≥ 2 מ&#x27;).</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Flur - OG</div></div>
+      
       
     </div>
     
 
     <div class="card fail">
       <div class="card-head">
-        <span class="idx">ממצא ⁦28⁩</span>
-        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.28⁩</span>
+        <span class="chip st-fail">נכשל</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רוחב מסדרון צר מהנדרש לדרך נגישה — מקטע בתוך המסדרון</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 · קומה E01_OKRD · רכיב Flur - OG</div>
       <table class="spec"><tr><th>נמדד</th><td class="bad">1202 מ&quot;מ (מקטע)</td><th>נדרש</th><td>≥ 1300 מ&quot;מ</td></tr></table>
       <div class="desc">בתוך המסדרון «Flur - OG» בקומה &#x27;E01_OKRD&#x27; נמצא מעבר ברוחב 1202 מ&quot;מ לאורך 6.5 מ&#x27; — מתחת לדרישת 1300 מ&quot;מ של דרך נגישה (סעיף 2.5.2.1). (מקטע 6 מתוך 6) החלל כולו רחב יותר במלבן העוטף, אך המדידה הגאומטרית של המעבר עצמו (שחיקת-פוליגון) חושפת את המקטע הצר. פתחי דלתות ומעברים נקודתיים הוחרגו (מקטע מקיים ≥ 2 מ&#x27;).</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Flur - OG</div></div>
+      
       
     </div>
     
 
     <div class="card warn">
       <div class="card-head">
-        <span class="idx">ממצא ⁦29⁩</span>
-        <span class="chip st-warn">אזהרה</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦1.29⁩</span>
+        <span class="chip st-warn">אזהרה</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">לא זוהה בית שימוש נגיש במודל</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.13.1</div>
       <table class="spec"><tr><th>נמדד</th><td class="">0 בתי שימוש נגישים</td><th>נדרש</th><td>≥ 1 לפי הוראות כל דין</td></tr></table>
       <div class="desc">המודל מכיל בתי שימוש אך אף אחד מהם לא מסווג כנגיש. אם זה בניין ציבורי, סעיף 2.13.1 מחייב בית שימוש נגיש אחד לפחות. ייתכן שהסיווג לא מופיע בשמות החללים — נדרשת בדיקה ידנית.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">לרכיב זה אין גאומטריה תלת-ממדית במודל — יש לאמת ידנית</div></div>
+      
       
     <div class="alternatives">
       <h4>חלופות מוצעות (⁦3⁩):</h4>
@@ -1199,14 +1278,14 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
 
     <div class="card warn">
       <div class="card-head">
-        <span class="idx">ממצא ⁦30⁩</span>
-        <span class="chip st-warn">אזהרה</span><span class="chip cf-advisory">ייעוץ</span>
+        <span class="idx">ממצא ⁦1.30⁩</span>
+        <span class="chip st-warn">אזהרה</span><span class="chip cf-advisory">ייעוץ</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">שירות נגיש — לא אותר במודל</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 3.1, (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.13 — שירותים נגישים</div>
       <table class="spec"><tr><th>נמדד</th><td class="">16 אסלות · 0 נגישות מסומנות</td><th>נדרש</th><td>לפחות שירות נגיש אחד (ת&quot;י 1918 §2.13)</td></tr></table>
       <div class="desc">זוהו 16 אסלות במודל, אך אף אחת אינה מסומנת כנגישה ולא אותר תא-שירות נגיש. ת&quot;י 1918 §2.13 מחייב שירות נגיש בבניין ציבורי. סמן את האסלה הנגישה (שם/טיפוס), או ודא עם יועץ הנגישות שקיים תא נגיש — לא ניתן לקבוע מהמודל בלבד.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">לרכיב זה אין גאומטריה תלת-ממדית במודל — יש לאמת ידנית</div></div>
+      
       
     <div class="alternatives">
       <h4>חלופות מוצעות (⁦3⁩):</h4>
@@ -1248,370 +1327,14 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
     
     </div>
     
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦31⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">מעלית ללא נתוני רוחב דלת</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.9.2 · קומה E00_OKRD · רכיב Aufzug West</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">לא ידוע</td><th>נדרש</th><td>≥ 800 מ&quot;מ</td></tr></table>
-      <div class="desc">מעלית &#x27;Aufzug West&#x27; בקומה &#x27;E00_OKRD&#x27; — לא נמצאה דלת תא תואמת במודל. לא ניתן לוודא ציות לסעיף 2.9.2 (רוחב ≥ 80-100 ס&quot;מ).</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Aufzug West</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦32⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">מעלית ללא נתוני רוחב דלת</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.9.2 · קומה E00_OKRD · רכיב Aufzug Ost</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">לא ידוע</td><th>נדרש</th><td>≥ 800 מ&quot;מ</td></tr></table>
-      <div class="desc">מעלית &#x27;Aufzug Ost&#x27; בקומה &#x27;E00_OKRD&#x27; — לא נמצאה דלת תא תואמת במודל. לא ניתן לוודא ציות לסעיף 2.9.2 (רוחב ≥ 80-100 ס&quot;מ).</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Aufzug Ost</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦33⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">מעלית — פנים התא אינו ממודל, לא ניתן לאמת מידות נגישות</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.9.2.ב · קומה E00_OKRD · רכיב Aufzug West</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">פיר ⁦2000×2575⁩ מ&quot;מ</td><th>נדרש</th><td>פנים תא ≥ ⁦1100×1400⁩ מ&quot;מ (טיפוס 2)</td></tr></table>
-      <div class="desc">מעלית &#x27;Aufzug West&#x27; בקומה &#x27;E00_OKRD&#x27; זוהתה כחלל-פיר במודל (מידות פיר ⁦2000×2575⁩ מ&quot;מ). פנים תא המעלית אינו ממודל בנפרד (אין IfcTransportElement), ומידות הפיר כוללות קירות ומרווחים — גדולות מפנים התא. לכן לא ניתן לאמת תא נגיש טיפוס 2 (≥ 110×140 ס&quot;מ פנים). יש למדל את פנים התא או לספק את מידותיו.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Aufzug West</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦34⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">מעלית — פנים התא אינו ממודל, לא ניתן לאמת מידות נגישות</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.9.2.ב · קומה E00_OKRD · רכיב Aufzug Ost</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">פיר ⁦2000×2575⁩ מ&quot;מ</td><th>נדרש</th><td>פנים תא ≥ ⁦1100×1400⁩ מ&quot;מ (טיפוס 2)</td></tr></table>
-      <div class="desc">מעלית &#x27;Aufzug Ost&#x27; בקומה &#x27;E00_OKRD&#x27; זוהתה כחלל-פיר במודל (מידות פיר ⁦2000×2575⁩ מ&quot;מ). פנים תא המעלית אינו ממודל בנפרד (אין IfcTransportElement), ומידות הפיר כוללות קירות ומרווחים — גדולות מפנים התא. לכן לא ניתן לאמת תא נגיש טיפוס 2 (≥ 110×140 ס&quot;מ פנים). יש למדל את פנים התא או לספק את מידותיו.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Aufzug Ost</div></div>
-      
-    </div>
-    
-
-    <div class="card skip">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦35⁩</span>
-        <span class="chip st-skip">לא רלוונטי</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">בדיקת גובה ידית דלתות — לא רצה (נתון IFC חסר)</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.3.8</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">0 מתוך 70 דלתות</td><th>נדרש</th><td>Pset_DoorCommon.HandleHeight לפחות בדלת אחת</td></tr></table>
-      <div class="desc">בדיקת סעיף 2.3.8 (גובה ידיות ומנעולים 85-110 ס&quot;מ) לא בוצעה. כל 70 הדלתות במודל חסרות את Pset_DoorCommon.HandleHeight. יש למלא את הגובה במודל המקור (Revit/ArchiCAD) ולהריץ שוב. ראו גם דרישות נוספות של סעיף 2.3.8 שאינן בדיקות אוטומטיות: מרחק ידית מאגף ≥ 4 ס&quot;מ, אורך אחיזה ≥ 8 ס&quot;מ, איסור ידית כפתור בדלת סובבת, מנעול תפוס-פנוי בבתי שימוש נגישים.</div>
-      
-      
-    </div>
-    
 </div>
-<h3 style="margin-top:14pt;color:#1C3D5A">ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון</h3>
-<div class="section">
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦36⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">דירוג אש חסר בדלת לחדר מדרגות</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה E00_OKRD · רכיב TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2421088</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
-      <div class="desc">הדלת &#x27;TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2421088&#x27; בקומה &#x27;E00_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2421088</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦37⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">דירוג אש חסר בדלת לחדר מדרגות</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה E00_OKRD · רכיב TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2421089</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
-      <div class="desc">הדלת &#x27;TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2421089&#x27; בקומה &#x27;E00_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2421089</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦38⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">דירוג אש חסר בדלת לפיר מעלית</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה E00_OKRD · רכיב TU Durchgang:DL - 1200 x 2100:2421090</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
-      <div class="desc">הדלת &#x27;TU Durchgang:DL - 1200 x 2100:2421090&#x27; בקומה &#x27;E00_OKRD&#x27; מחוברת לפיר מעלית. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU Durchgang:DL - 1200 x 2100:2421090</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦39⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">דירוג אש חסר בדלת לחדר מדרגות</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה E00_OKRD · רכיב TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2423930</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
-      <div class="desc">הדלת &#x27;TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2423930&#x27; בקומה &#x27;E00_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2423930</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦40⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">דירוג אש חסר בדלת לחדר מדרגות</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה E00_OKRD · רכיב TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2423931</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
-      <div class="desc">הדלת &#x27;TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2423931&#x27; בקומה &#x27;E00_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2423931</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦41⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">דירוג אש חסר בדלת לפיר מעלית</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה E00_OKRD · רכיב TU Durchgang:DL - 1200 x 2100:2423932</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
-      <div class="desc">הדלת &#x27;TU Durchgang:DL - 1200 x 2100:2423932&#x27; בקומה &#x27;E00_OKRD&#x27; מחוברת לפיר מעלית. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU Durchgang:DL - 1200 x 2100:2423932</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦42⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">דירוג אש חסר בדלת לחדר מדרגות</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה E01_OKRD · רכיב TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2426178</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
-      <div class="desc">הדלת &#x27;TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2426178&#x27; בקומה &#x27;E01_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2426178</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦43⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">דירוג אש חסר בדלת לחדר מדרגות</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה E01_OKRD · רכיב TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2426180</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
-      <div class="desc">הדלת &#x27;TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2426180&#x27; בקומה &#x27;E01_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2426180</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦44⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">דירוג אש חסר בדלת לפיר מעלית</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה E01_OKRD · רכיב TU Durchgang:DL - 1200 x 2100:2426586</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
-      <div class="desc">הדלת &#x27;TU Durchgang:DL - 1200 x 2100:2426586&#x27; בקומה &#x27;E01_OKRD&#x27; מחוברת לפיר מעלית. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU Durchgang:DL - 1200 x 2100:2426586</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦45⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">דירוג אש חסר בדלת לפיר מעלית</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה E01_OKRD · רכיב TU Durchgang:DL - 1200 x 2100:2426588</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
-      <div class="desc">הדלת &#x27;TU Durchgang:DL - 1200 x 2100:2426588&#x27; בקומה &#x27;E01_OKRD&#x27; מחוברת לפיר מעלית. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU Durchgang:DL - 1200 x 2100:2426588</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦46⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">דירוג אש חסר בדלת לחדר מדרגות</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה B01_OKRD · רכיב TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432934</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
-      <div class="desc">הדלת &#x27;TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432934&#x27; בקומה &#x27;B01_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432934</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦47⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">דירוג אש חסר בדלת לחדר מדרגות</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה B01_OKRD · רכיב TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432938</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
-      <div class="desc">הדלת &#x27;TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432938&#x27; בקומה &#x27;B01_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432938</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦48⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">דירוג אש חסר בדלת לחדר מכונות/טכני</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה B01_OKRD · רכיב TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432971</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
-      <div class="desc">הדלת &#x27;TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432971&#x27; בקומה &#x27;B01_OKRD&#x27; מחוברת לחדר מכונות/טכני. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432971</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦49⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">דירוג אש חסר בדלת לחדר מכונות/טכני</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה B01_OKRD · רכיב TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2433295</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
-      <div class="desc">הדלת &#x27;TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2433295&#x27; בקומה &#x27;B01_OKRD&#x27; מחוברת לחדר מכונות/טכני. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2433295</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦50⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">דירוג אש חסר בדלת לחדר מכונות/טכני</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה B01_OKRD · רכיב TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434320</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
-      <div class="desc">הדלת &#x27;TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434320&#x27; בקומה &#x27;B01_OKRD&#x27; מחוברת לחדר מכונות/טכני. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434320</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦51⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">דירוג אש חסר בדלת לחדר שירות טכני</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה B01_OKRD · רכיב TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434549</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
-      <div class="desc">הדלת &#x27;TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434549&#x27; בקומה &#x27;B01_OKRD&#x27; מחוברת לחדר שירות טכני. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434549</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦52⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">דירוג אש חסר בדלת לחדר מכונות/טכני</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳) · קומה B01_OKRD · רכיב TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434619</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">לא מולא במודל</td><th>נדרש</th><td>≥ EI30 דקות</td></tr></table>
-      <div class="desc">הדלת &#x27;TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434619&#x27; בקומה &#x27;B01_OKRD&#x27; מחוברת לחדר מכונות/טכני. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434619</div></div>
-      
-    </div>
-    
-</div>
-<h3 style="margin-top:14pt;color:#1C3D5A">תקנות התכנון והבנייה תש&quot;ל-1970</h3>
+<h3 style="margin-top:14pt;color:#1C3D5A">⁦2⁩. ת&quot;י 1001 — מסלול מילוט (≥ 110 ס&quot;מ) × ת&quot;י 1918 חלק 3.1</h3>
 <div class="section">
 
     <div class="card warn">
       <div class="card-head">
-        <span class="idx">ממצא ⁦53⁩</span>
-        <span class="chip st-warn">אזהרה</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">מזקף ראש בחדר (סעיף 2.03(ב))</h3>
-      </div>
-      <div class="source">מקור: תקנות התכנון והבנייה תש&quot;ל-1970, סעיף 2.03(א)(3)+(ב) · קומה B01_OKRD · רכיב RLT-Raum</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">1.51 מ&#x27;</td><th>נדרש</th><td>≥ 2.05 מ&#x27;</td></tr></table>
-      <div class="desc">מזקף ראש 1.51 מ&#x27; מתחת ל«מערכת (קובץ דיסציפלינה)» בחדר שירות «RLT-Raum» — פחות מהגובה 2.05 מ&#x27; של סעיף 2.03. מותר גובה נמוך רק על השטח העודף על מינימום סעיף 2.04 (קורות/כוכים) — לאימות מול האדריכל.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">RLT-Raum</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦54⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">מטבח — חלון בקיר-הגבול שויך לחלל סמוך (לאימות)</h3>
-      </div>
-      <div class="source">מקור: תקנות התכנון והבנייה תש&quot;ל-1970, סעיף 2.20 · קומה E00_OKRD · רכיב Küche</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">חלון בקיר-גבול (שיוך לחלל סמוך)</td><th>נדרש</th><td>חלון לאוויר החוץ (סעיף 2.20) — לאימות</td></tr></table>
-      <div class="desc">חלל &#x27;Küche&#x27; בקומה &#x27;E00_OKRD&#x27; (מטבח) — לא מקושר אליו חלון ישירות, אך קיים חלון המותקן באחד מקירות-הגבול שלו וששויך בחילוץ לחלל הסמוך (קיר משותף). לכן לא ניתן לקבוע בוודאות שאין כאן חלון לאוויר החוץ (סעיף 2.20) — ייתכן שהחלון משרת את החלל וייתכן שהוא פנימי. נדרש אימות ידני של שיוך החלון / התאורה הטבעית בפועל.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Küche</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦55⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">לא זוהתה מעלית נושאת אלונקה במודל</h3>
-      </div>
-      <div class="source">מקור: תקנות התכנון והבנייה תש&quot;ל-1970, סעיף 3.7.3.4(ב)(1)</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">2 מעליות — אף אחת אלונקה</td><th>נדרש</th><td>מעלית אחת לפחות בעומק ≥ 2100 מ&quot;מ</td></tr></table>
-      <div class="desc">המודל מכיל 2 מעלית/ות אך אף אחת מהן לא עומדת במידות תא מעלית אלונקה (עומק ≥ 2100 מ&quot;מ × רוחב ≥ 1100 מ&quot;מ) ואף אחת לא מזוהה לפי שמה כמעלית אלונקה. בבניין רב-קומות (כהגדרתו בחוק התכנון והבנייה סעיף 158א), סעיף 3.7.3.4(א) של התקנות מחייב מעלית אחת לפחות כזו. יש לוודא ידנית האם הבניין חייב במעלית אלונקה.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">לרכיב זה אין גאומטריה תלת-ממדית במודל — יש לאמת ידנית</div></div>
-      
-    </div>
-    
-</div>
-<h3 style="margin-top:14pt;color:#1C3D5A">ת&quot;י 1001 — מסלול מילוט (≥ 110 ס&quot;מ) × ת&quot;י 1918 חלק 3.1</h3>
-<div class="section">
-
-    <div class="card warn">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦56⁩</span>
-        <span class="chip st-warn">אזהרה</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦2.01⁩</span>
+        <span class="chip st-warn">אזהרה</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רוחב מסדרון — מילוט מול נגישות</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1001 — מסלול מילוט (≥ 110 ס&quot;מ) × ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 (≥ 130 ס&quot;מ) · רכיב מסדרון &#x27;Fluchtflur Ost&#x27; ברוחב 1175 מ&quot;מ: עבור לת&quot;י 1001 (מילוט), נכשל לת&quot;י 1918 (</div>
@@ -1621,15 +1344,15 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
 מופע שזוהה: מסדרון &#x27;Fluchtflur Ost&#x27; ברוחב 1175 מ&quot;מ: עבור לת&quot;י 1001 (מילוט), נכשל לת&quot;י 1918 (נגישות)
 
 המלצת פתרון: להרחיב מסדרון ל-≥ 130 ס&quot;מ. אם בלתי אפשרי: להפעיל את החריג בסעיף 2.5.2.2 (פרוזדור ≥ 90 ס&quot;מ עם הרחבות כל 15 מ&#x27; ומשטחי תמרון).</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">מסדרון &#x27;Fluchtflur Ost&#x27; ברוחב 1175 מ&quot;מ: עבור לת&quot;י 1001 (מילוט), נכשל לת&quot;י 1918 (</div></div>
+      
       
     </div>
     
 
     <div class="card warn">
       <div class="card-head">
-        <span class="idx">ממצא ⁦57⁩</span>
-        <span class="chip st-warn">אזהרה</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦2.02⁩</span>
+        <span class="chip st-warn">אזהרה</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">רוחב מסדרון — מילוט מול נגישות</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1001 — מסלול מילוט (≥ 110 ס&quot;מ) × ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.5.2.1 (≥ 130 ס&quot;מ) · רכיב מסדרון &#x27;Fluchtflur West&#x27; ברוחב 1175 מ&quot;מ: עבור לת&quot;י 1001 (מילוט), נכשל לת&quot;י 1918 </div>
@@ -1639,251 +1362,64 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
 מופע שזוהה: מסדרון &#x27;Fluchtflur West&#x27; ברוחב 1175 מ&quot;מ: עבור לת&quot;י 1001 (מילוט), נכשל לת&quot;י 1918 (נגישות)
 
 המלצת פתרון: להרחיב מסדרון ל-≥ 130 ס&quot;מ. אם בלתי אפשרי: להפעיל את החריג בסעיף 2.5.2.2 (פרוזדור ≥ 90 ס&quot;מ עם הרחבות כל 15 מ&#x27; ומשטחי תמרון).</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">מסדרון &#x27;Fluchtflur West&#x27; ברוחב 1175 מ&quot;מ: עבור לת&quot;י 1001 (מילוט), נכשל לת&quot;י 1918 </div></div>
+      
       
     </div>
     
 </div>
-<h3 style="margin-top:14pt;color:#1C3D5A">בקרת איכות מודל (BIM Validation) — TofesBIM</h3>
-<div class="section">
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦58⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-advisory">ייעוץ</span>
-        <h3 class="card-title">אלמנטים המצוירים כמשטח בלבד (ללא עובי) — לידיעה</h3>
-      </div>
-      <div class="source">מקור: בקרת איכות מודל (BIM Validation) — TofesBIM · רכיב Unterregion:2439145</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">4 אלמנטים דו-ממדיים</td><th>נדרש</th><td>לידיעה בלבד — אין דרישת תיקון</td></tr></table>
-      <div class="desc">במודל יש 4 אלמנטים שצוירו כמשטח דו-ממדי ולא כגוף מלא (למשל: Unterregion:2439145, Oberfläche:2440033, Unterregion:2454499). לרוב זה מכוון — פני קרקע, תקרות גנריות או סמלי ציוד — ולכן זו אינה שגיאה. כדאי לדעת: אלמנטים כאלה לא נכללים בחישובי כמויות ובבדיקות נפח.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Unterregion:2439145</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦59⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-advisory">ייעוץ</span>
-        <h3 class="card-title">חפיפה תוך-דיסציפלינרית — לאימות</h3>
-      </div>
-      <div class="source">מקור: בקרת איכות מודל (BIM Validation) — TofesBIM · רכיב Sohle:Sohle 1 mm:2437499</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">חיתוך 0.546 מ&quot;ק (88% מהקטן)</td><th>נדרש</th><td>ללא חפיפה בין אלמנטים באותה דיסציפלינה</td></tr></table>
-      <div class="desc">שני אלמנטים מטיפוס IfcSlab — חיתוך-הגופים האמיתי 0.546 מ&quot;ק = 88% מנפח האלמנט הקטן (מעל 50%). מידול כפול-חלקית; ההתנגשות הבין-מערכתית לא מכסה חפיפות בתוך אותה דיסציפלינה.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Sohle:Sohle 1 mm:2437499</div></div>
-      
-    </div>
-    
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦60⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-advisory">ייעוץ</span>
-        <h3 class="card-title">חפיפה תוך-דיסציפלינרית — לאימות</h3>
-      </div>
-      <div class="source">מקור: בקרת איכות מודל (BIM Validation) — TofesBIM · רכיב Geschossdecke:WD 200 hart:2721280</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">חיתוך 0.637 מ&quot;ק (100% מהקטן)</td><th>נדרש</th><td>ללא חפיפה בין אלמנטים באותה דיסציפלינה</td></tr></table>
-      <div class="desc">שני אלמנטים מטיפוס IfcSlab — חיתוך-הגופים האמיתי 0.637 מ&quot;ק = 100% מנפח האלמנט הקטן (מעל 50%). מידול כפול-חלקית; ההתנגשות הבין-מערכתית לא מכסה חפיפות בתוך אותה דיסציפלינה.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Geschossdecke:WD 200 hart:2721280</div></div>
-      
-    </div>
-    
-</div>
-<h3 style="margin-top:14pt;color:#1C3D5A">ת&quot;י 1918 חלק 1</h3>
+<h3 style="margin-top:14pt;color:#1C3D5A">⁦3⁩. ת&quot;י 1918 חלק 1</h3>
 <div class="section">
 
     <div class="card warn">
       <div class="card-head">
-        <span class="idx">ממצא ⁦61⁩</span>
-        <span class="chip st-warn">אזהרה</span><span class="chip cf-high">מדידה ישירה</span>
+        <span class="idx">ממצא ⁦3.01⁩</span>
+        <span class="chip st-warn">אזהרה</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-std">תקן ישראלי</span>
         <h3 class="card-title">מכשול תלוי מתחת למהלך מדרגות (ת&quot;י 1918 חלק 1 §2.9.1)</h3>
       </div>
       <div class="source">מקור: ת&quot;י 1918 חלק 1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.9.1 (מכשולים בדרך — גובה חופשי) · קומה E00_OKRD · רכיב Eingangsbereich / Flur</div>
       <table class="spec"><tr><th>נמדד</th><td class="">0.66 מ&#x27;</td><th>נדרש</th><td>≥ 2.00 מ&#x27; או מחסום</td></tr></table>
       <div class="desc">מהלך המדרגות «Zusammengebaute Treppe:Treppe:2424673 Run 1» יורד מעל «Eingangsbereich / Flur» ומשאיר גובה חופשי של 0.66 מ&#x27; — פחות מ-2.00 מ&#x27;. סעיף 2.9.1 דורש מחסום הניתן לאיתור במקל נחייה (תחתיתו ≤ 30 ס&quot;מ, פניו העליונים ≥ 55 ס&quot;מ מפני הדרך) סביב האזור שמתחת למהלך — יש לוודא שמחסום או סגירה מתוכננים שם.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">התצלום לא נוצר עבור ממצא זה — יש לאמת ידנית במודל</div><div class="ph-where">Eingangsbereich / Flur</div></div>
+      
       
     </div>
     
 </div>
-<h3 style="margin-top:14pt;color:#1C3D5A">טבלה 3.2.15.5 (מרחקי הליכה) — תקנות התכנון והבנייה תש&quot;ל</h3>
+<h3 style="margin-top:14pt;color:#1C3D5A">⁦4⁩. תקנות התכנון והבנייה תש&quot;ל-1970</h3>
 <div class="section">
 
-    <div class="card unknown">
+    <div class="card warn">
       <div class="card-head">
-        <span class="idx">ממצא ⁦62⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-advisory">ייעוץ</span>
-        <h3 class="card-title">מרחק הליכה — חללים ללא מסלול-מילוט מזוהה</h3>
+        <span class="idx">ממצא ⁦4.01⁩</span>
+        <span class="chip st-warn">אזהרה</span><span class="chip cf-high">מדידה ישירה</span><span class="chip tag-law">חקיקה</span>
+        <h3 class="card-title">מזקף ראש בחדר (סעיף 2.03(ב))</h3>
       </div>
-      <div class="source">מקור: טבלה 3.2.15.5 (מרחקי הליכה) — תקנות התכנון והבנייה תש&quot;ל</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">2 חללים</td><th>נדרש</th><td>מסלול-מילוט לכל חלל</td></tr></table>
-      <div class="desc">ל-2 מתוך 64 חללים לא נמצא מסלול דרך דלתות אל מוצא בטוח (דלת חיצונית או כניסה לחדר-מדרגות). (17 חללים מגיעים דרך כניסה לחדר-מדרגות שזוהה כמוצא בטוח — ודא שהוא מוגן כנדרש) לרוב זהו פער בגבולות-החלל (IfcRelSpaceBoundary) או בסימון היציאות; ייתכן גם מבוי-סתום אמיתי. לאימות: Offene Lounge 1 (2-6) · Offene Lounge 2 (2-15)</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">לרכיב זה אין גאומטריה תלת-ממדית במודל — יש לאמת ידנית</div></div>
-      
-    </div>
-    
-</div>
-<h3 style="margin-top:14pt;color:#1C3D5A">ת&quot;י 1205 חלק 2</h3>
-<div class="section">
-
-    <div class="card unknown">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦63⁩</span>
-        <span class="chip st-unknown">חסר מידע</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">שיפוע צנרת נקז — לא ניתן לאמת מהמודל</h3>
-      </div>
-      <div class="source">מקור: ת&quot;י 1205 חלק 2 (מתקני תברואה), סעיף 2.3.1 (טבלה 2)</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">לא ניתן לאמת</td><th>נדרש</th><td>שיפוע לפי קוטר (ת&quot;י 1205 חלק 2, טבלה 2)</td></tr></table>
-      <div class="desc">זוהו 216 מקטעי צנרת נקז אופקית שלא ניתן לאמת את שיפועם: המודל אינו כולל את ציר ההנחה של הצינור (IfcAxis2Placement3D.Axis), וחישוב מתיבת-תיחום (AABB) אינו אמין לשיפוע — הוא כולל את קוטר הצינור ומנפח שיפוע מדומה. לכן לא ניתן לקבוע עמידה בת&quot;י 1205 חלק 2 (טבלה 2). נדרשת בדיקה ידנית, או מודל עם גאומטריית קו-מרכז מדויקת לצנרת.</div>
-      <div class="snap-placeholder"><div class="ph-icon">⬚</div><div class="ph-msg">לרכיב זה אין גאומטריה תלת-ממדית במודל — יש לאמת ידנית</div></div>
-      
-    </div>
-    
-</div>
-<h3 style="margin-top:14pt;color:#1C3D5A">פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל</h3>
-<div class="section">
-
-    <div class="card pass">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦64⁩</span>
-        <span class="chip st-pass">עובר</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">מזקף ראש מעל מדרגות (פרט 3.2.2.4)</h3>
-      </div>
-      <div class="source">מקור: פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2421041 Run 1</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">3.09 מ&#x27;</td><th>נדרש</th><td>≥ 2.10 מ&#x27;</td></tr></table>
-      <div class="desc">מזקף ראש 3.09 מ&#x27; מעל «Fertigbetontreppe:Treppe:2421041 Run 1» — תקין</div>
-      
-      
-    </div>
-    
-
-    <div class="card pass">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦65⁩</span>
-        <span class="chip st-pass">עובר</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">מזקף ראש מעל מדרגות (פרט 3.2.2.4)</h3>
-      </div>
-      <div class="source">מקור: פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2421041 Run 2</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">3.12 מ&#x27;</td><th>נדרש</th><td>≥ 2.10 מ&#x27;</td></tr></table>
-      <div class="desc">מזקף ראש 3.12 מ&#x27; מעל «Fertigbetontreppe:Treppe:2421041 Run 2» — תקין</div>
-      
-      
-    </div>
-    
-
-    <div class="card pass">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦66⁩</span>
-        <span class="chip st-pass">עובר</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">מזקף ראש מעל מדרגות (פרט 3.2.2.4)</h3>
-      </div>
-      <div class="source">מקור: פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל · קומה E00_OKRD · רכיב Fertigbetontreppe:Treppe:2421059 Run 1</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">5.45 מ&#x27;</td><th>נדרש</th><td>≥ 2.10 מ&#x27;</td></tr></table>
-      <div class="desc">מזקף ראש 5.45 מ&#x27; מעל «Fertigbetontreppe:Treppe:2421059 Run 1» — תקין</div>
-      
-      
-    </div>
-    
-
-    <div class="card pass">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦67⁩</span>
-        <span class="chip st-pass">עובר</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">מזקף ראש מעל מדרגות (פרט 3.2.2.4)</h3>
-      </div>
-      <div class="source">מקור: פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל · קומה E00_OKRD · רכיב Fertigbetontreppe:Treppe:2421059 Run 2</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">3.50 מ&#x27;</td><th>נדרש</th><td>≥ 2.10 מ&#x27;</td></tr></table>
-      <div class="desc">מזקף ראש 3.50 מ&#x27; מעל «Fertigbetontreppe:Treppe:2421059 Run 2» — תקין</div>
-      
-      
-    </div>
-    
-
-    <div class="card pass">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦68⁩</span>
-        <span class="chip st-pass">עובר</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">מזקף ראש מעל מדרגות (פרט 3.2.2.4)</h3>
-      </div>
-      <div class="source">מקור: פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2423887 Run 1</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">3.09 מ&#x27;</td><th>נדרש</th><td>≥ 2.10 מ&#x27;</td></tr></table>
-      <div class="desc">מזקף ראש 3.09 מ&#x27; מעל «Fertigbetontreppe:Treppe:2423887 Run 1» — תקין</div>
-      
-      
-    </div>
-    
-
-    <div class="card pass">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦69⁩</span>
-        <span class="chip st-pass">עובר</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">מזקף ראש מעל מדרגות (פרט 3.2.2.4)</h3>
-      </div>
-      <div class="source">מקור: פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל · קומה B01_OKRD · רכיב Fertigbetontreppe:Treppe:2423887 Run 2</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">3.12 מ&#x27;</td><th>נדרש</th><td>≥ 2.10 מ&#x27;</td></tr></table>
-      <div class="desc">מזקף ראש 3.12 מ&#x27; מעל «Fertigbetontreppe:Treppe:2423887 Run 2» — תקין</div>
-      
-      
-    </div>
-    
-
-    <div class="card pass">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦70⁩</span>
-        <span class="chip st-pass">עובר</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">מזקף ראש מעל מדרגות (פרט 3.2.2.4)</h3>
-      </div>
-      <div class="source">מקור: פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל · קומה E00_OKRD · רכיב Fertigbetontreppe:Treppe:2423903 Run 1</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">5.45 מ&#x27;</td><th>נדרש</th><td>≥ 2.10 מ&#x27;</td></tr></table>
-      <div class="desc">מזקף ראש 5.45 מ&#x27; מעל «Fertigbetontreppe:Treppe:2423903 Run 1» — תקין</div>
-      
-      
-    </div>
-    
-
-    <div class="card pass">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦71⁩</span>
-        <span class="chip st-pass">עובר</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">מזקף ראש מעל מדרגות (פרט 3.2.2.4)</h3>
-      </div>
-      <div class="source">מקור: פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל · קומה E00_OKRD · רכיב Fertigbetontreppe:Treppe:2423903 Run 2</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">3.50 מ&#x27;</td><th>נדרש</th><td>≥ 2.10 מ&#x27;</td></tr></table>
-      <div class="desc">מזקף ראש 3.50 מ&#x27; מעל «Fertigbetontreppe:Treppe:2423903 Run 2» — תקין</div>
-      
-      
-    </div>
-    
-
-    <div class="card pass">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦72⁩</span>
-        <span class="chip st-pass">עובר</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">מזקף ראש מעל מדרגות (פרט 3.2.2.4)</h3>
-      </div>
-      <div class="source">מקור: פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל · קומה E00_OKRD · רכיב Zusammengebaute Treppe:Treppe:2424673 Run 1</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">4.95 מ&#x27;</td><th>נדרש</th><td>≥ 2.10 מ&#x27;</td></tr></table>
-      <div class="desc">מזקף ראש 4.95 מ&#x27; מעל «Zusammengebaute Treppe:Treppe:2424673 Run 1» — תקין</div>
-      
-      
-    </div>
-    
-
-    <div class="card pass">
-      <div class="card-head">
-        <span class="idx">ממצא ⁦73⁩</span>
-        <span class="chip st-pass">עובר</span><span class="chip cf-high">מדידה ישירה</span>
-        <h3 class="card-title">מזקף ראש מעל מדרגות (פרט 3.2.2.4)</h3>
-      </div>
-      <div class="source">מקור: פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל · קומה E00_OKRD · רכיב Zusammengebaute Treppe:Treppe:2424673 Run 2</div>
-      <table class="spec"><tr><th>נמדד</th><td class="">3.00 מ&#x27;</td><th>נדרש</th><td>≥ 2.10 מ&#x27;</td></tr></table>
-      <div class="desc">מזקף ראש 3.00 מ&#x27; מעל «Zusammengebaute Treppe:Treppe:2424673 Run 2» — תקין</div>
+      <div class="source">מקור: תקנות התכנון והבנייה תש&quot;ל-1970, סעיף 2.03(א)(3)+(ב) · קומה B01_OKRD · רכיב RLT-Raum</div>
+      <table class="spec"><tr><th>נמדד</th><td class="">1.51 מ&#x27;</td><th>נדרש</th><td>≥ 2.05 מ&#x27;</td></tr></table>
+      <div class="desc">מזקף ראש 1.51 מ&#x27; מתחת ל«מערכת (קובץ דיסציפלינה)» בחדר שירות «RLT-Raum» — פחות מהגובה 2.05 מ&#x27; של סעיף 2.03. מותר גובה נמוך רק על השטח העודף על מינימום סעיף 2.04 (קורות/כוכים) — לאימות מול האדריכל.</div>
       
       
     </div>
     
 </div>
 
+
+    <h2>בדיקות שעברו <span class="h2-sub">נבדקו ונמצאו תואמים</span></h2>
+    <table class="pass-table">
+      <tr><th></th><th>בדיקה</th><th>מקור</th><th>ממצאים</th></tr>
+      <tr><td class="pt-ok">✓</td><td>מזקף ראש מעל מדרגות (פרט 3.2.2.4)</td><td class="pt-src">פרט 3.2.2.4 (מזקף ראש מעל מדרגות) — תקנות התכנון והבנייה תש&quot;ל</td><td class="pt-n">⁦10⁩</td></tr>
+    </table>
+    
+
+    <h2>נספח — לאימות ידני <span class="h2-sub">⁦28⁩ פריטים שהמודל אינו מכיל נתון מספיק להכרעה</span></h2>
+    <div class="method" style="margin-bottom:6pt">
+      לפי עיקרון אפס-התרעות-שווא, פריטים אלה אינם מסומנים «נכשל» — הם ממתינים
+      לאימות ידני של בעל/ת מקצוע או להשלמת נתונים במודל.
+    </div>
+    <table class="ua-table">
+      <tr><th>#</th><th>ממצא</th><th>מיקום</th><th>הנדרש לאימות</th></tr>
+      <tr><td class="ua-n">⁦1⁩</td><td class="ua-t"><b>חפיפה תוך-דיסציפלינרית — לאימות</b><div class="ua-src">בקרת איכות מודל (BIM Validation) — TofesBIM</div></td><td class="ua-loc">Sohle:Sohle 1 mm:2437499</td><td class="ua-d">שני אלמנטים מטיפוס IfcSlab — חיתוך-הגופים האמיתי 0.546 מ&quot;ק = 88% מנפח האלמנט הקטן (מעל 50%). מידול כפול-חלקית; ההתנגשות הבין-מערכתית לא מכסה חפיפות בתוך אותה דיסציפלינה.</td></tr><tr><td class="ua-n">⁦2⁩</td><td class="ua-t"><b>חפיפה תוך-דיסציפלינרית — לאימות</b><div class="ua-src">בקרת איכות מודל (BIM Validation) — TofesBIM</div></td><td class="ua-loc">Geschossdecke:WD 200 hart:2721280</td><td class="ua-d">שני אלמנטים מטיפוס IfcSlab — חיתוך-הגופים האמיתי 0.637 מ&quot;ק = 100% מנפח האלמנט הקטן (מעל 50%). מידול כפול-חלקית; ההתנגשות הבין-מערכתית לא מכסה חפיפות בתוך אותה דיסציפלינה.</td></tr><tr><td class="ua-n">⁦3⁩</td><td class="ua-t"><b>אלמנטים המצוירים כמשטח בלבד (ללא עובי) — לידיעה</b><div class="ua-src">בקרת איכות מודל (BIM Validation) — TofesBIM</div></td><td class="ua-loc">Unterregion:2439145</td><td class="ua-d">במודל יש 4 אלמנטים שצוירו כמשטח דו-ממדי ולא כגוף מלא (למשל: Unterregion:2439145, Oberfläche:2440033, Unterregion:2454499). לרוב זה מכוון — פני קרקע, תקרות גנריות או סמלי ציוד — ולכן זו אינה שגיאה. כדאי לדעת: אלמנטים כאלה לא נכללים בחישובי כמויות ובבדיקות נפח.</td></tr><tr><td class="ua-n">⁦4⁩</td><td class="ua-t"><b>מרחק הליכה — חללים ללא מסלול-מילוט מזוהה</b><div class="ua-src">טבלה 3.2.15.5 (מרחקי הליכה) — תקנות התכנון והבנייה תש&quot;ל</div></td><td class="ua-loc">—</td><td class="ua-d">ל-2 מתוך 64 חללים לא נמצא מסלול דרך דלתות אל מוצא בטוח (דלת חיצונית או כניסה לחדר-מדרגות). (17 חללים מגיעים דרך כניסה לחדר-מדרגות שזוהה כמוצא בטוח — ודא שהוא מוגן כנדרש) לרוב זהו פער בגבולות-החלל (IfcRelSpaceBoundary) או בסימון היציאות; ייתכן גם מבוי-סתום אמיתי. לאימות: Offene Lounge 1 (2-6) · Offene Lounge 2 (2-15)</td></tr><tr><td class="ua-n">⁦5⁩</td><td class="ua-t"><b>שיפוע צנרת נקז — לא ניתן לאמת מהמודל</b><div class="ua-src">ת&quot;י 1205 חלק 2 (מתקני תברואה), סעיף 2.3.1 (טבלה 2)</div></td><td class="ua-loc">—</td><td class="ua-d">זוהו 216 מקטעי צנרת נקז אופקית שלא ניתן לאמת את שיפועם: המודל אינו כולל את ציר ההנחה של הצינור (IfcAxis2Placement3D.Axis), וחישוב מתיבת-תיחום (AABB) אינו אמין לשיפוע — הוא כולל את קוטר הצינור ומנפח שיפוע מדומה. לכן לא ניתן לקבוע עמידה בת&quot;י 1205 חלק 2 (טבלה 2). נדרשת בדיקה ידנית, או מודל עם גאומטריית קו-מרכז מדויקת לצנרת.</td></tr><tr><td class="ua-n">⁦6⁩</td><td class="ua-t"><b>דירוג אש חסר בדלת לחדר מדרגות</b><div class="ua-src">ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳)</div></td><td class="ua-loc">E00_OKRD · TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2421088</td><td class="ua-d">הדלת &#x27;TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2421088&#x27; בקומה &#x27;E00_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</td></tr><tr><td class="ua-n">⁦7⁩</td><td class="ua-t"><b>דירוג אש חסר בדלת לחדר מדרגות</b><div class="ua-src">ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳)</div></td><td class="ua-loc">E00_OKRD · TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2421089</td><td class="ua-d">הדלת &#x27;TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2421089&#x27; בקומה &#x27;E00_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</td></tr><tr><td class="ua-n">⁦8⁩</td><td class="ua-t"><b>דירוג אש חסר בדלת לפיר מעלית</b><div class="ua-src">ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳)</div></td><td class="ua-loc">E00_OKRD · TU Durchgang:DL - 1200 x 2100:2421090</td><td class="ua-d">הדלת &#x27;TU Durchgang:DL - 1200 x 2100:2421090&#x27; בקומה &#x27;E00_OKRD&#x27; מחוברת לפיר מעלית. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</td></tr><tr><td class="ua-n">⁦9⁩</td><td class="ua-t"><b>דירוג אש חסר בדלת לחדר מדרגות</b><div class="ua-src">ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳)</div></td><td class="ua-loc">E00_OKRD · TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2423930</td><td class="ua-d">הדלת &#x27;TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2423930&#x27; בקומה &#x27;E00_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</td></tr><tr><td class="ua-n">⁦10⁩</td><td class="ua-t"><b>דירוג אש חסר בדלת לחדר מדרגות</b><div class="ua-src">ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳)</div></td><td class="ua-loc">E00_OKRD · TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2423931</td><td class="ua-d">הדלת &#x27;TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2423931&#x27; בקומה &#x27;E00_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</td></tr><tr><td class="ua-n">⁦11⁩</td><td class="ua-t"><b>דירוג אש חסר בדלת לפיר מעלית</b><div class="ua-src">ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳)</div></td><td class="ua-loc">E00_OKRD · TU Durchgang:DL - 1200 x 2100:2423932</td><td class="ua-d">הדלת &#x27;TU Durchgang:DL - 1200 x 2100:2423932&#x27; בקומה &#x27;E00_OKRD&#x27; מחוברת לפיר מעלית. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</td></tr><tr><td class="ua-n">⁦12⁩</td><td class="ua-t"><b>דירוג אש חסר בדלת לחדר מדרגות</b><div class="ua-src">ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳)</div></td><td class="ua-loc">E01_OKRD · TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2426178</td><td class="ua-d">הדלת &#x27;TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2426178&#x27; בקומה &#x27;E01_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</td></tr><tr><td class="ua-n">⁦13⁩</td><td class="ua-t"><b>דירוג אש חסר בדלת לחדר מדרגות</b><div class="ua-src">ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳)</div></td><td class="ua-loc">E01_OKRD · TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2426180</td><td class="ua-d">הדלת &#x27;TU DF 1 - Fluchttüre Endausgang:EN 179 - ML - 1010 x 2250:2426180&#x27; בקומה &#x27;E01_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</td></tr><tr><td class="ua-n">⁦14⁩</td><td class="ua-t"><b>דירוג אש חסר בדלת לפיר מעלית</b><div class="ua-src">ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳)</div></td><td class="ua-loc">E01_OKRD · TU Durchgang:DL - 1200 x 2100:2426586</td><td class="ua-d">הדלת &#x27;TU Durchgang:DL - 1200 x 2100:2426586&#x27; בקומה &#x27;E01_OKRD&#x27; מחוברת לפיר מעלית. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</td></tr><tr><td class="ua-n">⁦15⁩</td><td class="ua-t"><b>דירוג אש חסר בדלת לפיר מעלית</b><div class="ua-src">ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳)</div></td><td class="ua-loc">E01_OKRD · TU Durchgang:DL - 1200 x 2100:2426588</td><td class="ua-d">הדלת &#x27;TU Durchgang:DL - 1200 x 2100:2426588&#x27; בקומה &#x27;E01_OKRD&#x27; מחוברת לפיר מעלית. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</td></tr><tr><td class="ua-n">⁦16⁩</td><td class="ua-t"><b>דירוג אש חסר בדלת לחדר מדרגות</b><div class="ua-src">ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳)</div></td><td class="ua-loc">B01_OKRD · TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432934</td><td class="ua-d">הדלת &#x27;TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432934&#x27; בקומה &#x27;B01_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</td></tr><tr><td class="ua-n">⁦17⁩</td><td class="ua-t"><b>דירוג אש חסר בדלת לחדר מדרגות</b><div class="ua-src">ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳)</div></td><td class="ua-loc">B01_OKRD · TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432938</td><td class="ua-d">הדלת &#x27;TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432938&#x27; בקומה &#x27;B01_OKRD&#x27; מחוברת לחדר מדרגות. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</td></tr><tr><td class="ua-n">⁦18⁩</td><td class="ua-t"><b>דירוג אש חסר בדלת לחדר מכונות/טכני</b><div class="ua-src">ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳)</div></td><td class="ua-loc">B01_OKRD · TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432971</td><td class="ua-d">הדלת &#x27;TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2432971&#x27; בקומה &#x27;B01_OKRD&#x27; מחוברת לחדר מכונות/טכני. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</td></tr><tr><td class="ua-n">⁦19⁩</td><td class="ua-t"><b>דירוג אש חסר בדלת לחדר מכונות/טכני</b><div class="ua-src">ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳)</div></td><td class="ua-loc">B01_OKRD · TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2433295</td><td class="ua-d">הדלת &#x27;TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2433295&#x27; בקומה &#x27;B01_OKRD&#x27; מחוברת לחדר מכונות/טכני. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</td></tr><tr><td class="ua-n">⁦20⁩</td><td class="ua-t"><b>דירוג אש חסר בדלת לחדר מכונות/טכני</b><div class="ua-src">ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳)</div></td><td class="ua-loc">B01_OKRD · TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434320</td><td class="ua-d">הדלת &#x27;TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434320&#x27; בקומה &#x27;B01_OKRD&#x27; מחוברת לחדר מכונות/טכני. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</td></tr><tr><td class="ua-n">⁦21⁩</td><td class="ua-t"><b>דירוג אש חסר בדלת לחדר שירות טכני</b><div class="ua-src">ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳)</div></td><td class="ua-loc">B01_OKRD · TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434549</td><td class="ua-d">הדלת &#x27;TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434549&#x27; בקומה &#x27;B01_OKRD&#x27; מחוברת לחדר שירות טכני. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</td></tr><tr><td class="ua-n">⁦22⁩</td><td class="ua-t"><b>דירוג אש חסר בדלת לחדר מכונות/טכני</b><div class="ua-src">ת&quot;י 1212 + ת&quot;י 1212 + ת&quot;י 1001 חלק 2.1/2.2 + תקנות התכנון (בטיחות אש: בקרת עשן בבנייני מגורים עד 13 מ׳)</div></td><td class="ua-loc">B01_OKRD · TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434619</td><td class="ua-d">הדלת &#x27;TU DF 1 - Rahmenstock flächenbündig:DL - 1000 x 2000:2434619&#x27; בקומה &#x27;B01_OKRD&#x27; מחוברת לחדר מכונות/טכני. לפי ת&quot;י 1212 + תקנות הנדרשות, לדלת כזו חובה דירוג עמידות אש של לפחות EI30 דקות. אך Pset_DoorCommon.FireRating ריק במודל. חובה לאמת: (א) אם הדלת שהותקנה היא דלת אש EI30+ ולמלא את השדה במודל; (ב) אם לא — להחליף לדלת מתאימה.</td></tr><tr><td class="ua-n">⁦23⁩</td><td class="ua-t"><b>מעלית ללא נתוני רוחב דלת</b><div class="ua-src">ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.9.2</div></td><td class="ua-loc">E00_OKRD · Aufzug West</td><td class="ua-d">מעלית &#x27;Aufzug West&#x27; בקומה &#x27;E00_OKRD&#x27; — לא נמצאה דלת תא תואמת במודל. לא ניתן לוודא ציות לסעיף 2.9.2 (רוחב ≥ 80-100 ס&quot;מ).</td></tr><tr><td class="ua-n">⁦24⁩</td><td class="ua-t"><b>מעלית ללא נתוני רוחב דלת</b><div class="ua-src">ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.9.2</div></td><td class="ua-loc">E00_OKRD · Aufzug Ost</td><td class="ua-d">מעלית &#x27;Aufzug Ost&#x27; בקומה &#x27;E00_OKRD&#x27; — לא נמצאה דלת תא תואמת במודל. לא ניתן לוודא ציות לסעיף 2.9.2 (רוחב ≥ 80-100 ס&quot;מ).</td></tr><tr><td class="ua-n">⁦25⁩</td><td class="ua-t"><b>מעלית — פנים התא אינו ממודל, לא ניתן לאמת מידות נגישות</b><div class="ua-src">ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.9.2.ב</div></td><td class="ua-loc">E00_OKRD · Aufzug West</td><td class="ua-d">מעלית &#x27;Aufzug West&#x27; בקומה &#x27;E00_OKRD&#x27; זוהתה כחלל-פיר במודל (מידות פיר ⁦2000×2575⁩ מ&quot;מ). פנים תא המעלית אינו ממודל בנפרד (אין IfcTransportElement), ומידות הפיר כוללות קירות ומרווחים — גדולות מפנים התא. לכן לא ניתן לאמת תא נגיש טיפוס 2 (≥ 110×140 ס&quot;מ פנים). יש למדל את פנים התא או לספק את מידותיו.</td></tr><tr><td class="ua-n">⁦26⁩</td><td class="ua-t"><b>מעלית — פנים התא אינו ממודל, לא ניתן לאמת מידות נגישות</b><div class="ua-src">ת&quot;י 1918 חלק 3.1 (נגישות הסביבה הבנויה: פנים הבניין), סעיף 2.9.2.ב</div></td><td class="ua-loc">E00_OKRD · Aufzug Ost</td><td class="ua-d">מעלית &#x27;Aufzug Ost&#x27; בקומה &#x27;E00_OKRD&#x27; זוהתה כחלל-פיר במודל (מידות פיר ⁦2000×2575⁩ מ&quot;מ). פנים תא המעלית אינו ממודל בנפרד (אין IfcTransportElement), ומידות הפיר כוללות קירות ומרווחים — גדולות מפנים התא. לכן לא ניתן לאמת תא נגיש טיפוס 2 (≥ 110×140 ס&quot;מ פנים). יש למדל את פנים התא או לספק את מידותיו.</td></tr><tr><td class="ua-n">⁦27⁩</td><td class="ua-t"><b>מטבח — חלון בקיר-הגבול שויך לחלל סמוך (לאימות)</b><div class="ua-src">תקנות התכנון והבנייה תש&quot;ל-1970, סעיף 2.20</div></td><td class="ua-loc">E00_OKRD · Küche</td><td class="ua-d">חלל &#x27;Küche&#x27; בקומה &#x27;E00_OKRD&#x27; (מטבח) — לא מקושר אליו חלון ישירות, אך קיים חלון המותקן באחד מקירות-הגבול שלו וששויך בחילוץ לחלל הסמוך (קיר משותף). לכן לא ניתן לקבוע בוודאות שאין כאן חלון לאוויר החוץ (סעיף 2.20) — ייתכן שהחלון משרת את החלל וייתכן שהוא פנימי. נדרש אימות ידני של שיוך החלון / התאורה הטבעית בפועל.</td></tr><tr><td class="ua-n">⁦28⁩</td><td class="ua-t"><b>לא זוהתה מעלית נושאת אלונקה במודל</b><div class="ua-src">תקנות התכנון והבנייה תש&quot;ל-1970, סעיף 3.7.3.4(ב)(1)</div></td><td class="ua-loc">—</td><td class="ua-d">המודל מכיל 2 מעלית/ות אך אף אחת מהן לא עומדת במידות תא מעלית אלונקה (עומק ≥ 2100 מ&quot;מ × רוחב ≥ 1100 מ&quot;מ) ואף אחת לא מזוהה לפי שמה כמעלית אלונקה. בבניין רב-קומות (כהגדרתו בחוק התכנון והבנייה סעיף 158א), סעיף 3.7.3.4(א) של התקנות מחייב מעלית אחת לפחות כזו. יש לוודא ידנית האם הבניין חייב במעלית אלונקה.</td></tr>
+    </table>
+    
 
     <div class="transparency">
       <b>הערת שקיפות.</b> המנוע מריץ בדיקות נוספות שטרם עברו אימות סופי מול
@@ -1935,7 +1471,7 @@ table.model-info td{ padding:5pt 8pt; border:1px solid var(--rule);
     <div class="footer">
       <b>TofesBIM</b> · מנוע בדיקת תאימות אוטומטי · 09/07/2026 ·
       מזהה מסמך <span class="ltr">TB-20260709-E533</span><br>
-      אימות מקוון של מסמך זה: <span class="ltr">https://matanluzonnn-hue.github.io/tofesbim-verify/?t=8HdFdDD5Mk0-v1eYJeeI3Q</span><br>
+      אימות מקוון של מסמך זה: <span class="ltr">https://matanluzonnn-hue.github.io/tofesbim-verify/verify/IYyRjx-uFs_cR260RTuZXA</span><br>
       הדו״ח אינו מהווה אישור רשמי. לכל ממצא מצוין מקור הדרישה (מספר התקן והסעיף);
       נוסח התקן אינו משוכפל בדו״ח מטעמי זכויות יוצרים.<br>
       מסמך חסוי — לשימוש מקצועי בלבד.

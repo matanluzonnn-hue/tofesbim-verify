@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>מפנה לאימות…</title>
+<script>
+// GitHub Pages SPA hack: server-style paths like
+//   /tofesbim-verify/verify/TOKEN
+// (the format TofesBIM stamps on report covers) land on this 404 page —
+// extract the token and redirect to the static lookup page (?t=TOKEN).
+(function () {
+  var m = location.pathname.match(/\/verify\/([A-Za-z0-9_-]{16,64})\/?$/);
+  if (m) {
+    location.replace('/tofesbim-verify/?t=' + encodeURIComponent(m[1]));
+  }
+})();
+</script>
+</head>
+<body>
+<p style="font-family:sans-serif;text-align:center;margin-top:40px">
+  הדף לא נמצא. <a href="/tofesbim-verify/">לעמוד האימות הראשי</a>
+</p>
+</body></html>
