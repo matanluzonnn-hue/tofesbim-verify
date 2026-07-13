@@ -532,6 +532,18 @@ tbody.ser-extra{ display:none; }
 @media print{ .to-top{ display:none !important; } }
 </style>
 <style>@page{ @bottom-left{ content:"TB-20260713-5B4C · TofesBIM"; font-family:'Heebo','Segoe UI',sans-serif; font-size:7.5pt; color:#8A97A5; }} }}</style>
+<style>
+/* mobile-safe overrides (QR scanned on phones) — 2026-07-13 */
+@media (max-width: 680px){
+  html, body { overflow-x: hidden !important; max-width: 100% !important; }
+  .page-watermark { display: none !important; }           /* fixed elem -> h-scroll */
+  .cover-seal {                                            /* was absolute -> overlapped status row */
+    position: static !important; left: auto !important; bottom: auto !important;
+    margin: 4mm 16mm 8mm !important; text-align: center !important;
+  }
+  .cover-qr { margin-inline-start: 0 !important; }
+}
+</style>
 </head>
 <body>
 <a class="to-top" href="#toc">↑ תוכן</a>
