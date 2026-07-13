@@ -81,5 +81,17 @@
     "n_warn": 5,
     "n_unknown": 27,
     "report_file": "report-example.pdf"
+  },
+  "1lpRiY7dHF6TrQtxrJzfXQ": {
+    "doc_id": "TB-20260713-5B4C",
+    "date": "13/07/2026",
+    "show_project": false,
+    "project_label": "",
+    "n_standards": 11,
+    "n_findings": 78,
+    "n_fail": 28,
+    "n_warn": 5,
+    "n_unknown": 27,
+    "report_file": "report-example.pdf"
   }
 }
