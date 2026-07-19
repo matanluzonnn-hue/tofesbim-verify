@@ -549,6 +549,21 @@ tbody.ser-extra{ display:none; }
 @media print{ .to-top{ display:none !important; } }
 </style>
 <style>@page{ @bottom-left{ content:"TB-20260719-5B4C · TofesBIM"; font-family:'Heebo','Segoe UI',sans-serif; font-size:7.5pt; color:#8A97A5; }} }}</style>
+
+<style id="qr-demo-print-cap-override">
+/* QR/demo-sample override ONLY (this repo, not the product).
+   The product's own print CSS force-opens every extra series row in a printed/
+   PDF report ("the PDF is the complete record" — correct for a real customer's
+   legal document). For the investor-facing sample this reads as noise (some
+   cards had 70+ forced-open rows). Re-caps to the same 5-row + "+N" summary the
+   screen view already uses. Same selector specificity + later in the cascade +
+   !important wins over the original @media print rule. */
+@media print{
+  tbody.ser-extra{ display:none !important; }
+  .ser-more-open{ display:inline-block !important; cursor:default !important; }
+  .ser-more-close{ display:none !important; }
+}
+</style>
 </head>
 <body>
 <a class="to-top" href="#toc">↑ תוכן</a>
